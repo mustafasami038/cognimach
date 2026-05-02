@@ -70,17 +70,13 @@ export default function Landing() {
         <div className="marquee-container">
           <div className="marquee-content" style={{ display: 'flex', alignItems: 'center' }}>
             {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-              <div key={i} className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div key={i} className="marquee-item">
                 <img 
-                  src="https://upload.wikimedia.org/wikipedia/tr/thumb/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png/200px-Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" 
+                  src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" 
                   alt="AGÜ" 
-                  style={{ height: '60px', width: 'auto', margin: '0 40px', objectFit: 'contain' }} 
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.nextSibling.style.display = 'block';
-                  }}
+                  referrerPolicy="no-referrer"
+                  style={{ height: '80px', width: 'auto', margin: '0 50px', objectFit: 'contain', backgroundColor: 'white', padding: '10px', borderRadius: '8px' }} 
                 />
-                <span style={{ display: 'none', fontSize: '1.2rem', fontWeight: 700, color: '#e2e8f0' }}>AGÜ</span>
               </div>
             ))}
           </div>
