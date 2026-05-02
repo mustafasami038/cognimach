@@ -63,17 +63,22 @@ export default function Landing() {
       </section>
 
       {/* SECTION 2: MARQUEE */}
-      <div className="marquee-container">
-        <div className="marquee-content">
-          <span className="marquee-item">AGÜ Teknoloji Transfer Ofisi</span>
-          <span className="marquee-item">Kapadokya YZ Zirvesi</span>
-          <span className="marquee-item">Kayseri Sanayi Odası</span>
-          <span className="marquee-item">Ulusal Akıllı Üretim Ağı</span>
-          {/* Tekrar */}
-          <span className="marquee-item">AGÜ Teknoloji Transfer Ofisi</span>
-          <span className="marquee-item">Kapadokya YZ Zirvesi</span>
-          <span className="marquee-item">Kayseri Sanayi Odası</span>
-          <span className="marquee-item">Ulusal Akıllı Üretim Ağı</span>
+      <div style={{ padding: '2rem 0' }}>
+        <h3 className="text-center" style={{ fontSize: '0.8rem', color: '#64748b', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '2rem' }}>
+          Stratejik Partnerlerimiz & Destekçilerimiz
+        </h3>
+        <div className="marquee-container">
+          <div className="marquee-content">
+            <span className="marquee-item"><Zap size={20} style={{marginRight: '10px'}} /> AGÜ Teknoloji Transfer Ofisi</span>
+            <span className="marquee-item"><Activity size={20} style={{marginRight: '10px'}} /> Kapadokya YZ Zirvesi</span>
+            <span className="marquee-item"><ShieldCheck size={20} style={{marginRight: '10px'}} /> Kayseri Sanayi Odası</span>
+            <span className="marquee-item"><TrendingUp size={20} style={{marginRight: '10px'}} /> Ulusal Akıllı Üretim Ağı</span>
+            {/* Tekrar */}
+            <span className="marquee-item"><Zap size={20} style={{marginRight: '10px'}} /> AGÜ Teknoloji Transfer Ofisi</span>
+            <span className="marquee-item"><Activity size={20} style={{marginRight: '10px'}} /> Kapadokya YZ Zirvesi</span>
+            <span className="marquee-item"><ShieldCheck size={20} style={{marginRight: '10px'}} /> Kayseri Sanayi Odası</span>
+            <span className="marquee-item"><TrendingUp size={20} style={{marginRight: '10px'}} /> Ulusal Akıllı Üretim Ağı</span>
+          </div>
         </div>
       </div>
 
