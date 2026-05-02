@@ -52,21 +52,21 @@ export default function Landing() {
       {/* SECTION 3: PROBLEM VS SOLUTION */}
       <section style={{ padding: '6rem 2rem', background: 'rgba(15, 23, 42, 0.2)' }}>
         <div className="container">
-          <div className="grid grid-cols-2 gap-12 items-center">
-            <div className="glass-panel" style={{ borderColor: 'rgba(239, 68, 68, 0.2)', padding: '3rem' }}>
-              <div style={{ color: '#ef4444', marginBottom: '1rem' }}><ShieldAlert size={48} /></div>
+          <div className="grid grid-cols-2 gap-12">
+            <div className="glass-panel" style={{ borderColor: 'rgba(239, 68, 68, 0.2)', padding: '3rem', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ color: '#ef4444', marginBottom: '1.5rem' }}><ShieldAlert size={48} /></div>
               <h2 style={{ fontSize: '2rem' }}>Eski Nesil: Reaktif Bakım</h2>
-              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexCol: 'column', gap: '1rem', marginTop: '1.5rem' }}>
+              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1.5rem' }}>
                 <li style={{ color: '#94a3b8' }}>❌ Makine bozulur, üretim aniden durur.</li>
                 <li style={{ color: '#94a3b8' }}>❌ Yedek parça maliyetleri tavan yapar.</li>
                 <li style={{ color: '#94a3b8' }}>❌ Fabrikada panik havası başlar.</li>
               </ul>
             </div>
             
-            <div className="glass-panel glow-border" style={{ padding: '3rem', border: '1px solid rgba(0, 229, 255, 0.4)' }}>
-              <div style={{ color: '#00e5ff', marginBottom: '1rem' }}><ShieldCheck size={48} /></div>
+            <div className="glass-panel glow-border" style={{ padding: '3rem', border: '1px solid rgba(0, 229, 255, 0.4)', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ color: '#00e5ff', marginBottom: '1.5rem' }}><ShieldCheck size={48} /></div>
               <h2 style={{ fontSize: '2rem' }}>Yeni Nesil: CogniMach Preskriptif Bakım</h2>
-              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexCol: 'column', gap: '1rem', marginTop: '1.5rem' }}>
+              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1.5rem' }}>
                 <li style={{ color: '#e2e8f0' }}>✅ Saniyeler içinde anomali tespiti.</li>
                 <li style={{ color: '#e2e8f0' }}>✅ Yapay zeka ile otomatik kök neden analizi.</li>
                 <li style={{ color: '#e2e8f0' }}>✅ Otonom iş emirleri ile sıfır duruş.</li>
