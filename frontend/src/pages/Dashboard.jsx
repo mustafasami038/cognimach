@@ -119,9 +119,14 @@ export default function Dashboard() {
         setAlertMsg(res.data.alert);
         
         // Mail Gönderim Bildirimi
-        if (res.data.mail_status && res.data.mail_status.includes('başarıyla')) {
-          setToastMsg('✉️ Otonom iş emri (Mail) başarıyla iletildi!');
-          setTimeout(() => setToastMsg(''), 5000);
+        if (res.data.mail_status) {
+          if (res.data.mail_status.includes('başarıyla')) {
+            setToastMsg('✉️ Otonom iş emri (Mail) başarıyla iletildi!');
+            setTimeout(() => setToastMsg(''), 5000);
+          } else if (res.data.mail_status.includes('❌') || res.data.mail_status.includes('eksik')) {
+            setToastMsg(res.data.mail_status); // Mail hatasını ekranda göster
+            setTimeout(() => setToastMsg(''), 7000);
+          }
         }
       }
     } catch (err) {
