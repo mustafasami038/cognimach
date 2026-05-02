@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ShieldCheck, Zap, MessageSquare, Mail, ArrowRight, Activity, TrendingUp, ShieldAlert, Loader2 } from 'lucide-react';
@@ -6,6 +6,30 @@ import { ShieldCheck, Zap, MessageSquare, Mail, ArrowRight, Activity, TrendingUp
 export default function Landing() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [visibleLogs, setVisibleLogs] = useState(0);
+
+  const terminalLogs = [
+    { text: "> [SYS] Establishing secure connection to CNC_Node_01... [OK]", color: "text-slate-300" },
+    { text: "> [STREAM] Ingesting live telemetry: 1550 RPM | Temp: 308K", color: "text-cyan-400" },
+    { text: "> [AI_ENGINE] Random Forest anomaly detection: NORMAL", color: "text-emerald-400" },
+    { text: "> [PREDICTION] Holt Time-Series active. RUL: 45 Shifts", color: "text-emerald-400" },
+    { text: "> [LLM_GEMINI] Root cause analysis module: STANDBY", color: "text-blue-400" }
+  ];
+
+  useEffect(() => {
+    if (visibleLogs < terminalLogs.length) {
+      const timer = setTimeout(() => {
+        setVisibleLogs(prev => prev + 1);
+      }, 800); // Reveal a new line every 800ms
+      return () => clearTimeout(timer);
+    } else {
+      // Loop the animation after a pause
+      const timer = setTimeout(() => {
+        setVisibleLogs(0);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [visibleLogs, terminalLogs.length]);
 
   const handleDemoLogin = async () => {
     setLoading(true);
@@ -32,29 +56,65 @@ export default function Landing() {
     <div className="animate-fade-in">
       {/* SECTION 1: HERO */}
       <section style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden' }}>
-        <div className="container" style={{ position: 'relative', zIndex: 10 }}>
-          <div className="text-center">
-            <h1 className="hero-title gradient-text">
-              Endüstrinin Nöral Ağı: CogniMach
-            </h1>
-            <p style={{ fontSize: '1.5rem', maxWidth: '800px', margin: '1.5rem auto', color: '#94a3b8' }}>
-              Üretim hatlarınızı karanlıktan kurtarın. Çift motorlu yapay zeka ve entegre LLM asistanı ile 
-              <span style={{ color: '#00e5ff', fontWeight: 600 }}> "Sıfır Duruş"</span> hedefine ulaşın.
-            </p>
+        <div className="container mx-auto" style={{ position: 'relative', zIndex: 10 }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[85vh] w-full">
             
-            <div className="flex justify-center gap-6 mt-8">
-              <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}>
-                Sisteme Entegre Ol <ArrowRight size={20} />
-              </button>
-              <button 
-                onClick={handleDemoLogin} 
-                className="btn btn-secondary" 
-                style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}
-                disabled={loading}
-              >
-                {loading ? <Loader2 className="animate-spin" size={20} /> : 'Canlı Demoyu İzle'}
-              </button>
+            {/* Left Column (Text & Buttons) */}
+            <div className="text-left flex flex-col items-start justify-start">
+              <h1 className="hero-title gradient-text text-left text-5xl lg:text-6xl font-bold leading-tight" style={{ textAlign: 'left' }}>
+                Endüstrinin Nöral Ağı: CogniMach
+              </h1>
+              <p className="text-xl max-w-lg mt-6 mb-8 text-left" style={{ color: '#94a3b8' }}>
+                Üretim hatlarınızı karanlıktan kurtarın. Çift motorlu yapay zeka ve entegre LLM asistanı ile 
+                <span style={{ color: '#00e5ff', fontWeight: 600 }}> "Sıfır Duruş"</span> hedefine ulaşın.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto">
+                <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1rem 2rem', fontSize: '1.05rem' }}>
+                  Sisteme Entegre Ol <ArrowRight size={20} />
+                </button>
+                <button 
+                  onClick={handleDemoLogin} 
+                  className="btn btn-secondary" 
+                  style={{ padding: '1rem 2rem', fontSize: '1.05rem' }}
+                  disabled={loading}
+                >
+                  {loading ? <Loader2 className="animate-spin" size={20} /> : 'Canlı Demoyu İzle'}
+                </button>
+              </div>
             </div>
+
+            {/* Right Column (Live Telemetry Terminal) */}
+            <div className="flex justify-center items-center relative w-full">
+              <div className="bg-slate-950/60 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-[0_0_50px_rgba(0,229,255,0.1)] w-full max-w-lg mx-auto relative overflow-hidden flex flex-col">
+                {/* macOS Style Header */}
+                <div className="px-4 py-3 bg-slate-900/50 border-b border-slate-700/50 flex items-center">
+                  <div className="flex gap-2">
+                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                  </div>
+                  <div className="mx-auto text-xs font-mono text-slate-400 opacity-80 pl-4">cognimach-core-v3.sh</div>
+                </div>
+                
+                {/* Terminal Body */}
+                <div className="p-6 font-mono text-sm leading-relaxed min-h-[280px] flex flex-col gap-3">
+                  {terminalLogs.map((log, index) => (
+                    <div 
+                      key={index} 
+                      className={`${log.color} transition-opacity duration-300 ${index < visibleLogs ? 'opacity-100' : 'opacity-0 hidden'}`}
+                    >
+                      {log.text}
+                    </div>
+                  ))}
+                  <div className="text-slate-400 mt-1 flex items-center">
+                    <span>{'>'}</span>
+                    <span className="w-2.5 h-4 bg-slate-400 ml-2 animate-pulse"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
