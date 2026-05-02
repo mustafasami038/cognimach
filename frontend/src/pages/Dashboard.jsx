@@ -32,7 +32,7 @@ export default function Dashboard() {
 
   const checkStatus = async () => {
     try {
-      const res = await axios.get(`http://localhost:8000/telemetry/status/${tenantId}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/telemetry/status/${tenantId}`);
       setStatus(res.data.status);
     } catch (err) {
       console.error(err);
@@ -45,7 +45,7 @@ export default function Dashboard() {
     const formData = new FormData();
     formData.append('file', file);
     try {
-      await axios.post(`http://localhost:8000/telemetry/upload/${tenantId}`, formData);
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/telemetry/upload/${tenantId}`, formData);
       setStatus('bekliyor');
       setAlertMsg('');
     } catch (err) {
@@ -54,20 +54,20 @@ export default function Dashboard() {
   };
 
   const startSystem = async () => {
-    await axios.post(`http://localhost:8000/telemetry/action/${tenantId}?action=start`);
+    await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/telemetry/action/${tenantId}?action=start`);
     setStatus('calisiyor');
     setAlertMsg('');
   };
 
   const fixSystem = async () => {
-    await axios.post(`http://localhost:8000/telemetry/action/${tenantId}?action=fix`);
+    await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/telemetry/action/${tenantId}?action=fix`);
     setStatus('calisiyor');
     setAlertMsg('');
   };
 
   const fetchNext = async () => {
     try {
-      const res = await axios.get(`http://localhost:8000/telemetry/next/${tenantId}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/telemetry/next/${tenantId}`);
       if (res.data.end_of_data) {
         setStatus('bekliyor');
         return;
@@ -99,7 +99,7 @@ export default function Dashboard() {
     setIsAiLoading(true);
     
     try {
-      const res = await axios.post(`http://localhost:8000/ai/chat/${tenantId}`, { prompt: chatInput });
+      const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/ai/chat/${tenantId}`, { prompt: chatInput });
       setChatMessages(prev => [...prev, { role: 'assistant', content: res.data.reply }]);
     } catch (err) {
       setChatMessages(prev => [...prev, { role: 'assistant', content: 'Hata: ' + (err.response?.data?.detail || err.message) }]);

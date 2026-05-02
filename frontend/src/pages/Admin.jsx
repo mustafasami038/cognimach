@@ -12,7 +12,7 @@ export default function Admin() {
 
   const fetchTenants = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/admin/tenants');
+      const res = await axios.get((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/admin/tenants');
       setTenants(res.data);
     } catch (err) {
       console.error(err);
@@ -22,7 +22,7 @@ export default function Admin() {
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:8000/admin/tenants', newTenant);
+      const res = await axios.post((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/admin/tenants', newTenant);
       setMsg(res.data.message);
       fetchTenants();
       setNewTenant({ tenant_id: '', sirket: '', sifre: '', rol: 'client', esik: 15 });
@@ -34,7 +34,7 @@ export default function Admin() {
   const handleDelete = async (id) => {
     if (!window.confirm('Emin misiniz?')) return;
     try {
-      await axios.delete(`http://localhost:8000/admin/tenants/${id}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/admin/tenants/${id}`);
       fetchTenants();
     } catch (err) {
       alert(err.response?.data?.detail);
