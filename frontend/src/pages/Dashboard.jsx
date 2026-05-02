@@ -128,6 +128,17 @@ export default function Dashboard() {
             setTimeout(() => setToastMsg(''), 7000);
           }
         }
+
+        // WhatsApp Gönderim Bildirimi
+        if (res.data.wp_status) {
+          if (res.data.wp_status.includes('başarıyla')) {
+            setToastMsg('📱 WhatsApp Bildirimi Başarıyla Gönderildi!');
+            setTimeout(() => setToastMsg(''), 5000);
+          } else if (res.data.wp_status.includes('❌')) {
+            setToastMsg(res.data.wp_status);
+            setTimeout(() => setToastMsg(''), 7000);
+          }
+        }
       }
     } catch (err) {
       console.error(err);

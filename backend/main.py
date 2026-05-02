@@ -11,6 +11,8 @@ from email.mime.text import MIMEText
 import datetime
 import io
 import warnings
+import urllib.parse
+import urllib.request
 
 warnings.filterwarnings("ignore")
 
@@ -28,11 +30,13 @@ app.add_middleware(
 users_db = {
     "admin": {
         "sifre": "agu2026", "rol": "admin", "sirket": "CogniMach HQ (Super Admin)",
-        "api_key": "", "gnd_mail": "", "gnd_sifre": "", "alc_mail": "", "esik": 15
+        "api_key": "", "gnd_mail": "", "gnd_sifre": "", "alc_mail": "", "esik": 15,
+        "whatsapp_no": "", "whatsapp_key": ""
     },
     "demo": {
         "sifre": "1234", "rol": "client", "sirket": "Örnek Fabrika A.Ş. (Demo)",
-        "api_key": "", "gnd_mail": "", "gnd_sifre": "", "alc_mail": "", "esik": 15
+        "api_key": "", "gnd_mail": "", "gnd_sifre": "", "alc_mail": "", "esik": 15,
+        "whatsapp_no": "", "whatsapp_key": ""
     }
 }
 
@@ -54,6 +58,8 @@ class TenantConfig(BaseModel):
     gnd_sifre: str = ""
     alc_mail: str = ""
     esik: int = 15
+    whatsapp_no: str = ""
+    whatsapp_key: str = ""
 
 @app.post("/login")
 def login(req: LoginRequest):
@@ -176,6 +182,35 @@ def otomatik_mail_gonder(tetikleyen_ai, olay_tipi, anlik_veri, rul_gosterim, use
     except Exception as e:
         return f"❌ İletişim Hatası: {str(e)}"
 
+def otomatik_whatsapp_gonder(tetikleyen_ai, olay_tipi, anlik_veri, rul_gosterim, user_cfg):
+    wp_no = user_cfg.get("whatsapp_no")
+    wp_key = user_cfg.get("whatsapp_key")
+    sirket_adi = user_cfg.get("sirket")
+    
+    if not wp_no or not wp_key:
+        return None
+        
+    try:
+        saat = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        if "Holt" in tetikleyen_ai:
+            baslik = "⚠️ *SARI ALARM*"
+        else:
+            baslik = "🚨 *KIRMIZI ALARM*"
+
+        mesaj = f"{baslik}\nŞirket: {sirket_adi}\nSaat: {saat}\n\nOlay: {olay_tipi}\nAI: {tetikleyen_ai}\nAşınma: {anlik_veri['Tool wear [min]']} Dk\nSıcaklık: {anlik_veri['Air temperature [K]']:.1f} K"
+        encoded_mesaj = urllib.parse.quote(mesaj)
+        
+        url = f"https://api.callmebot.com/whatsapp.php?phone={wp_no}&text={encoded_mesaj}&apikey={wp_key}"
+        
+        req = urllib.request.Request(url)
+        with urllib.request.urlopen(req, timeout=10) as response:
+            if response.status == 200:
+                return "✅ WhatsApp bildirimi başarıyla iletildi."
+            else:
+                return f"❌ WhatsApp Hatası (HTTP {response.status})"
+    except Exception as e:
+        return f"❌ WhatsApp Hatası: {str(e)}"
+
 @app.get("/telemetry/next/{tenant_id}")
 def get_next_telemetry(tenant_id: str):
     if tenant_id not in tenant_data:
@@ -234,9 +269,11 @@ def get_next_telemetry(tenant_id: str):
         log_entry = {'Tarih/Saat': su_an, 'Vardiya Dk.': i, 'Tetikleyen AI': tetikleyen, 'Olay Tipi': olay, 'Hava Sıc.': anlik_veri['Air temperature [K]'], 'Hız': anlik_veri['Rotational speed [rpm]'], 'Aşınma': anlik_veri['Tool wear [min]']}
         data["logs"].append(log_entry)
         mail_status = otomatik_mail_gonder(tetikleyen, olay, anlik_veri, "Sıfırlandı", user_cfg)
+        wp_status = otomatik_whatsapp_gonder(tetikleyen, olay, anlik_veri, "Sıfırlandı", user_cfg)
         data["status"] = "arizali"
         response["status"] = "arizali"
         response["mail_status"] = mail_status
+        response["wp_status"] = wp_status
         response["alert"] = "🚨 COGNIMACH KIRMIZI ALARM: Sistem Güvenlik Nedeniyle Kilitlendi!"
     elif 0 < rul_sayisal <= esik:
         olay = '⚠️ Kritik Degradasyon (Yaşlanma)'
@@ -245,9 +282,11 @@ def get_next_telemetry(tenant_id: str):
         log_entry = {'Tarih/Saat': su_an, 'Vardiya Dk.': i, 'Tetikleyen AI': tetikleyen, 'Olay Tipi': olay, 'Hava Sıc.': anlik_veri['Air temperature [K]'], 'Hız': anlik_veri['Rotational speed [rpm]'], 'Aşınma': anlik_veri['Tool wear [min]']}
         data["logs"].append(log_entry)
         mail_status = otomatik_mail_gonder(tetikleyen, olay, anlik_veri, rul_gosterim, user_cfg)
+        wp_status = otomatik_whatsapp_gonder(tetikleyen, olay, anlik_veri, rul_gosterim, user_cfg)
         data["status"] = "bakim_gerekiyor"
         response["status"] = "bakim_gerekiyor"
         response["mail_status"] = mail_status
+        response["wp_status"] = wp_status
         response["alert"] = "⚠️ COGNIMACH SARI ALARM: Proaktif Müdahale Gerekiyor!"
     else:
         # If normal, advance row

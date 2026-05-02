@@ -7,7 +7,7 @@ export default function Admin() {
   const [msg, setMsg] = useState('');
   
   const [editTenantId, setEditTenantId] = useState(null);
-  const [editConfig, setEditConfig] = useState({ tenant_id: '', sirket: '', sifre: '', rol: 'client', api_key: '', gnd_mail: '', gnd_sifre: '', alc_mail: '', esik: 15 });
+  const [editConfig, setEditConfig] = useState({ tenant_id: '', sirket: '', sifre: '', rol: 'client', api_key: '', gnd_mail: '', gnd_sifre: '', alc_mail: '', esik: 15, whatsapp_no: '', whatsapp_key: '' });
 
   useEffect(() => {
     fetchTenants();
@@ -58,7 +58,9 @@ export default function Admin() {
       gnd_mail: t.gnd_mail || '',
       gnd_sifre: t.gnd_sifre || '',
       alc_mail: t.alc_mail || '',
-      esik: t.esik || 15
+      esik: t.esik || 15,
+      whatsapp_no: t.whatsapp_no || '',
+      whatsapp_key: t.whatsapp_key || ''
     });
   };
 
@@ -167,6 +169,20 @@ export default function Admin() {
                 <div>
                   <label className="input-label">Alıcı Mail (Hedef)</label>
                   <input type="email" className="input-field" value={editConfig.alc_mail} onChange={e => setEditConfig({...editConfig, alc_mail: e.target.value})} />
+                </div>
+
+                <hr style={{ borderColor: '#1e293b', margin: '10px 0' }} />
+                <h4 style={{ color: '#22c55e', fontSize: '0.9rem' }}>📱 WhatsApp (CallMeBot)</h4>
+                
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                  <div>
+                    <label className="input-label">WhatsApp Numarası</label>
+                    <input type="text" className="input-field" placeholder="+90555..." value={editConfig.whatsapp_no} onChange={e => setEditConfig({...editConfig, whatsapp_no: e.target.value})} />
+                  </div>
+                  <div>
+                    <label className="input-label">CallMeBot API Key</label>
+                    <input type="password" className="input-field" value={editConfig.whatsapp_key} onChange={e => setEditConfig({...editConfig, whatsapp_key: e.target.value})} />
+                  </div>
                 </div>
 
                 <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
