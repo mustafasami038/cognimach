@@ -57,10 +57,11 @@ export default function Landing() {
       {/* SECTION 1: HERO */}
       <section style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden' }}>
         <div className="container mx-auto" style={{ position: 'relative', zIndex: 10 }}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[85vh] w-full">
+          {/* 1. The Parent Container (Force the Split) */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full min-h-[80vh]">
             
-            {/* Left Column (Text & Buttons) */}
-            <div className="text-left flex flex-col items-start justify-start">
+            {/* 2. The Left Column (Text & Buttons) */}
+            <div className="flex flex-col items-start justify-start text-left">
               <h1 className="hero-title gradient-text text-left text-5xl lg:text-6xl font-bold leading-tight" style={{ textAlign: 'left' }}>
                 Endüstrinin Nöral Ağı: CogniMach
               </h1>
@@ -84,21 +85,21 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* Right Column (Live Telemetry Terminal) */}
-            <div className="flex justify-center items-center relative w-full">
-              <div className="bg-slate-950/60 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-[0_0_50px_rgba(0,229,255,0.1)] w-full max-w-lg mx-auto relative overflow-hidden flex flex-col">
+            {/* 3. The Right Column (The Glass Terminal) */}
+            <div className="w-full flex justify-center lg:justify-end">
+              <div className="bg-slate-900/80 backdrop-blur-2xl border border-slate-700/80 rounded-xl p-6 shadow-[0_0_50px_rgba(0,229,255,0.15)] w-full max-w-lg font-mono text-sm text-left relative overflow-hidden flex flex-col">
                 {/* macOS Style Header */}
-                <div className="px-4 py-3 bg-slate-900/50 border-b border-slate-700/50 flex items-center">
+                <div className="flex items-center mb-6 pb-4 border-b border-slate-700/50">
                   <div className="flex gap-2">
                     <div className="w-3 h-3 rounded-full bg-red-500"></div>
                     <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
                   </div>
-                  <div className="mx-auto text-xs font-mono text-slate-400 opacity-80 pl-4">cognimach-core-v3.sh</div>
+                  <div className="mx-auto text-xs font-mono text-slate-400 opacity-80">cognimach-core-v3.sh</div>
                 </div>
                 
-                {/* Terminal Body */}
-                <div className="p-6 font-mono text-sm leading-relaxed min-h-[280px] flex flex-col gap-3">
+                {/* 4. Terminal Content */}
+                <div className="leading-relaxed min-h-[220px] flex flex-col gap-3">
                   {terminalLogs.map((log, index) => (
                     <div 
                       key={index} 
