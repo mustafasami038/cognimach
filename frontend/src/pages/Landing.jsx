@@ -56,61 +56,70 @@ export default function Landing() {
       {/* SECTION 1: HERO */}
       <section style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden' }}>
         <div className="container mx-auto" style={{ position: 'relative', zIndex: 10 }}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full min-h-[80vh]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full min-h-[80vh]">
             
-            {/* Left Column (Text & Buttons) */}
+            {/* Left Column (Vitrin - Müşteri Karşılama) */}
             <div className="flex flex-col items-start justify-start text-left">
-              <h1 className="hero-title gradient-text text-left text-5xl lg:text-7xl font-bold leading-tight" style={{ textAlign: 'left' }}>
-                Endüstrinin Nöral Ağı: CogniMach
+              <h1 className="hero-title gradient-text text-left text-5xl lg:text-7xl font-bold leading-[1.1]" style={{ textAlign: 'left', fontSize: '4.8rem', marginBottom: '2rem' }}>
+                Endüstrinin <br className="hidden lg:block" />
+                Nöral Ağı: <br className="hidden lg:block" />
+                CogniMach
               </h1>
-              <p className="text-xl max-w-lg mt-6 mb-8 text-left" style={{ color: '#94a3b8' }}>
+              <p className="text-xl max-w-lg mb-10 text-left leading-relaxed" style={{ color: '#94a3b8', fontSize: '1.4rem' }}>
                 Üretim hatlarınızı karanlıktan kurtarın. Çift motorlu yapay zeka ve entegre LLM asistanı ile 
                 <span style={{ color: '#00e5ff', fontWeight: 600 }}> "Sıfır Duruş"</span> hedefine ulaşın.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-6 mt-4 w-full sm:w-auto">
-                <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}>
-                  Sisteme Entegre Ol <ArrowRight size={20} />
+              <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto">
+                <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1.2rem 3rem', fontSize: '1.1rem' }}>
+                  Sisteme Entegre Ol <ArrowRight size={22} className="ml-2" />
                 </button>
                 <button 
                   onClick={handleDemoLogin} 
                   className="btn btn-secondary" 
-                  style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}
+                  style={{ padding: '1.2rem 3rem', fontSize: '1.1rem' }}
                   disabled={loading}
                 >
-                  {loading ? <Loader2 className="animate-spin" size={20} /> : 'Canlı Demoyu İzle'}
+                  {loading ? <Loader2 className="animate-spin" size={22} /> : 'Canlı Demoyu İzle'}
                 </button>
               </div>
             </div>
 
-            {/* Right Column (The Glass Terminal) */}
-            <div className="w-full flex justify-center lg:justify-end">
-              <div className="bg-slate-900/80 backdrop-blur-2xl border border-slate-700/80 rounded-xl p-6 shadow-[0_0_50px_rgba(0,229,255,0.15)] w-full max-w-lg font-mono text-sm text-left relative overflow-hidden flex flex-col">
-                {/* macOS Style Header */}
-                <div className="flex items-center mb-6 pb-4 border-b border-slate-700/50">
+            {/* Right Column (Makine Dairesi - Canlı Telemetri Terminali) */}
+            <div className="w-full flex justify-center lg:justify-end mt-12 lg:mt-0">
+              <div className="bg-slate-900/60 backdrop-blur-3xl border border-slate-700/50 rounded-2xl p-8 shadow-[0_0_80px_rgba(0,229,255,0.1)] w-full max-w-xl font-mono text-sm text-left relative overflow-hidden flex flex-col min-h-[400px]">
+                {/* Terminal Header */}
+                <div className="flex items-center mb-8 pb-4 border-b border-white/5">
                   <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-500/50"></div>
                   </div>
-                  <div className="mx-auto text-xs font-mono text-slate-400 opacity-80 pl-4">cognimach-core-v3.sh</div>
+                  <div className="mx-auto text-[10px] tracking-[0.2em] text-slate-500 font-bold uppercase">cognimach_core_v4_stable</div>
                 </div>
                 
-                {/* Terminal Content */}
-                <div className="leading-relaxed min-h-[220px] flex flex-col gap-3">
+                {/* Terminal Body - Animated Logs */}
+                <div className="flex flex-col gap-4">
                   {terminalLogs.map((log, index) => (
                     <div 
                       key={index} 
-                      className={`${log.color} transition-opacity duration-300 ${index < visibleLogs ? 'opacity-100' : 'opacity-0 hidden'}`}
+                      className={`${log.color} transition-all duration-500 transform ${index < visibleLogs ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}
+                      style={{ textShadow: index < visibleLogs ? '0 0 15px currentColor' : 'none' }}
                     >
                       {log.text}
                     </div>
                   ))}
-                  <div className="text-slate-400 mt-1 flex items-center">
-                    <span>{'>'}</span>
-                    <span className="w-2.5 h-4 bg-slate-400 ml-2 animate-pulse"></span>
+                  
+                  {/* Blinking Cursor */}
+                  <div className="flex items-center mt-2">
+                    <span className="text-slate-500 font-bold mr-2">{'>'}</span>
+                    <div className="w-2.5 h-5 bg-cyan-400 animate-pulse shadow-[0_0_10px_#00e5ff]"></div>
                   </div>
                 </div>
+
+                {/* Decorative Background Elements */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 blur-[60px]"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-500/5 blur-[60px]"></div>
               </div>
             </div>
 
