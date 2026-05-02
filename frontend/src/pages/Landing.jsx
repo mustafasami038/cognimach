@@ -132,11 +132,6 @@ export default function Landing() {
                       {/* Node Circle */}
                       <circle cx={node.x} cy={node.y} r="8" fill="#1e293b" stroke="#00e5ff" strokeWidth="2" />
                       <circle cx={node.x} cy={node.y} r="3" fill="#00e5ff" className="animate-pulse" />
-                      
-                      {/* Label */}
-                      <text x={node.x} y={node.y + 25} fill="#94a3b8" fontSize="10" fontFamily="monospace" textAnchor="middle" opacity="0.6">
-                        {node.label}
-                      </text>
                     </g>
                   ))}
 
@@ -160,21 +155,11 @@ export default function Landing() {
                   ))}
                 </svg>
 
-                {/* Overlay Text (Minimalist) */}
-                <div className="absolute bottom-6 left-8 flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-cyan-400/60 font-bold">Neural Engine Active</span>
-                </div>
-                
-                <div className="absolute top-6 right-8">
-                  <Activity size={20} color="#00e5ff" className="opacity-20" />
-                </div>
+                {/* Decorative Background Elements */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 blur-[60px]"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-500/5 blur-[60px]"></div>
               </div>
             </div>
-
-          </div>
-        </div>
-
           </div>
         </div>
 
