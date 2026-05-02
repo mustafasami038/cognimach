@@ -72,10 +72,9 @@ export default function Landing() {
             {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
               <div key={i} className="marquee-item">
                 <img 
-                  src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" 
-                  alt="AGÜ" 
-                  referrerPolicy="no-referrer"
-                  style={{ height: '80px', width: 'auto', margin: '0 50px', objectFit: 'contain', backgroundColor: 'white', padding: '10px', borderRadius: '8px' }} 
+                  src="/partner_logo.png" 
+                  alt="Partner Logo" 
+                  style={{ height: '80px', width: 'auto', margin: '0 50px', objectFit: 'contain' }} 
                 />
               </div>
             ))}
