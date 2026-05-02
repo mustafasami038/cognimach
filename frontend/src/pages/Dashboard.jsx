@@ -175,9 +175,12 @@ export default function Dashboard() {
       )}
 
       <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 style={{ color: '#00e5ff', marginBottom: '0.5rem' }}>💠 {companyName} Merkezi Paneli</h1>
-          <p>CogniMach Otonom Karar Destek Ağı</p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <img src="/logo.jpg" alt="Logo" style={{ width: '60px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 229, 255, 0.2)' }} />
+          <div>
+            <h1 style={{ color: '#00e5ff', marginBottom: '0.2rem', fontSize: '1.5rem' }}>{companyName} Merkezi Paneli</h1>
+            <p style={{ margin: 0, fontSize: '0.9rem', color: '#94a3b8' }}>CogniMach Otonom Karar Destek Ağı</p>
+          </div>
         </div>
         
         {status === 'no_data' ? (

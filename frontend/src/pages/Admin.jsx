@@ -77,7 +77,10 @@ export default function Admin() {
 
   return (
     <div className="container animate-fade-in">
-      <h1 style={{ color: '#00e5ff', marginBottom: '2rem' }}>💠 CogniMach Kontrol Paneli</h1>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '2rem' }}>
+        <img src="/logo.jpg" alt="Logo" style={{ width: '80px', borderRadius: '8px', boxShadow: '0 0 15px rgba(0, 229, 255, 0.2)' }} />
+        <h1 style={{ color: '#00e5ff', margin: 0 }}>CogniMach Kontrol Paneli</h1>
+      </div>
 
       <div className="grid grid-cols-3 gap-8">
         <div className="col-span-2">

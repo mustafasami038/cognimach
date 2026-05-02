@@ -37,8 +37,9 @@ export default function Login() {
     <div className="container flex justify-center items-center" style={{ minHeight: '80vh' }}>
       <div className="glass-panel animate-fade-in" style={{ width: '100%', maxWidth: '450px', padding: '3rem 2rem' }}>
         <div className="text-center mb-6">
-          <h1 style={{ color: '#00e5ff', fontSize: '2rem' }}>Kimlik Doğrulama</h1>
-          <p>CogniMach SCADA sistemine erişmek için şifrenizi giriniz.</p>
+          <img src="/logo.jpg" alt="CogniMach Logo" style={{ width: '200px', marginBottom: '1rem', borderRadius: '12px', boxShadow: '0 0 20px rgba(0, 229, 255, 0.3)' }} />
+          <h1 style={{ color: '#00e5ff', fontSize: '1.5rem' }}>Sistem Girişi</h1>
+          <p>CogniMach SCADA Ağı</p>
         </div>
 
         {error && (
