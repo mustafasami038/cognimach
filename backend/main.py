@@ -280,11 +280,7 @@ def generate_report(tenant_id: str):
         
     try:
         genai.configure(api_key=api_key)
-        secilen_model = 'gemini-pro' 
-        for m in genai.list_models():
-            if 'generateContent' in m.supported_generation_methods and 'flash' in m.name:
-                secilen_model = m.name
-                break
+        secilen_model = 'gemini-pro'
         llm_model = genai.GenerativeModel(secilen_model)
         senaryo = "SARI ALARM (Degradasyon)" if status == 'bakim_gerekiyor' else "KIRMIZI ALARM (Donanım Şoku)"
         prompt = f"Şirket: {sirket_adi}. DURUM: {senaryo}. Fabrika yönetimine profesyonel, teknik kök neden ve otonom aksiyon raporu yaz."
@@ -305,10 +301,6 @@ def ai_chat(tenant_id: str, req: ChatRequest):
     try:
         genai.configure(api_key=api_key)
         secilen_model = 'gemini-pro'
-        for m in genai.list_models():
-            if 'generateContent' in m.supported_generation_methods and 'flash' in m.name:
-                secilen_model = m.name
-                break
         model = genai.GenerativeModel(secilen_model)
         canli_context = f"Sistem: CogniMach. Şirket: {sirket_adi}. Soru: {req.prompt}."
         response = model.generate_content(canli_context)
