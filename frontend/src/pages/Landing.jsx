@@ -63,21 +63,46 @@ export default function Landing() {
       </section>
 
       {/* SECTION 2: MARQUEE */}
-      <div style={{ padding: '2rem 0' }}>
-        <h3 className="text-center" style={{ fontSize: '0.8rem', color: '#64748b', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '2rem' }}>
-          Stratejik Partnerlerimiz & Destekçilerimiz
+      <div style={{ padding: '3rem 0', background: 'rgba(2, 6, 23, 0.5)' }}>
+        <h3 className="text-center" style={{ fontSize: '0.9rem', color: '#94a3b8', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '2.5rem', fontWeight: 600 }}>
+          Bizi Tercih Edenler
         </h3>
         <div className="marquee-container">
-          <div className="marquee-content">
-            <span className="marquee-item"><Zap size={20} style={{marginRight: '10px'}} /> AGÜ Teknoloji Transfer Ofisi</span>
-            <span className="marquee-item"><Activity size={20} style={{marginRight: '10px'}} /> Kapadokya YZ Zirvesi</span>
-            <span className="marquee-item"><ShieldCheck size={20} style={{marginRight: '10px'}} /> Kayseri Sanayi Odası</span>
-            <span className="marquee-item"><TrendingUp size={20} style={{marginRight: '10px'}} /> Ulusal Akıllı Üretim Ağı</span>
+          <div className="marquee-content" style={{ display: 'flex', alignItems: 'center' }}>
+            <div className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="AGÜ" style={{ height: '40px', filter: 'brightness(1.2)' }} />
+              <span>AGÜ Teknoloji Transfer Ofisi</span>
+            </div>
+            <div className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <img src="https://www.kayso.org.tr/assets/images/logo.png" alt="KAYSO" style={{ height: '40px', filter: 'brightness(0) invert(1)' }} />
+              <span>Kayseri Sanayi Odası</span>
+            </div>
+            <div className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <Activity size={32} color="#00e5ff" />
+              <span>Kapadokya YZ Zirvesi</span>
+            </div>
+            <div className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <ShieldCheck size={32} color="#3b82f6" />
+              <span>Ulusal Akıllı Üretim Ağı</span>
+            </div>
+            
             {/* Tekrar */}
-            <span className="marquee-item"><Zap size={20} style={{marginRight: '10px'}} /> AGÜ Teknoloji Transfer Ofisi</span>
-            <span className="marquee-item"><Activity size={20} style={{marginRight: '10px'}} /> Kapadokya YZ Zirvesi</span>
-            <span className="marquee-item"><ShieldCheck size={20} style={{marginRight: '10px'}} /> Kayseri Sanayi Odası</span>
-            <span className="marquee-item"><TrendingUp size={20} style={{marginRight: '10px'}} /> Ulusal Akıllı Üretim Ağı</span>
+            <div className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="AGÜ" style={{ height: '40px', filter: 'brightness(1.2)' }} />
+              <span>AGÜ Teknoloji Transfer Ofisi</span>
+            </div>
+            <div className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <img src="https://www.kayso.org.tr/assets/images/logo.png" alt="KAYSO" style={{ height: '40px', filter: 'brightness(0) invert(1)' }} />
+              <span>Kayseri Sanayi Odası</span>
+            </div>
+            <div className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <Activity size={32} color="#00e5ff" />
+              <span>Kapadokya YZ Zirvesi</span>
+            </div>
+            <div className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <ShieldCheck size={32} color="#3b82f6" />
+              <span>Ulusal Akıllı Üretim Ağı</span>
+            </div>
           </div>
         </div>
       </div>
