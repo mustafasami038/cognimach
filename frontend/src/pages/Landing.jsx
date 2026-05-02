@@ -69,40 +69,14 @@ export default function Landing() {
         </h3>
         <div className="marquee-container">
           <div className="marquee-content" style={{ display: 'flex', alignItems: 'center' }}>
-            <div className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-              <img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="AGÜ" style={{ height: '40px', filter: 'brightness(1.2)' }} />
-              <span>AGÜ Teknoloji Transfer Ofisi</span>
-            </div>
-            <div className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-              <img src="https://www.kayso.org.tr/assets/images/logo.png" alt="KAYSO" style={{ height: '40px', filter: 'brightness(0) invert(1)' }} />
-              <span>Kayseri Sanayi Odası</span>
-            </div>
-            <div className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-              <Activity size={32} color="#00e5ff" />
-              <span>Kapadokya YZ Zirvesi</span>
-            </div>
-            <div className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-              <ShieldCheck size={32} color="#3b82f6" />
-              <span>Ulusal Akıllı Üretim Ağı</span>
-            </div>
-            
-            {/* Tekrar */}
-            <div className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-              <img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="AGÜ" style={{ height: '40px', filter: 'brightness(1.2)' }} />
-              <span>AGÜ Teknoloji Transfer Ofisi</span>
-            </div>
-            <div className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-              <img src="https://www.kayso.org.tr/assets/images/logo.png" alt="KAYSO" style={{ height: '40px', filter: 'brightness(0) invert(1)' }} />
-              <span>Kayseri Sanayi Odası</span>
-            </div>
-            <div className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-              <Activity size={32} color="#00e5ff" />
-              <span>Kapadokya YZ Zirvesi</span>
-            </div>
-            <div className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-              <ShieldCheck size={32} color="#3b82f6" />
-              <span>Ulusal Akıllı Üretim Ağı</span>
-            </div>
+            <div className="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="Partner" style={{ height: '60px', margin: '0 40px' }} /></div>
+            <div className="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="Partner" style={{ height: '60px', margin: '0 40px' }} /></div>
+            <div className="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="Partner" style={{ height: '60px', margin: '0 40px' }} /></div>
+            <div className="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="Partner" style={{ height: '60px', margin: '0 40px' }} /></div>
+            <div className="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="Partner" style={{ height: '60px', margin: '0 40px' }} /></div>
+            <div className="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="Partner" style={{ height: '60px', margin: '0 40px' }} /></div>
+            <div className="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="Partner" style={{ height: '60px', margin: '0 40px' }} /></div>
+            <div className="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="Partner" style={{ height: '60px', margin: '0 40px' }} /></div>
           </div>
         </div>
       </div>
