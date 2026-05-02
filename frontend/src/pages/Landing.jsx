@@ -54,117 +54,140 @@ export default function Landing() {
   return (
     <div className="animate-fade-in">
       {/* SECTION 1: HERO */}
-      <section style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden' }}>
-        <div className="container" style={{ position: 'relative', zIndex: 10 }}>
-          <div className="hero-grid">
+      <section style={{ padding: '6rem 2rem', position: 'relative', overflow: 'hidden', minHeight: '85vh', display: 'flex', alignItems: 'center' }}>
+        <div className="container" style={{ position: 'relative', zIndex: 10, width: '100%', margin: '0 auto' }}>
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'row', 
+            alignItems: 'center', 
+            justifyContent: 'space-between',
+            gap: '4rem', 
+            width: '100%',
+            flexWrap: 'wrap' 
+          }}>
             
             {/* Left Column (Vitrin) */}
-            <div className="hero-left items-start-force text-left-force">
-              <h1 className="hero-title gradient-text text-left-force" style={{ fontSize: '4.5rem', marginBottom: '1.5rem', lineHeight: '1.1' }}>
+            <div style={{ 
+              flex: '1 1 500px', 
+              textAlign: 'left', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              alignItems: 'flex-start' 
+            }}>
+              <h1 className="hero-title gradient-text" style={{ 
+                textAlign: 'left', 
+                fontSize: 'clamp(3rem, 8vw, 4.8rem)', 
+                lineHeight: '1.1', 
+                marginBottom: '2rem',
+                fontWeight: 800
+              }}>
                 Endüstrinin <br /> Nöral Ağı: <br /> CogniMach
               </h1>
-              <p className="text-left-force" style={{ fontSize: '1.3rem', maxWidth: '550px', marginBottom: '2.5rem', color: '#94a3b8' }}>
+              <p style={{ 
+                fontSize: '1.4rem', 
+                maxWidth: '550px', 
+                marginBottom: '3rem', 
+                color: '#94a3b8',
+                lineHeight: '1.6',
+                textAlign: 'left'
+              }}>
                 Üretim hatlarınızı karanlıktan kurtarın. Çift motorlu yapay zeka ve entegre LLM asistanı ile 
                 <span style={{ color: '#00e5ff', fontWeight: 600 }}> "Sıfır Duruş"</span> hedefine ulaşın.
               </p>
               
-              <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
-                <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}>
-                  Sisteme Entegre Ol <ArrowRight size={20} />
+              <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+                <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1.2rem 3rem', fontSize: '1.1rem' }}>
+                  Sisteme Entegre Ol <ArrowRight size={22} style={{ marginLeft: '8px' }} />
                 </button>
                 <button 
                   onClick={handleDemoLogin} 
                   className="btn btn-secondary" 
-                  style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}
+                  style={{ padding: '1.2rem 3rem', fontSize: '1.1rem' }}
                   disabled={loading}
                 >
-                  {loading ? <Loader2 className="animate-spin" size={20} /> : 'Canlı Demoyu İzle'}
+                  {loading ? <Loader2 className="animate-spin" size={22} /> : 'Canlı Demoyu İzle'}
                 </button>
               </div>
             </div>
 
-            {/* Right Column (Makine Dairesi - Canlı Sistem Animasyonu) */}
-            <div className="hero-right" style={{ display: 'flex', justifyContent: 'center' }}>
-              <div className="bg-slate-900/40 backdrop-blur-3xl border border-cyan-500/20 rounded-3xl p-4 shadow-[0_0_100px_rgba(0,229,255,0.1)] w-full max-w-xl relative overflow-hidden flex items-center justify-center min-h-[500px]">
+            {/* Right Column (Makine Dairesi - Animasyon) */}
+            <div style={{ 
+              flex: '1 1 400px', 
+              display: 'flex', 
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              <div style={{ 
+                backgroundColor: 'rgba(15, 23, 42, 0.4)', 
+                backdropFilter: 'blur(30px)', 
+                WebkitBackdropFilter: 'blur(30px)',
+                border: '1px solid rgba(0, 229, 255, 0.25)', 
+                borderRadius: '2.5rem', 
+                padding: '2rem', 
+                width: '100%', 
+                maxWidth: '580px', 
+                height: '520px', 
+                position: 'relative', 
+                overflow: 'hidden', 
+                boxShadow: '0 0 100px rgba(0, 229, 255, 0.15)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
                 
-                {/* Devasa Nöral Hub Görseli (SVG Animation) */}
-                <svg viewBox="0 0 400 400" className="w-full h-full drop-shadow-[0_0_20px_rgba(0,229,255,0.2)]">
+                {/* SVG Neural Animation */}
+                <svg viewBox="0 0 400 400" style={{ width: '100%', height: '100%', filter: 'drop-shadow(0 0 15px rgba(0, 229, 255, 0.3))' }}>
                   <defs>
-                    <radialGradient id="hubGradient" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#00e5ff" stopOpacity="0.8" />
+                    <radialGradient id="hubGlow" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#00e5ff" stopOpacity="0.7" />
                       <stop offset="100%" stopColor="#00e5ff" stopOpacity="0" />
                     </radialGradient>
-                    <filter id="glow">
-                      <feGaussianBlur stdDeviation="3" result="blur" />
-                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                    </filter>
                   </defs>
 
-                  {/* Central Hub */}
-                  <circle cx="200" cy="200" r="40" fill="url(#hubGradient)" className="animate-pulse">
-                    <animate attributeName="r" values="35;45;35" dur="3s" repeatCount="indefinite" />
-                  </circle>
-                  <circle cx="200" cy="200" r="15" fill="#00e5ff" filter="url(#glow)" />
-
-                  {/* Machine Nodes (Satellite) */}
+                  {/* Lines with Pulses */}
                   {[
-                    { x: 80, y: 100, label: 'CNC_01' },
-                    { x: 320, y: 120, label: 'LINE_B' },
-                    { x: 100, y: 300, label: 'ARM_V3' },
-                    { x: 300, y: 320, label: 'PRESS_X' }
-                  ].map((node, i) => (
+                    { x: 80, y: 100 }, { x: 320, y: 120 },
+                    { x: 100, y: 300 }, { x: 300, y: 320 },
+                    { x: 200, y: 50 }, { x: 200, y: 350 }
+                  ].map((pos, i) => (
                     <g key={i}>
-                      {/* Connection Line */}
-                      <line x1="200" y1="200" x2={node.x} y2={node.y} stroke="#00e5ff" strokeWidth="1" strokeDasharray="5,5" opacity="0.2">
-                        <animate attributeName="stroke-dashoffset" from="100" to="0" dur="5s" repeatCount="indefinite" />
-                      </line>
-                      
-                      {/* Data Pulse (Moving Dot) */}
-                      <circle r="3" fill="#00e5ff">
-                        <animateMotion 
-                          path={`M 200 200 L ${node.x} ${node.y}`} 
-                          dur={`${2 + i}s`} 
-                          repeatCount="indefinite" 
-                        />
+                      <line x1="200" y1="200" x2={pos.x} y2={pos.y} stroke="#00e5ff" strokeWidth="1.5" strokeDasharray="4,4" opacity="0.15" />
+                      <circle r="4" fill="#00e5ff">
+                        <animateMotion path={`M 200 200 L ${pos.x} ${pos.y}`} dur={`${2 + i}s`} repeatCount="indefinite" />
                         <animate attributeName="opacity" values="0;1;0" dur={`${2 + i}s`} repeatCount="indefinite" />
                       </circle>
-
-                      {/* Node Circle */}
-                      <circle cx={node.x} cy={node.y} r="8" fill="#1e293b" stroke="#00e5ff" strokeWidth="2" />
-                      <circle cx={node.x} cy={node.y} r="3" fill="#00e5ff" className="animate-pulse" />
+                      <circle cx={pos.x} cy={pos.y} r="8" fill="#0f172a" stroke="#00e5ff" strokeWidth="1.5" />
+                      <circle cx={pos.x} cy={pos.y} r="3" fill="#00e5ff">
+                        <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite" />
+                      </circle>
                     </g>
                   ))}
 
-                  {/* Floating Data Particles */}
-                  {[...Array(12)].map((_, i) => (
-                    <circle key={i} r="1.5" fill="#00e5ff" opacity="0.4">
-                      <animate 
-                        attributeName="cx" 
-                        values={`${Math.random() * 400};${Math.random() * 400}`} 
-                        dur={`${5 + Math.random() * 10}s`} 
-                        repeatCount="indefinite" 
-                      />
-                      <animate 
-                        attributeName="cy" 
-                        values={`${Math.random() * 400};${Math.random() * 400}`} 
-                        dur={`${5 + Math.random() * 10}s`} 
-                        repeatCount="indefinite" 
-                      />
-                      <animate attributeName="opacity" values="0;0.4;0" dur="3s" repeatCount="indefinite" />
+                  {/* Central Hub */}
+                  <circle cx="200" cy="200" r="50" fill="url(#hubGlow)">
+                    <animate attributeName="r" values="45;55;45" dur="3s" repeatCount="indefinite" />
+                  </circle>
+                  <circle cx="200" cy="200" r="18" fill="#00e5ff" style={{ filter: 'blur(1px)' }} />
+                  
+                  {/* Floating Particles */}
+                  {[...Array(15)].map((_, i) => (
+                    <circle key={i} r="1.5" fill="#00e5ff" opacity="0.3">
+                      <animate attributeName="cx" values={`${Math.random()*400};${Math.random()*400}`} dur={`${10+Math.random()*10}s`} repeatCount="indefinite" />
+                      <animate attributeName="cy" values={`${Math.random()*400};${Math.random()*400}`} dur={`${10+Math.random()*10}s`} repeatCount="indefinite" />
                     </circle>
                   ))}
                 </svg>
 
-                {/* Decorative Background Elements */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 blur-[60px]"></div>
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-500/5 blur-[60px]"></div>
+                {/* Minimalist Visual Indicators */}
+                <div style={{ position: 'absolute', bottom: '2rem', left: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#22c55e', boxShadow: '0 0 10px #22c55e' }}></div>
+                  <span style={{ fontSize: '10px', color: 'rgba(0, 229, 255, 0.5)', letterSpacing: '2px', fontWeight: 'bold' }}>SYSTEM_LIVE</span>
+                </div>
               </div>
             </div>
+
           </div>
         </div>
-
-        {/* Arka Plan Efekti */}
-        <div style={{ position: 'absolute', top: '-20%', left: '50%', transform: 'translateX(-50%)', width: '800px', height: '800px', background: 'radial-gradient(circle, rgba(0, 229, 255, 0.05) 0%, transparent 70%)', zIndex: 1 }}></div>
       </section>
 
       {/* SECTION 2: MARQUEE */}
