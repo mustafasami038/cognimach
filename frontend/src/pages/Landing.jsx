@@ -83,58 +83,97 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* Right Column (Makine Dairesi - Nöral Hub Görseli) */}
+            {/* Right Column (Makine Dairesi - Canlı Sistem Animasyonu) */}
             <div className="hero-right" style={{ display: 'flex', justifyContent: 'center' }}>
-              <div className="bg-slate-900/60 backdrop-blur-3xl border border-slate-700/50 rounded-2xl p-8 shadow-[0_0_80px_rgba(0,229,255,0.15)] w-full max-w-xl relative overflow-hidden flex flex-col min-h-[450px]">
-                {/* Header Dots */}
-                <div className="flex gap-2 mb-8">
-                  <div className="w-3 h-3 rounded-full bg-red-500/40"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/40"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-500/40"></div>
+              <div className="bg-slate-900/40 backdrop-blur-3xl border border-cyan-500/20 rounded-3xl p-4 shadow-[0_0_100px_rgba(0,229,255,0.1)] w-full max-w-xl relative overflow-hidden flex items-center justify-center min-h-[500px]">
+                
+                {/* Devasa Nöral Hub Görseli (SVG Animation) */}
+                <svg viewBox="0 0 400 400" className="w-full h-full drop-shadow-[0_0_20px_rgba(0,229,255,0.2)]">
+                  <defs>
+                    <radialGradient id="hubGradient" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#00e5ff" stopOpacity="0.8" />
+                      <stop offset="100%" stopColor="#00e5ff" stopOpacity="0" />
+                    </radialGradient>
+                    <filter id="glow">
+                      <feGaussianBlur stdDeviation="3" result="blur" />
+                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                  </defs>
+
+                  {/* Central Hub */}
+                  <circle cx="200" cy="200" r="40" fill="url(#hubGradient)" className="animate-pulse">
+                    <animate attributeName="r" values="35;45;35" dur="3s" repeatCount="indefinite" />
+                  </circle>
+                  <circle cx="200" cy="200" r="15" fill="#00e5ff" filter="url(#glow)" />
+
+                  {/* Machine Nodes (Satellite) */}
+                  {[
+                    { x: 80, y: 100, label: 'CNC_01' },
+                    { x: 320, y: 120, label: 'LINE_B' },
+                    { x: 100, y: 300, label: 'ARM_V3' },
+                    { x: 300, y: 320, label: 'PRESS_X' }
+                  ].map((node, i) => (
+                    <g key={i}>
+                      {/* Connection Line */}
+                      <line x1="200" y1="200" x2={node.x} y2={node.y} stroke="#00e5ff" strokeWidth="1" strokeDasharray="5,5" opacity="0.2">
+                        <animate attributeName="stroke-dashoffset" from="100" to="0" dur="5s" repeatCount="indefinite" />
+                      </line>
+                      
+                      {/* Data Pulse (Moving Dot) */}
+                      <circle r="3" fill="#00e5ff">
+                        <animateMotion 
+                          path={`M 200 200 L ${node.x} ${node.y}`} 
+                          dur={`${2 + i}s`} 
+                          repeatCount="indefinite" 
+                        />
+                        <animate attributeName="opacity" values="0;1;0" dur={`${2 + i}s`} repeatCount="indefinite" />
+                      </circle>
+
+                      {/* Node Circle */}
+                      <circle cx={node.x} cy={node.y} r="8" fill="#1e293b" stroke="#00e5ff" strokeWidth="2" />
+                      <circle cx={node.x} cy={node.y} r="3" fill="#00e5ff" className="animate-pulse" />
+                      
+                      {/* Label */}
+                      <text x={node.x} y={node.y + 25} fill="#94a3b8" fontSize="10" fontFamily="monospace" textAnchor="middle" opacity="0.6">
+                        {node.label}
+                      </text>
+                    </g>
+                  ))}
+
+                  {/* Floating Data Particles */}
+                  {[...Array(12)].map((_, i) => (
+                    <circle key={i} r="1.5" fill="#00e5ff" opacity="0.4">
+                      <animate 
+                        attributeName="cx" 
+                        values={`${Math.random() * 400};${Math.random() * 400}`} 
+                        dur={`${5 + Math.random() * 10}s`} 
+                        repeatCount="indefinite" 
+                      />
+                      <animate 
+                        attributeName="cy" 
+                        values={`${Math.random() * 400};${Math.random() * 400}`} 
+                        dur={`${5 + Math.random() * 10}s`} 
+                        repeatCount="indefinite" 
+                      />
+                      <animate attributeName="opacity" values="0;0.4;0" dur="3s" repeatCount="indefinite" />
+                    </circle>
+                  ))}
+                </svg>
+
+                {/* Overlay Text (Minimalist) */}
+                <div className="absolute bottom-6 left-8 flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-cyan-400/60 font-bold">Neural Engine Active</span>
                 </div>
                 
-                {/* Background Code Pulse */}
-                <div className="font-mono text-[10px] opacity-20 select-none pointer-events-none flex flex-col gap-2">
-                  <div className="text-cyan-400">{'>>'} INITIALIZING NEURAL_CORE_V4</div>
-                  <div className="text-slate-400 pl-4">import tensorflow as tf</div>
-                  <div className="text-slate-400 pl-4">from cognimach.ai import RandomForest, HoltWinter</div>
-                  <div className="text-slate-400 pl-4">def process_telemetry(stream):</div>
-                  <div className="text-slate-400 pl-8">prediction = model.predict(stream.data)</div>
-                  <div className="text-slate-400 pl-8">if prediction.anomaly_score {'>'} 0.85:</div>
-                  <div className="text-red-400 pl-12">trigger_alert("CRITICAL_BEARING_FAILURE")</div>
-                  <div className="text-slate-400 pl-8">else:</div>
-                  <div className="text-green-400 pl-12">optimize_throughput(stream)</div>
-                  <div className="text-slate-400 pl-4">{'>>'} DATA_INGESTION_ACTIVE: 1550 RPM</div>
-                </div>
-
-                {/* Central Animated Visual */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative">
-                    {/* Glowing Orbs */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-cyan-500/10 rounded-full blur-[60px] animate-pulse"></div>
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-blue-500/10 rounded-full blur-[40px]"></div>
-                    
-                    {/* Neural Pulse Graphic */}
-                    <div className="relative z-10 flex flex-col items-center">
-                      <div className="p-6 bg-slate-950/80 border border-cyan-500/30 rounded-full shadow-[0_0_30px_rgba(0,229,255,0.2)]">
-                        <Activity size={60} color="#00e5ff" className="glow-element" style={{ animation: 'pulse-glow 2s infinite' }} />
-                      </div>
-                      <div className="mt-4 px-4 py-1 bg-cyan-500/20 rounded-full border border-cyan-500/30">
-                        <span className="text-[10px] font-bold text-cyan-400 tracking-widest uppercase">Live Neural Hub</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Dynamic Data Stream (Floating Nodes) */}
-                <div className="absolute bottom-8 right-8 flex flex-col items-end gap-2">
-                   <div className="text-[10px] text-cyan-400 font-mono opacity-60">INGRESS: 42.8 KB/S</div>
-                   <div className="w-24 h-1 bg-slate-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-cyan-400" style={{ width: '65%', animation: 'slide-line 2s infinite linear' }}></div>
-                   </div>
+                <div className="absolute top-6 right-8">
+                  <Activity size={20} color="#00e5ff" className="opacity-20" />
                 </div>
               </div>
             </div>
+
+          </div>
+        </div>
 
           </div>
         </div>
