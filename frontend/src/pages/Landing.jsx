@@ -28,24 +28,6 @@ export default function Landing() {
               </button>
             </div>
           </div>
-
-          {/* Floating UI Elements */}
-          <div className="floating" style={{ position: 'absolute', top: '10%', left: '5%', zIndex: 5 }}>
-            <div className="glass-panel" style={{ padding: '1rem', borderLeft: '4px solid #22c55e' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#22c55e', animation: 'pulse-glow 2s infinite' }}></span>
-                <span style={{ fontSize: '0.8rem', fontWeight: 600 }}>RPM: 2861</span>
-              </div>
-            </div>
-          </div>
-          <div className="floating" style={{ position: 'absolute', bottom: '20%', right: '5%', zIndex: 5, animationDelay: '1s' }}>
-            <div className="glass-panel" style={{ padding: '1rem', borderLeft: '4px solid #00e5ff' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <Activity size={16} color="#00e5ff" />
-                <span style={{ fontSize: '0.8rem', fontWeight: 600 }}>RUL: 45 Vardiya</span>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Arka Plan Efekti */}
