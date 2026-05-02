@@ -69,14 +69,20 @@ export default function Landing() {
         </h3>
         <div className="marquee-container">
           <div className="marquee-content" style={{ display: 'flex', alignItems: 'center' }}>
-            <div className="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="Partner" style={{ height: '60px', margin: '0 40px' }} /></div>
-            <div className="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="Partner" style={{ height: '60px', margin: '0 40px' }} /></div>
-            <div className="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="Partner" style={{ height: '60px', margin: '0 40px' }} /></div>
-            <div className="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="Partner" style={{ height: '60px', margin: '0 40px' }} /></div>
-            <div className="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="Partner" style={{ height: '60px', margin: '0 40px' }} /></div>
-            <div className="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="Partner" style={{ height: '60px', margin: '0 40px' }} /></div>
-            <div className="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="Partner" style={{ height: '60px', margin: '0 40px' }} /></div>
-            <div className="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/tr/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" alt="Partner" style={{ height: '60px', margin: '0 40px' }} /></div>
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+              <div key={i} className="marquee-item" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <img 
+                  src="https://upload.wikimedia.org/wikipedia/tr/thumb/6/63/Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png/200px-Abdullah_G%C3%BCl_%C3%9Cniversitesi_Logosu.png" 
+                  alt="AGÜ" 
+                  style={{ height: '60px', width: 'auto', margin: '0 40px', objectFit: 'contain' }} 
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'block';
+                  }}
+                />
+                <span style={{ display: 'none', fontSize: '1.2rem', fontWeight: 700, color: '#e2e8f0' }}>AGÜ</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
