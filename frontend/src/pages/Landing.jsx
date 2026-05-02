@@ -32,18 +32,20 @@ export default function Landing() {
     <div className="animate-fade-in">
       {/* SECTION 1: HERO */}
       <section style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden' }}>
-        <div className="container" style={{ position: 'relative', zIndex: 10 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', lg: { flexDirection: 'row' }, alignItems: 'center', gap: '4rem' }} className="lg:flex-row flex flex-col items-center gap-16">
-            <div style={{ flex: 1, textAlign: 'left' }} className="hero-text-container">
-              <h1 className="hero-title gradient-text" style={{ textAlign: 'left', fontSize: '4.5rem' }}>
+        <div className="container mx-auto" style={{ position: 'relative', zIndex: 10 }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[85vh] w-full">
+            
+            {/* Left Column (Text & Buttons) */}
+            <div className="text-left flex flex-col items-start justify-start">
+              <h1 className="hero-title gradient-text text-left" style={{ textAlign: 'left', fontSize: '4.5rem' }}>
                 Endüstrinin Nöral Ağı: CogniMach
               </h1>
-              <p style={{ fontSize: '1.4rem', maxWidth: '600px', margin: '1.5rem 0', color: '#94a3b8' }}>
+              <p style={{ fontSize: '1.4rem', maxWidth: '600px', margin: '1.5rem 0', color: '#94a3b8', textAlign: 'left' }}>
                 Üretim hatlarınızı karanlıktan kurtarın. Çift motorlu yapay zeka ve entegre LLM asistanı ile 
                 <span style={{ color: '#00e5ff', fontWeight: 600 }}> "Sıfır Duruş"</span> hedefine ulaşın.
               </p>
               
-              <div className="flex gap-6 mt-8">
+              <div className="flex gap-6 mt-8 justify-start">
                 <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1rem 2rem', fontSize: '1.05rem' }}>
                   Sisteme Entegre Ol <ArrowRight size={20} />
                 </button>
@@ -58,21 +60,16 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* HERO ILLUSTRATION - CLEAN GLASS CONTAINER WITH IMAGE */}
-            <div className="hidden lg:flex flex-1 justify-center relative w-full">
-              {/* Glow behind the container */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-500/20 rounded-full blur-[100px] pointer-events-none"></div>
-              
-              {/* Glass Container */}
-              <div className="bg-slate-900/30 backdrop-blur-2xl border border-cyan-400/30 rounded-2xl shadow-[0_0_60px_rgba(0,229,255,0.15)] aspect-square w-full max-w-[500px] flex items-center justify-center relative overflow-hidden z-10">
-                <img 
-                  src="/fractal.png" 
-                  alt="CogniMach AI Core" 
-                  className="w-4/5 h-4/5 object-contain"
-                  style={{ animation: 'float 6s ease-in-out infinite' }}
-                />
-              </div>
+            {/* Right Column (The Image) */}
+            <div className="flex justify-center items-center w-full relative">
+               <img 
+                 src="/fractal.png" 
+                 alt="CogniMach AI Core" 
+                 className="w-full max-w-lg xl:max-w-xl object-contain drop-shadow-[0_0_40px_rgba(0,229,255,0.3)]"
+                 style={{ animation: 'float 6s ease-in-out infinite' }}
+               />
             </div>
+            
           </div>
         </div>
 
