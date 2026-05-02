@@ -204,10 +204,14 @@ def otomatik_whatsapp_gonder(tetikleyen_ai, olay_tipi, anlik_veri, rul_gosterim,
         
         req = urllib.request.Request(url)
         with urllib.request.urlopen(req, timeout=10) as response:
+            body = response.read().decode('utf-8', errors='ignore')
             if response.status == 200:
                 return "✅ WhatsApp bildirimi başarıyla iletildi."
             else:
-                return f"❌ WhatsApp Hatası (HTTP {response.status})"
+                return f"❌ WhatsApp Hatası (HTTP {response.status}): {body[:150]}"
+    except urllib.error.HTTPError as e:
+        body = e.read().decode('utf-8', errors='ignore')
+        return f"❌ WhatsApp Hatası: {body[:150]}"
     except Exception as e:
         return f"❌ WhatsApp Hatası: {str(e)}"
 
