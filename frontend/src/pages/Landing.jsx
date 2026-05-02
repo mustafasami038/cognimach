@@ -62,8 +62,25 @@ export default function Landing() {
         <div style={{ position: 'absolute', top: '-20%', left: '50%', transform: 'translateX(-50%)', width: '800px', height: '800px', background: 'radial-gradient(circle, rgba(0, 229, 255, 0.05) 0%, transparent 70%)', zIndex: 1 }}></div>
       </section>
 
-      {/* SECTION 2: MARQUEE REMOVED FOR NOW */}
-
+      {/* SECTION 2: MARQUEE */}
+      <div style={{ padding: '3rem 0', background: 'rgba(2, 6, 23, 0.5)' }}>
+        <h3 className="text-center" style={{ fontSize: '0.9rem', color: '#94a3b8', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '2.5rem', fontWeight: 600 }}>
+          Bizi Tercih Edenler
+        </h3>
+        <div className="marquee-container">
+          <div className="marquee-content" style={{ display: 'flex', alignItems: 'center' }}>
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+              <div key={i} className="marquee-item">
+                <img 
+                  src="/partner_logo.png" 
+                  alt="Partner Logo" 
+                  style={{ height: '80px', width: 'auto', margin: '0 50px', objectFit: 'contain' }} 
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* SECTION 3: PROBLEM VS SOLUTION */}
       <section style={{ padding: '6rem 2rem', background: 'rgba(15, 23, 42, 0.2)' }}>
