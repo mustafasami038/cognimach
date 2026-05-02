@@ -55,71 +55,84 @@ export default function Landing() {
     <div className="animate-fade-in">
       {/* SECTION 1: HERO */}
       <section style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden' }}>
-        <div className="container mx-auto" style={{ position: 'relative', zIndex: 10 }}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full min-h-[80vh]">
+        <div className="container" style={{ position: 'relative', zIndex: 10 }}>
+          <div className="hero-grid">
             
-            {/* Left Column (Vitrin - Müşteri Karşılama) */}
-            <div className="flex flex-col items-start justify-start text-left">
-              <h1 className="hero-title gradient-text text-left text-5xl lg:text-7xl font-bold leading-[1.1]" style={{ textAlign: 'left', fontSize: '4.8rem', marginBottom: '2rem' }}>
-                Endüstrinin <br className="hidden lg:block" />
-                Nöral Ağı: <br className="hidden lg:block" />
-                CogniMach
+            {/* Left Column (Vitrin) */}
+            <div className="hero-left items-start-force text-left-force">
+              <h1 className="hero-title gradient-text text-left-force" style={{ fontSize: '4.5rem', marginBottom: '1.5rem', lineHeight: '1.1' }}>
+                Endüstrinin <br /> Nöral Ağı: <br /> CogniMach
               </h1>
-              <p className="text-xl max-w-lg mb-10 text-left leading-relaxed" style={{ color: '#94a3b8', fontSize: '1.4rem' }}>
+              <p className="text-left-force" style={{ fontSize: '1.3rem', maxWidth: '550px', marginBottom: '2.5rem', color: '#94a3b8' }}>
                 Üretim hatlarınızı karanlıktan kurtarın. Çift motorlu yapay zeka ve entegre LLM asistanı ile 
                 <span style={{ color: '#00e5ff', fontWeight: 600 }}> "Sıfır Duruş"</span> hedefine ulaşın.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto">
-                <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1.2rem 3rem', fontSize: '1.1rem' }}>
-                  Sisteme Entegre Ol <ArrowRight size={22} className="ml-2" />
+              <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+                <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}>
+                  Sisteme Entegre Ol <ArrowRight size={20} />
                 </button>
                 <button 
                   onClick={handleDemoLogin} 
                   className="btn btn-secondary" 
-                  style={{ padding: '1.2rem 3rem', fontSize: '1.1rem' }}
+                  style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}
                   disabled={loading}
                 >
-                  {loading ? <Loader2 className="animate-spin" size={22} /> : 'Canlı Demoyu İzle'}
+                  {loading ? <Loader2 className="animate-spin" size={20} /> : 'Canlı Demoyu İzle'}
                 </button>
               </div>
             </div>
 
-            {/* Right Column (Makine Dairesi - Canlı Telemetri Terminali) */}
-            <div className="w-full flex justify-center lg:justify-end mt-12 lg:mt-0">
-              <div className="bg-slate-900/60 backdrop-blur-3xl border border-slate-700/50 rounded-2xl p-8 shadow-[0_0_80px_rgba(0,229,255,0.1)] w-full max-w-xl font-mono text-sm text-left relative overflow-hidden flex flex-col min-h-[400px]">
-                {/* Terminal Header */}
-                <div className="flex items-center mb-8 pb-4 border-b border-white/5">
-                  <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
-                    <div className="w-3 h-3 rounded-full bg-green-500/50"></div>
-                  </div>
-                  <div className="mx-auto text-[10px] tracking-[0.2em] text-slate-500 font-bold uppercase">cognimach_core_v4_stable</div>
+            {/* Right Column (Makine Dairesi - Nöral Hub Görseli) */}
+            <div className="hero-right" style={{ display: 'flex', justifyContent: 'center' }}>
+              <div className="bg-slate-900/60 backdrop-blur-3xl border border-slate-700/50 rounded-2xl p-8 shadow-[0_0_80px_rgba(0,229,255,0.15)] w-full max-w-xl relative overflow-hidden flex flex-col min-h-[450px]">
+                {/* Header Dots */}
+                <div className="flex gap-2 mb-8">
+                  <div className="w-3 h-3 rounded-full bg-red-500/40"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/40"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500/40"></div>
                 </div>
                 
-                {/* Terminal Body - Animated Logs */}
-                <div className="flex flex-col gap-4">
-                  {terminalLogs.map((log, index) => (
-                    <div 
-                      key={index} 
-                      className={`${log.color} transition-all duration-500 transform ${index < visibleLogs ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}
-                      style={{ textShadow: index < visibleLogs ? '0 0 15px currentColor' : 'none' }}
-                    >
-                      {log.text}
+                {/* Background Code Pulse */}
+                <div className="font-mono text-[10px] opacity-20 select-none pointer-events-none flex flex-col gap-2">
+                  <div className="text-cyan-400">{'>>'} INITIALIZING NEURAL_CORE_V4</div>
+                  <div className="text-slate-400 pl-4">import tensorflow as tf</div>
+                  <div className="text-slate-400 pl-4">from cognimach.ai import RandomForest, HoltWinter</div>
+                  <div className="text-slate-400 pl-4">def process_telemetry(stream):</div>
+                  <div className="text-slate-400 pl-8">prediction = model.predict(stream.data)</div>
+                  <div className="text-slate-400 pl-8">if prediction.anomaly_score {'>'} 0.85:</div>
+                  <div className="text-red-400 pl-12">trigger_alert("CRITICAL_BEARING_FAILURE")</div>
+                  <div className="text-slate-400 pl-8">else:</div>
+                  <div className="text-green-400 pl-12">optimize_throughput(stream)</div>
+                  <div className="text-slate-400 pl-4">{'>>'} DATA_INGESTION_ACTIVE: 1550 RPM</div>
+                </div>
+
+                {/* Central Animated Visual */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative">
+                    {/* Glowing Orbs */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-cyan-500/10 rounded-full blur-[60px] animate-pulse"></div>
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-blue-500/10 rounded-full blur-[40px]"></div>
+                    
+                    {/* Neural Pulse Graphic */}
+                    <div className="relative z-10 flex flex-col items-center">
+                      <div className="p-6 bg-slate-950/80 border border-cyan-500/30 rounded-full shadow-[0_0_30px_rgba(0,229,255,0.2)]">
+                        <Activity size={60} color="#00e5ff" className="glow-element" style={{ animation: 'pulse-glow 2s infinite' }} />
+                      </div>
+                      <div className="mt-4 px-4 py-1 bg-cyan-500/20 rounded-full border border-cyan-500/30">
+                        <span className="text-[10px] font-bold text-cyan-400 tracking-widest uppercase">Live Neural Hub</span>
+                      </div>
                     </div>
-                  ))}
-                  
-                  {/* Blinking Cursor */}
-                  <div className="flex items-center mt-2">
-                    <span className="text-slate-500 font-bold mr-2">{'>'}</span>
-                    <div className="w-2.5 h-5 bg-cyan-400 animate-pulse shadow-[0_0_10px_#00e5ff]"></div>
                   </div>
                 </div>
 
-                {/* Decorative Background Elements */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 blur-[60px]"></div>
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-500/5 blur-[60px]"></div>
+                {/* Dynamic Data Stream (Floating Nodes) */}
+                <div className="absolute bottom-8 right-8 flex flex-col items-end gap-2">
+                   <div className="text-[10px] text-cyan-400 font-mono opacity-60">INGRESS: 42.8 KB/S</div>
+                   <div className="w-24 h-1 bg-slate-800 rounded-full overflow-hidden">
+                      <div className="h-full bg-cyan-400" style={{ width: '65%', animation: 'slide-line 2s infinite linear' }}></div>
+                   </div>
+                </div>
               </div>
             </div>
 
