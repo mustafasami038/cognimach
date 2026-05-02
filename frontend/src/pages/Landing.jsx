@@ -56,67 +56,47 @@ export default function Landing() {
     <div className="animate-fade-in">
       {/* SECTION 1: HERO */}
       <section style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden' }}>
-        <div className="container mx-auto" style={{ position: 'relative', zIndex: 10 }}>
-          {/* 1. The Parent Container (Force the Split) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full min-h-[80vh]">
-            
-            {/* 2. The Left Column (Text & Buttons) */}
-            <div className="flex flex-col items-start justify-start text-left">
-              <h1 className="hero-title gradient-text text-left text-5xl lg:text-6xl font-bold leading-tight" style={{ textAlign: 'left' }}>
-                Endüstrinin Nöral Ağı: CogniMach
-              </h1>
-              <p className="text-xl max-w-lg mt-6 mb-8 text-left" style={{ color: '#94a3b8' }}>
-                Üretim hatlarınızı karanlıktan kurtarın. Çift motorlu yapay zeka ve entegre LLM asistanı ile 
-                <span style={{ color: '#00e5ff', fontWeight: 600 }}> "Sıfır Duruş"</span> hedefine ulaşın.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto">
-                <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1rem 2rem', fontSize: '1.05rem' }}>
-                  Sisteme Entegre Ol <ArrowRight size={20} />
-                </button>
-                <button 
-                  onClick={handleDemoLogin} 
-                  className="btn btn-secondary" 
-                  style={{ padding: '1rem 2rem', fontSize: '1.05rem' }}
-                  disabled={loading}
-                >
-                  {loading ? <Loader2 className="animate-spin" size={20} /> : 'Canlı Demoyu İzle'}
-                </button>
-              </div>
+        {/* EXACT HERO SKELETON PROVIDED BY USER */}
+        <div className="flex flex-col lg:flex-row items-center justify-between w-full min-h-[80vh] gap-12 px-4 lg:px-12 relative z-10">
+          
+          {/* Left Column */}
+          <div className="w-full lg:w-1/2 flex flex-col items-start justify-start text-left">
+            <h1 className="text-5xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 mb-6">
+              Endüstrinin Nöral Ağı:<br/>CogniMach
+            </h1>
+            <p className="text-slate-400 text-lg mb-8 max-w-xl">
+              Üretim hatlarınızı karanlıktan kurtarın. Çift motorlu yapay zeka ve entegre LLM asistanı ile "Sıfır Duruş" hedefine ulaşın.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+              <button onClick={() => navigate('/login')} className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black font-bold py-3 px-8 rounded-md hover:scale-105 transition-transform">
+                Sisteme Entegre Ol →
+              </button>
+              <button onClick={handleDemoLogin} disabled={loading} className="border border-cyan-500 text-cyan-400 font-bold py-3 px-8 rounded-md hover:bg-cyan-500/10 transition-colors flex justify-center items-center gap-2">
+                {loading ? <Loader2 className="animate-spin" size={20} /> : 'Canlı Demoyu İzle'}
+              </button>
             </div>
-
-            {/* 3. The Right Column (The Glass Terminal) */}
-            <div className="w-full flex justify-center lg:justify-end">
-              <div className="bg-slate-900/80 backdrop-blur-2xl border border-slate-700/80 rounded-xl p-6 shadow-[0_0_50px_rgba(0,229,255,0.15)] w-full max-w-lg font-mono text-sm text-left relative overflow-hidden flex flex-col">
-                {/* macOS Style Header */}
-                <div className="flex items-center mb-6 pb-4 border-b border-slate-700/50">
-                  <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                  </div>
-                  <div className="mx-auto text-xs font-mono text-slate-400 opacity-80">cognimach-core-v3.sh</div>
-                </div>
-                
-                {/* 4. Terminal Content */}
-                <div className="leading-relaxed min-h-[220px] flex flex-col gap-3">
-                  {terminalLogs.map((log, index) => (
-                    <div 
-                      key={index} 
-                      className={`${log.color} transition-opacity duration-300 ${index < visibleLogs ? 'opacity-100' : 'opacity-0 hidden'}`}
-                    >
-                      {log.text}
-                    </div>
-                  ))}
-                  <div className="text-slate-400 mt-1 flex items-center">
-                    <span>{'>'}</span>
-                    <span className="w-2.5 h-4 bg-slate-400 ml-2 animate-pulse"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
+
+          {/* Right Column */}
+          <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
+            <div className="bg-slate-950/80 backdrop-blur-xl border border-slate-700/60 rounded-xl p-6 shadow-[0_0_40px_rgba(0,229,255,0.15)] w-full max-w-lg font-mono text-sm text-left">
+              <div className="flex gap-2 mb-4">
+                <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+              </div>
+              <div className="text-cyan-400/90 leading-relaxed space-y-1">
+                <p className="text-slate-400">{"> cognimach-core-v3.sh"}</p>
+                <p>{"> [SYS] Establishing secure connection to CNC_Node_01... [OK]"}</p>
+                <p>{"> [STREAM] Ingesting live telemetry: 1550 RPM | Temp: 308K"}</p>
+                <p className="text-emerald-400">{"> [AI_ENGINE] Random Forest anomaly detection: NORMAL"}</p>
+                <p className="text-emerald-400">{"> [PREDICTION] Holt Time-Series active. RUL: 45 Shifts"}</p>
+                <p className="text-blue-400">{"> [LLM_GEMINI] Root cause analysis module: STANDBY"}</p>
+                <p className="animate-pulse">_</p>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         {/* Arka Plan Efekti */}
