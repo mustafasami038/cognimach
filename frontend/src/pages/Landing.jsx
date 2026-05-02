@@ -1,70 +1,169 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Hexagon, Zap, TrendingUp, BrainCircuit } from 'lucide-react';
+import { ShieldCheck, Zap, MessageSquare, Mail, ArrowRight, Activity, TrendingUp, ShieldAlert } from 'lucide-react';
 
 export default function Landing() {
   const navigate = useNavigate();
 
   return (
-    <div className="container animate-fade-in" style={{ paddingTop: '5rem' }}>
-      <div className="text-center mb-8">
-        <Hexagon color="#00e5ff" size={80} style={{ margin: '0 auto', filter: 'drop-shadow(0 0 15px rgba(0, 229, 255, 0.5))' }} />
-        <h1 className="hero-title mt-4">CogniMach</h1>
-        <h3 style={{ color: '#94a3b8', fontWeight: 300, fontSize: '1.5rem', marginTop: '1rem' }}>
-          Endüstriyel Makinelerin Dijital Zekası
-        </h3>
-      </div>
+    <div className="animate-fade-in">
+      {/* SECTION 1: HERO */}
+      <section style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden' }}>
+        <div className="container" style={{ position: 'relative', zIndex: 10 }}>
+          <div className="text-center">
+            <h1 className="hero-title gradient-text">
+              Endüstrinin Nöral Ağı: CogniMach
+            </h1>
+            <p style={{ fontSize: '1.5rem', maxWidth: '800px', margin: '1.5rem auto', color: '#94a3b8' }}>
+              Üretim hatlarınızı karanlıktan kurtarın. Çift motorlu yapay zeka ve entegre LLM asistanı ile 
+              <span style={{ color: '#00e5ff', fontWeight: 600 }}> "Sıfır Duruş"</span> hedefine ulaşın.
+            </p>
+            
+            <div className="flex justify-center gap-6 mt-8">
+              <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}>
+                Sisteme Entegre Ol <ArrowRight size={20} />
+              </button>
+              <button className="btn btn-secondary" style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}>
+                Canlı Demoyu İzle
+              </button>
+            </div>
+          </div>
 
-      <div className="flex justify-center mb-8">
-        <div className="glass-panel highlight-cyan" style={{ maxWidth: '800px', textAlign: 'center', fontSize: '1.2rem', color: '#cbd5e1' }}>
-          Üretim hatlarındaki karanlık noktaları aydınlatın. Kestirimci bakım mimarimiz ve yapay zeka asistanımızla <b>sıfır duruş</b> hedefine ulaşın.
+          {/* Floating UI Elements */}
+          <div className="floating" style={{ position: 'absolute', top: '10%', left: '5%', zIndex: 5 }}>
+            <div className="glass-panel" style={{ padding: '1rem', borderLeft: '4px solid #22c55e' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#22c55e', animation: 'pulse-glow 2s infinite' }}></span>
+                <span style={{ fontSize: '0.8rem', fontWeight: 600 }}>RPM: 2861</span>
+              </div>
+            </div>
+          </div>
+          <div className="floating" style={{ position: 'absolute', bottom: '20%', right: '5%', zIndex: 5, animationDelay: '1s' }}>
+            <div className="glass-panel" style={{ padding: '1rem', borderLeft: '4px solid #00e5ff' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <Activity size={16} color="#00e5ff" />
+                <span style={{ fontSize: '0.8rem', fontWeight: 600 }}>RUL: 45 Vardiya</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Arka Plan Efekti */}
+        <div style={{ position: 'absolute', top: '-20%', left: '50%', transform: 'translateX(-50%)', width: '800px', height: '800px', background: 'radial-gradient(circle, rgba(0, 229, 255, 0.05) 0%, transparent 70%)', zIndex: 1 }}></div>
+      </section>
+
+      {/* SECTION 2: MARQUEE */}
+      <div className="marquee-container">
+        <div className="marquee-content">
+          <span className="marquee-item">AGÜ Teknoloji Transfer Ofisi</span>
+          <span className="marquee-item">Kapadokya YZ Zirvesi</span>
+          <span className="marquee-item">Kayseri Sanayi Odası</span>
+          <span className="marquee-item">Ulusal Akıllı Üretim Ağı</span>
+          {/* Tekrar */}
+          <span className="marquee-item">AGÜ Teknoloji Transfer Ofisi</span>
+          <span className="marquee-item">Kapadokya YZ Zirvesi</span>
+          <span className="marquee-item">Kayseri Sanayi Odası</span>
+          <span className="marquee-item">Ulusal Akıllı Üretim Ağı</span>
         </div>
       </div>
 
-      <div className="flex justify-center mb-8 mt-8">
-        <button className="btn" style={{ fontSize: '1.25rem', padding: '1rem 3rem' }} onClick={() => navigate('/login')}>
-          <Zap /> CogniMach Ağına Giriş Yap
-        </button>
-      </div>
-
-      <div className="mb-8" style={{ marginTop: '5rem' }}>
-        <h2 className="text-center" style={{ color: '#e2e8f0', fontWeight: 600, fontSize: '2rem', marginBottom: '3rem' }}>Değer Önerilerimiz</h2>
-        <div className="grid grid-cols-3 gap-6">
-          <div className="glass-panel highlight-red">
-            <div className="flex items-center gap-2 mb-4">
-              <Zap color="#ef4444" size={28} />
-              <h3 style={{ marginBottom: 0 }}>Şok Tespiti</h3>
+      {/* SECTION 3: PROBLEM VS SOLUTION */}
+      <section style={{ padding: '6rem 2rem', background: 'rgba(15, 23, 42, 0.2)' }}>
+        <div className="container">
+          <div className="grid grid-cols-2 gap-12 items-center">
+            <div className="glass-panel" style={{ borderColor: 'rgba(239, 68, 68, 0.2)', padding: '3rem' }}>
+              <div style={{ color: '#ef4444', marginBottom: '1rem' }}><ShieldAlert size={48} /></div>
+              <h2 style={{ fontSize: '2rem' }}>Eski Nesil: Reaktif Bakım</h2>
+              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexCol: 'column', gap: '1rem', marginTop: '1.5rem' }}>
+                <li style={{ color: '#94a3b8' }}>❌ Makine bozulur, üretim aniden durur.</li>
+                <li style={{ color: '#94a3b8' }}>❌ Yedek parça maliyetleri tavan yapar.</li>
+                <li style={{ color: '#94a3b8' }}>❌ Fabrikada panik havası başlar.</li>
+              </ul>
             </div>
-            <p>Random Forest algoritması ile milisaniyelik tork ve sıcaklık anomalilerini avlar. Hasar oluşmadan hattı durdurur.</p>
+            
+            <div className="glass-panel glow-border" style={{ padding: '3rem', border: '1px solid rgba(0, 229, 255, 0.4)' }}>
+              <div style={{ color: '#00e5ff', marginBottom: '1rem' }}><ShieldCheck size={48} /></div>
+              <h2 style={{ fontSize: '2rem' }}>Yeni Nesil: CogniMach Preskriptif Bakım</h2>
+              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexCol: 'column', gap: '1rem', marginTop: '1.5rem' }}>
+                <li style={{ color: '#e2e8f0' }}>✅ Saniyeler içinde anomali tespiti.</li>
+                <li style={{ color: '#e2e8f0' }}>✅ Yapay zeka ile otomatik kök neden analizi.</li>
+                <li style={{ color: '#e2e8f0' }}>✅ Otonom iş emirleri ile sıfır duruş.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 4: BENTO GRID */}
+      <section style={{ padding: '6rem 2rem' }}>
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 style={{ fontSize: '3rem' }}>Geleceğin Teknolojisi</h2>
+            <p>Endüstri 4.0'ın ötesinde, tam otonom bir mimari.</p>
           </div>
           
-          <div className="glass-panel highlight-orange">
-            <div className="flex items-center gap-2 mb-4">
-              <TrendingUp color="#f59e0b" size={28} />
-              <h3 style={{ marginBottom: 0 }}>RUL Projeksiyonu</h3>
+          <div className="bento-grid">
+            <div className="glass-panel bento-1 flex-col justify-center">
+              <Zap color="#00e5ff" size={32} />
+              <h3 className="mt-4">Hibrit Kök Neden Analizi</h3>
+              <p>Random Forest algoritmalarımız milisaniyelik tork sapmalarını yakalar ve hatayı oluşmadan bilir.</p>
             </div>
-            <p>Holt Zaman Serisi analizi ile takımların aşınma trendini okur, size kalan net vardiya ömrünü raporlar.</p>
-          </div>
-
-          <div className="glass-panel highlight-cyan">
-            <div className="flex items-center gap-2 mb-4">
-              <BrainCircuit color="#00e5ff" size={28} />
-              <h3 style={{ marginBottom: 0 }}>Nöral Asistan</h3>
+            
+            <div className="glass-panel bento-2 flex-col justify-center">
+              <TrendingUp color="#3b82f6" size={32} />
+              <h3 className="mt-4">Geleceği Gören Mimari</h3>
+              <p>Holt Zaman Serisi projeksiyonu ile makinelerinizin Kalan Faydalı Ömrünü (RUL) vardiya hassasiyetinde tahmin ediyoruz.</p>
             </div>
-            <p>Duruş anındaki canlı makine verilerini okuyan entegre LLM asistanı ile mühendis gibi sohbet edin.</p>
+            
+            <div className="glass-panel bento-3 flex-col justify-center">
+              <MessageSquare color="#a855f7" size={32} />
+              <h3 className="mt-4">Sanal Bakım Asistanı</h3>
+              <p>Gemini LLM tabanlı chatbotumuz, sensör verilerini insan dilinde analiz ederek raporlar sunar.</p>
+            </div>
+            
+            <div className="glass-panel bento-4 flex-col justify-center">
+              <Mail color="#f59e0b" size={32} />
+              <h3 className="mt-4">Karanlık Fabrika Otomasyonu</h3>
+              <p>Herhangi bir anomali anında sistem otomatik olarak mail ve WhatsApp üzerinden iş emri oluşturur.</p>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div style={{ marginTop: '5rem', borderTop: '1px solid var(--glass-border)', paddingTop: '2rem' }}>
-        <h3 className="text-center" style={{ color: '#64748b', fontWeight: 400, marginBottom: '2rem' }}>Güvenilir Partner Ağı</h3>
-        <div className="grid grid-cols-4 gap-4 text-center" style={{ color: '#94a3b8', fontWeight: 'bold' }}>
-          <div>AGÜ TTO</div>
-          <div>Kapadokya YZ Zirvesi</div>
-          <div>KAYSO</div>
-          <div>Akıllı Üretim Kons.</div>
+      {/* SECTION 5: ROI METRICS */}
+      <section style={{ padding: '6rem 0', background: 'linear-gradient(to right, transparent, rgba(0, 229, 255, 0.05), transparent)' }}>
+        <div className="container grid grid-cols-3 gap-8 text-center">
+          <div>
+            <h2 style={{ fontSize: '4rem', color: '#00e5ff', textShadow: '0 0 20px rgba(0, 225, 255, 0.4)' }}>%40</h2>
+            <p style={{ fontWeight: 600 }}>Planlanmamış Duruşlarda Azalma</p>
+          </div>
+          <div>
+            <h2 style={{ fontSize: '4rem', color: '#00e5ff', textShadow: '0 0 20px rgba(0, 225, 255, 0.4)' }}>15+</h2>
+            <p style={{ fontWeight: 600 }}>Erken Uyarı Vardiya Kapasitesi</p>
+          </div>
+          <div>
+            <h2 style={{ fontSize: '4rem', color: '#00e5ff', textShadow: '0 0 20px rgba(0, 225, 255, 0.4)' }}>0</h2>
+            <p style={{ fontWeight: 600 }}>Veri Kaybı (Edge Computing)</p>
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* SECTION 6: FINAL CTA & FOOTER */}
+      <section style={{ padding: '8rem 2rem', textAlign: 'center' }}>
+        <div className="container glass-panel" style={{ padding: '4rem', background: 'radial-gradient(circle at center, rgba(0, 229, 255, 0.1) 0%, transparent 70%)' }}>
+          <h2 style={{ fontSize: '2.5rem' }}>Fabrikanızı Endüstri 4.0 ile tanıştırmaya hazır mısınız?</h2>
+          <p style={{ marginBottom: '2rem' }}>Otonom bakım devrimine bugün katılın.</p>
+          <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1rem 3rem' }}>Hemen Başla</button>
+        </div>
+        
+        <footer style={{ marginTop: '6rem', borderTop: '1px solid #1e293b', padding: '2rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '1rem' }}>
+            <img src="/logo.jpg" alt="Logo" style={{ width: '40px', borderRadius: '4px' }} />
+            <span style={{ fontWeight: 700, letterSpacing: '1px' }}>COGNIMACH</span>
+          </div>
+          <p style={{ fontSize: '0.8rem' }}>&copy; 2026 CogniMach Neural Systems. Tüm hakları saklıdır.</p>
+        </footer>
+      </section>
     </div>
   );
 }

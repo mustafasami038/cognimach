@@ -22,9 +22,9 @@ function App() {
     <>
       {!isAuthPage && (
         <nav className="nav-bar">
-          <div className="flex items-center gap-2" style={{cursor: 'pointer'}} onClick={() => navigate('/')}>
-            <Hexagon color="#00e5ff" size={28} />
-            <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#e2e8f0' }}>CogniMach</span>
+          <div className="flex items-center gap-3" style={{cursor: 'pointer'}} onClick={() => navigate('/')}>
+            <img src="/logo.jpg" alt="Logo" style={{ height: '35px', borderRadius: '4px' }} />
+            <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#e2e8f0', letterSpacing: '1px' }}>COGNIMACH</span>
           </div>
           <div>
             <button className="btn btn-secondary" onClick={handleLogout}>
