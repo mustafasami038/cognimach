@@ -85,28 +85,28 @@ export default function Landing() {
           </div>
           
           <div className="bento-grid">
-            <div className="glass-panel bento-1 flex-col justify-center">
+            <div className="glass-panel bento-1 flex-col" style={{ justifyContent: 'center', padding: '2.5rem' }}>
               <Zap color="#00e5ff" size={32} />
-              <h3 className="mt-4">Hibrit Kök Neden Analizi</h3>
+              <h3 style={{ marginTop: '1.5rem', fontSize: '1.5rem' }}>Hibrit Kök Neden Analizi</h3>
               <p>Random Forest algoritmalarımız milisaniyelik tork sapmalarını yakalar ve hatayı oluşmadan bilir.</p>
             </div>
             
-            <div className="glass-panel bento-2 flex-col justify-center">
+            <div className="glass-panel bento-2 flex-col" style={{ justifyContent: 'center', padding: '2.5rem' }}>
               <TrendingUp color="#3b82f6" size={32} />
-              <h3 className="mt-4">Geleceği Gören Mimari</h3>
+              <h3 style={{ marginTop: '1.5rem', fontSize: '1.5rem' }}>Geleceği Gören Mimari</h3>
               <p>Holt Zaman Serisi projeksiyonu ile makinelerinizin Kalan Faydalı Ömrünü (RUL) vardiya hassasiyetinde tahmin ediyoruz.</p>
             </div>
             
-            <div className="glass-panel bento-3 flex-col justify-center">
+            <div className="glass-panel bento-3 flex-col" style={{ justifyContent: 'center', padding: '2rem' }}>
               <MessageSquare color="#a855f7" size={32} />
-              <h3 className="mt-4">Sanal Bakım Asistanı</h3>
-              <p>Gemini LLM tabanlı chatbotumuz, sensör verilerini insan dilinde analiz ederek raporlar sunar.</p>
+              <h3 style={{ marginTop: '1.2rem' }}>Sanal Bakım Asistanı</h3>
+              <p style={{ fontSize: '0.9rem' }}>Gemini LLM tabanlı chatbotumuz, sensör verilerini insan dilinde analiz ederek raporlar sunar.</p>
             </div>
             
-            <div className="glass-panel bento-4 flex-col justify-center">
+            <div className="glass-panel bento-4 flex-col" style={{ justifyContent: 'center', padding: '2rem' }}>
               <Mail color="#f59e0b" size={32} />
-              <h3 className="mt-4">Karanlık Fabrika Otomasyonu</h3>
-              <p>Herhangi bir anomali anında sistem otomatik olarak mail ve WhatsApp üzerinden iş emri oluşturur.</p>
+              <h3 style={{ marginTop: '1.2rem' }}>Karanlık Fabrika Otomasyonu</h3>
+              <p style={{ fontSize: '0.9rem' }}>Herhangi bir anomali anında sistem otomatik olarak mail ve WhatsApp üzerinden iş emri oluşturur.</p>
             </div>
           </div>
         </div>
