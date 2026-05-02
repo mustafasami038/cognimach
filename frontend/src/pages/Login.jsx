@@ -34,7 +34,14 @@ export default function Login() {
   };
 
   return (
-    <div className="container flex justify-center items-center" style={{ minHeight: '80vh' }}>
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      minHeight: '100vh', 
+      width: '100%',
+      padding: '2rem'
+    }}>
       <div className="glass-panel animate-fade-in" style={{ width: '100%', maxWidth: '450px', padding: '3rem 2rem' }}>
         <div className="text-center mb-6">
           <img src="/logo.jpg" alt="CogniMach Logo" style={{ width: '200px', marginBottom: '1rem', borderRadius: '12px', boxShadow: '0 0 20px rgba(0, 229, 255, 0.3)' }} />
