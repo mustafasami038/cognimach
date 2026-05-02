@@ -32,44 +32,29 @@ export default function Landing() {
     <div className="animate-fade-in">
       {/* SECTION 1: HERO */}
       <section style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden' }}>
-        <div className="container mx-auto" style={{ position: 'relative', zIndex: 10 }}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[85vh] w-full">
+        <div className="container" style={{ position: 'relative', zIndex: 10 }}>
+          <div className="text-center">
+            <h1 className="hero-title gradient-text">
+              Endüstrinin Nöral Ağı: CogniMach
+            </h1>
+            <p style={{ fontSize: '1.5rem', maxWidth: '800px', margin: '1.5rem auto', color: '#94a3b8' }}>
+              Üretim hatlarınızı karanlıktan kurtarın. Çift motorlu yapay zeka ve entegre LLM asistanı ile 
+              <span style={{ color: '#00e5ff', fontWeight: 600 }}> "Sıfır Duruş"</span> hedefine ulaşın.
+            </p>
             
-            {/* Left Column (Text & Buttons) */}
-            <div className="text-left flex flex-col items-start justify-start">
-              <h1 className="hero-title gradient-text text-left" style={{ textAlign: 'left', fontSize: '4.5rem' }}>
-                Endüstrinin Nöral Ağı: CogniMach
-              </h1>
-              <p style={{ fontSize: '1.4rem', maxWidth: '600px', margin: '1.5rem 0', color: '#94a3b8', textAlign: 'left' }}>
-                Üretim hatlarınızı karanlıktan kurtarın. Çift motorlu yapay zeka ve entegre LLM asistanı ile 
-                <span style={{ color: '#00e5ff', fontWeight: 600 }}> "Sıfır Duruş"</span> hedefine ulaşın.
-              </p>
-              
-              <div className="flex gap-6 mt-8 justify-start">
-                <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1rem 2rem', fontSize: '1.05rem' }}>
-                  Sisteme Entegre Ol <ArrowRight size={20} />
-                </button>
-                <button 
-                  onClick={handleDemoLogin} 
-                  className="btn btn-secondary" 
-                  style={{ padding: '1rem 2rem', fontSize: '1.05rem' }}
-                  disabled={loading}
-                >
-                  {loading ? <Loader2 className="animate-spin" size={20} /> : 'Canlı Demoyu İzle'}
-                </button>
-              </div>
+            <div className="flex justify-center gap-6 mt-8">
+              <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}>
+                Sisteme Entegre Ol <ArrowRight size={20} />
+              </button>
+              <button 
+                onClick={handleDemoLogin} 
+                className="btn btn-secondary" 
+                style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}
+                disabled={loading}
+              >
+                {loading ? <Loader2 className="animate-spin" size={20} /> : 'Canlı Demoyu İzle'}
+              </button>
             </div>
-
-            {/* Right Column (The Image) */}
-            <div className="flex justify-center items-center w-full relative">
-               <img 
-                 src="/fractal.png" 
-                 alt="CogniMach AI Core" 
-                 className="w-full max-w-lg xl:max-w-xl object-contain drop-shadow-[0_0_40px_rgba(0,229,255,0.3)]"
-                 style={{ animation: 'float 6s ease-in-out infinite' }}
-               />
-            </div>
-            
           </div>
         </div>
 
