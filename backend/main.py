@@ -44,6 +44,39 @@ users_db = {
 tenant_data = {}
 # format: tenant_data[tenant_id] = {"df": pd.DataFrame, "rf_model": RandomForestClassifier, "current_row": 35, "logs": []}
 
+@app.on_event("startup")
+async def startup_event():
+    # Pre-load demo data for immediate use
+    try:
+        import numpy as np
+        # Create a sample dataset for the demo tenant
+        rows = 200
+        data = {
+            'Air temperature [K]': np.random.uniform(295, 305, rows),
+            'Process temperature [K]': np.random.uniform(305, 315, rows),
+            'Rotational speed [rpm]': np.random.uniform(1400, 1600, rows),
+            'Torque [Nm]': np.random.uniform(35, 50, rows),
+            'Tool wear [min]': np.arange(0, rows),
+            'Machine failure': [0] * (rows - 5) + [1] * 5  # Failure at the end
+        }
+        df_demo = pd.DataFrame(data)
+        
+        # Train a simple model for the demo
+        ozellikler = ['Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]']
+        X = df_demo[ozellikler]
+        y = df_demo['Machine failure']
+        model = RandomForestClassifier(n_estimators=10)
+        model.fit(X, y)
+        
+        tenant_data["demo"] = {
+            "df": df_demo,
+            "rf_model": model,
+            "current_row": 0,
+            "logs": ["📌 Demo veri seti otomatik olarak yüklendi.", "🤖 Yapay Zeka modeli aktif."]
+        }
+    except Exception as e:
+        print(f"Startup error: {e}")
+
 class LoginRequest(BaseModel):
     tenant_id: str
     password: str

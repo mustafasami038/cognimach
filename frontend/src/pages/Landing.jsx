@@ -1,9 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShieldCheck, Zap, MessageSquare, Mail, ArrowRight, Activity, TrendingUp, ShieldAlert } from 'lucide-react';
+import axios from 'axios';
+import { ShieldCheck, Zap, MessageSquare, Mail, ArrowRight, Activity, TrendingUp, ShieldAlert, Loader2 } from 'lucide-react';
 
 export default function Landing() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const handleDemoLogin = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.post((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/login', {
+        tenant_id: 'demo',
+        password: '1234'
+      });
+      
+      if (res.data.success) {
+        localStorage.setItem('tenant_id', res.data.tenant_id);
+        localStorage.setItem('user_role', res.data.user.rol);
+        localStorage.setItem('company_name', res.data.user.sirket);
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      console.error("Demo giriş hatası:", err);
+      alert("Demo şu an hazır değil, lütfen daha sonra tekrar deneyin.");
+    }
+    setLoading(false);
+  };
 
   return (
     <div className="animate-fade-in">
@@ -23,8 +46,13 @@ export default function Landing() {
               <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}>
                 Sisteme Entegre Ol <ArrowRight size={20} />
               </button>
-              <button className="btn btn-secondary" style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}>
-                Canlı Demoyu İzle
+              <button 
+                onClick={handleDemoLogin} 
+                className="btn btn-secondary" 
+                style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}
+                disabled={loading}
+              >
+                {loading ? <Loader2 className="animate-spin" size={20} /> : 'Canlı Demoyu İzle'}
               </button>
             </div>
           </div>
