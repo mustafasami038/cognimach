@@ -314,3 +314,32 @@ p {
   z-index: -1;
   opacity: 0.3;
 }
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotateX(15deg) rotateY(-15deg); }
+  50% { transform: translateY(-20px) rotateX(10deg) rotateY(-10deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; filter: blur(10px); }
+  50% { opacity: 1; filter: blur(15px); }
+}
+
+@keyframes slide-line {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.hero-3d-container {
+  perspective: 1200px;
+}
+
+.hero-illustration {
+  transform-style: preserve-3d;
+  animation: float 6s ease-in-out infinite;
+}
+
+.glow-element {
+  animation: pulse-glow 4s ease-in-out infinite;
+}

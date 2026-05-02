@@ -33,27 +33,106 @@ export default function Landing() {
       {/* SECTION 1: HERO */}
       <section style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden' }}>
         <div className="container" style={{ position: 'relative', zIndex: 10 }}>
-          <div className="text-center">
-            <h1 className="hero-title gradient-text">
-              Endüstrinin Nöral Ağı: CogniMach
-            </h1>
-            <p style={{ fontSize: '1.5rem', maxWidth: '800px', margin: '1.5rem auto', color: '#94a3b8' }}>
-              Üretim hatlarınızı karanlıktan kurtarın. Çift motorlu yapay zeka ve entegre LLM asistanı ile 
-              <span style={{ color: '#00e5ff', fontWeight: 600 }}> "Sıfır Duruş"</span> hedefine ulaşın.
-            </p>
-            
-            <div className="flex justify-center gap-6 mt-8">
-              <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}>
-                Sisteme Entegre Ol <ArrowRight size={20} />
-              </button>
-              <button 
-                onClick={handleDemoLogin} 
-                className="btn btn-secondary" 
-                style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}
-                disabled={loading}
-              >
-                {loading ? <Loader2 className="animate-spin" size={20} /> : 'Canlı Demoyu İzle'}
-              </button>
+          <div style={{ display: 'flex', flexDirection: 'column', lg: { flexDirection: 'row' }, alignItems: 'center', gap: '4rem' }} className="lg:flex-row flex flex-col items-center gap-16">
+            <div style={{ flex: 1, textAlign: 'left' }} className="hero-text-container">
+              <h1 className="hero-title gradient-text" style={{ textAlign: 'left', fontSize: '4.5rem' }}>
+                Endüstrinin Nöral Ağı: CogniMach
+              </h1>
+              <p style={{ fontSize: '1.4rem', maxWidth: '600px', margin: '1.5rem 0', color: '#94a3b8' }}>
+                Üretim hatlarınızı karanlıktan kurtarın. Çift motorlu yapay zeka ve entegre LLM asistanı ile 
+                <span style={{ color: '#00e5ff', fontWeight: 600 }}> "Sıfır Duruş"</span> hedefine ulaşın.
+              </p>
+              
+              <div className="flex gap-6 mt-8">
+                <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1rem 2rem', fontSize: '1.05rem' }}>
+                  Sisteme Entegre Ol <ArrowRight size={20} />
+                </button>
+                <button 
+                  onClick={handleDemoLogin} 
+                  className="btn btn-secondary" 
+                  style={{ padding: '1rem 2rem', fontSize: '1.05rem' }}
+                  disabled={loading}
+                >
+                  {loading ? <Loader2 className="animate-spin" size={20} /> : 'Canlı Demoyu İzle'}
+                </button>
+              </div>
+            </div>
+
+            {/* HERO ILLUSTRATION - 3D GLASSMOPRHIC DASHBOARD */}
+            <div className="hero-3d-container relative hidden lg:block" style={{ flex: 1 }}>
+              <div className="hero-illustration relative w-[550px] h-[400px]">
+                {/* Base Glass Layer */}
+                <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-2xl border border-cyan-400/30 rounded-2xl shadow-2xl overflow-hidden" style={{ transform: 'translateZ(0px)' }}>
+                  <div className="p-4 border-b border-white/10 flex justify-between items-center bg-white/5">
+                    <div className="flex gap-2">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-500/40"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-500/40"></div>
+                    </div>
+                    <div className="h-1.5 w-24 bg-white/10 rounded-full"></div>
+                  </div>
+                  
+                  <div className="p-6 flex flex-col gap-6">
+                    {/* Abstract Chart Area */}
+                    <div className="h-32 w-full bg-cyan-500/5 rounded-xl border border-cyan-500/10 relative overflow-hidden">
+                      <div className="absolute bottom-0 left-0 w-full h-full p-4 flex items-end gap-1">
+                        {[40, 70, 45, 90, 65, 80, 55, 75, 40, 60].map((h, i) => (
+                          <div key={i} className="flex-1 bg-cyan-400/30 rounded-t-sm" style={{ height: `${h}%`, transition: 'height 1s ease' }}></div>
+                        ))}
+                      </div>
+                      <div className="absolute inset-0 glow-element bg-cyan-500/5"></div>
+                      <div className="absolute top-2 left-4 text-[10px] text-cyan-400 font-mono">LIVE_STREAM_DATA</div>
+                    </div>
+
+                    {/* Stats Grid */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="h-24 rounded-xl bg-blue-500/5 border border-blue-500/10 p-4 flex flex-col justify-between">
+                        <div className="h-1 w-8 bg-blue-400/30 rounded-full"></div>
+                        <div className="h-3 w-16 bg-white/10 rounded-full"></div>
+                        <div className="h-1.5 w-full bg-white/5 rounded-full"></div>
+                      </div>
+                      <div className="h-24 rounded-xl bg-cyan-500/5 border border-cyan-500/10 p-4 flex flex-col justify-between">
+                        <div className="h-1 w-8 bg-cyan-400/30 rounded-full"></div>
+                        <div className="h-3 w-20 bg-white/10 rounded-full"></div>
+                        <div className="h-1.5 w-full bg-white/5 rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Floating "Neural" Nodes & Effects */}
+                <div className="absolute -top-10 -right-10 w-48 h-48 bg-cyan-500/10 rounded-full blur-[80px] glow-element"></div>
+                <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-blue-500/10 rounded-full blur-[80px] glow-element"></div>
+
+                {/* Floating Widget 1 */}
+                <div className="absolute top-10 -right-10 p-4 bg-slate-900/60 backdrop-blur-xl border border-cyan-400/40 rounded-xl shadow-xl flex items-center gap-4" style={{ transform: 'translateZ(80px)' }}>
+                  <div className="p-2 bg-cyan-400/20 rounded-lg">
+                    <Activity color="#00e5ff" size={24} className="glow-element" />
+                  </div>
+                  <div>
+                    <div className="text-[10px] text-cyan-400 font-mono">NODE_ACTIVE</div>
+                    <div className="text-xs font-bold text-white">99.8% UPTIME</div>
+                  </div>
+                </div>
+
+                {/* Floating Widget 2 */}
+                <div className="absolute -bottom-4 right-10 p-4 bg-slate-900/60 backdrop-blur-xl border border-blue-400/40 rounded-xl shadow-xl flex items-center gap-4" style={{ transform: 'translateZ(120px)' }}>
+                  <div className="p-2 bg-blue-400/20 rounded-lg">
+                    <Zap color="#3b82f6" size={24} className="glow-element" />
+                  </div>
+                  <div>
+                    <div className="text-[10px] text-blue-400 font-mono">PREDICTION_ENGINE</div>
+                    <div className="text-xs font-bold text-white">READY_FOR_OEE</div>
+                  </div>
+                </div>
+
+                {/* Decorative Connection Line */}
+                <svg className="absolute inset-0 w-full h-full overflow-visible pointer-events-none" style={{ transform: 'translateZ(-20px)' }}>
+                  <path d="M 500 50 Q 600 200 500 350" stroke="rgba(0, 229, 255, 0.2)" strokeWidth="1" fill="none" />
+                  <circle cx="500" cy="50" r="3" fill="#00e5ff" className="glow-element" />
+                  <circle cx="500" cy="350" r="3" fill="#3b82f6" className="glow-element" />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
