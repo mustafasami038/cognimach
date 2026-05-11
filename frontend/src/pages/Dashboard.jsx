@@ -345,10 +345,10 @@ export default function Dashboard() {
       </div>
 
       {/* V2.0 MODULES ROW */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8 w-full">
-        
-        {/* WIDGET 1: VIBRATION SPECTRUM */}
-        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-700/80 rounded-xl p-6 shadow-lg flex flex-col">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 w-full">
+
+        {/* WIDGET 1: Titreşim Zarf Spektrumu */}
+        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-xl p-6 shadow-lg flex flex-col">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
               📊 Titreşim Zarf Spektrumu (Live)
@@ -361,30 +361,38 @@ export default function Dashboard() {
               Sensör Aktif
             </span>
           </div>
-          
+
           {/* CSS Equalizer Chart */}
-          <div className="relative h-32 w-full flex items-end gap-1 border-b border-l border-slate-700 px-2 pb-0">
-            <div className="w-full bg-cyan-500/40 h-[20%] rounded-t-sm"></div>
-            <div className="w-full bg-cyan-500/60 h-[35%] rounded-t-sm"></div>
-            <div className="w-full bg-cyan-500/80 h-[60%] rounded-t-sm animate-pulse"></div>
-            <div className="w-full bg-cyan-500/50 h-[30%] rounded-t-sm"></div>
-            {/* Spike at 165Hz */}
-            <div className="w-full bg-red-500 h-[95%] rounded-t-sm animate-pulse shadow-[0_0_10px_rgba(239,68,68,0.8)]"></div>
-            <div className="w-full bg-cyan-500/60 h-[45%] rounded-t-sm"></div>
-            <div className="w-full bg-cyan-500/40 h-[25%] rounded-t-sm"></div>
-            <div className="w-full bg-cyan-500/70 h-[50%] rounded-t-sm"></div>
-            
-            {/* Axis Labels */}
-            <div className="absolute -bottom-6 left-0 text-[10px] text-slate-500 font-mono">0 Hz</div>
-            <div className="absolute -bottom-6 right-0 text-[10px] text-slate-500 font-mono">500 Hz</div>
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] text-red-400 font-mono bg-slate-950 px-2 py-1 rounded border border-red-500/30 whitespace-nowrap">
-              ⚠️ İç Bilezik Arızası: 165 Hz
+          <div className="relative flex items-end gap-1 h-32 w-full border-b border-l border-slate-700 p-2">
+            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[20%]"></div>
+            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[45%]"></div>
+            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[30%]"></div>
+            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[60%]"></div>
+            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[35%]"></div>
+            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[50%]"></div>
+            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[25%]"></div>
+            {/* ANOMALY BAR — 165Hz İç Bilezik */}
+            <div className="relative w-full rounded-t-sm h-[95%] bg-red-500 animate-pulse shadow-[0_0_10px_red]">
+              <span className="absolute -top-7 left-1/2 -translate-x-1/2 text-[9px] text-red-400 font-mono bg-slate-950 px-1.5 py-0.5 rounded border border-red-500/40 whitespace-nowrap">
+                ⚠️ 165 Hz (İç Bilezik)
+              </span>
             </div>
+            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[55%]"></div>
+            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[40%]"></div>
+            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[65%]"></div>
+            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[30%]"></div>
+            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[48%]"></div>
+            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[22%]"></div>
+            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[38%]"></div>
+
+            {/* Axis Labels */}
+            <div className="absolute -bottom-5 left-0 text-[9px] text-slate-500 font-mono">0 Hz</div>
+            <div className="absolute -bottom-5 right-0 text-[9px] text-slate-500 font-mono">500 Hz</div>
           </div>
         </div>
 
-        {/* WIDGET 2: SMART SCHEDULING */}
-        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-700/80 rounded-xl p-6 shadow-lg flex flex-col justify-between">
+        {/* WIDGET 2: Üretim ve Bakım Çizelgesi */}
+        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-xl p-6 shadow-lg flex flex-col justify-between">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
               ⏱️ Üretim ve Bakım Çizelgesi
@@ -393,38 +401,38 @@ export default function Dashboard() {
               Optimal Slot Bulundu
             </span>
           </div>
-          
-          {/* Gantt Bar */}
-          <div className="w-full flex flex-col gap-2 mt-2">
-            <div className="flex w-full h-12 rounded-lg overflow-hidden border border-slate-700 shadow-inner">
-              <div className="w-[35%] bg-blue-600 flex items-center justify-center border-r border-slate-800">
-                <span className="text-xs font-bold text-white truncate px-1">Sipariş #401 (12s)</span>
-              </div>
-              <div className="w-[25%] bg-emerald-500 flex items-center justify-center border-r border-slate-800 animate-pulse">
-                <span className="text-xs font-bold text-slate-950 truncate px-1">⚙️ BAKIM (4s)</span>
-              </div>
-              <div className="w-[40%] bg-blue-800 flex items-center justify-center">
-                <span className="text-xs font-bold text-white truncate px-1">Sipariş #402 (18s)</span>
-              </div>
+
+          {/* Visual Gantt Bar */}
+          <div className="flex w-full h-12 rounded-lg overflow-hidden border border-slate-700">
+            <div className="w-[40%] bg-blue-600 flex items-center justify-center text-white text-xs font-bold border-r border-slate-800">
+              Sipariş #401 (12s)
             </div>
-            <div className="flex justify-between w-full text-[10px] text-slate-500 font-mono mt-1">
-              <span>Şimdi</span>
-              <span>+12s</span>
-              <span>+16s</span>
-              <span>+34s</span>
+            <div className="w-[20%] bg-emerald-500 flex items-center justify-center text-slate-950 text-xs font-black animate-pulse border-r border-slate-800">
+              ⚙️ BAKIM (4s)
+            </div>
+            <div className="w-[40%] bg-blue-800 flex items-center justify-center text-white text-xs font-bold">
+              Sipariş #402 (18s)
             </div>
           </div>
 
-          <div className="mt-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 flex items-start gap-3">
-            <span className="text-lg">💡</span>
+          {/* Timeline axis ticks */}
+          <div className="flex justify-between text-[9px] text-slate-500 font-mono mt-1 px-0.5">
+            <span>Şimdi</span>
+            <span>+12s</span>
+            <span>+16s</span>
+            <span>+34s</span>
+          </div>
+
+          {/* Footer Alert */}
+          <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3 mt-4 flex items-start gap-3">
+            <span className="text-lg leading-none pt-0.5">💡</span>
             <p className="text-xs text-emerald-400 leading-relaxed">
-              <strong className="text-emerald-300">Kurtarılan Kurulum Süresi: 3.5 Saat.</strong><br/>
-              Teslimatlar gecikmeyecek şekilde bakım, iki farklı kalite üretiminin arasına alındı.
+              <strong className="text-emerald-300">Kurtarılan Kurulum Süresi: 3.5 Saat.</strong><br />
+              Teslimatlar gecikmeyecek şekilde bakım, iki üretim arasına alındı.
             </p>
           </div>
         </div>
 
-      </div>
     </div>
   );
 }
