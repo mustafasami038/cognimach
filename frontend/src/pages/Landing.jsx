@@ -190,94 +190,55 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* SECTION 1.5: SISTEM 2.0 */}
-      <section className="w-full py-16 px-4 lg:px-12 flex flex-col gap-10" style={{ background: 'rgba(15, 23, 42, 0.3)' }}>
-        <div className="container" style={{ margin: '0 auto' }}>
-          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 mb-2 border-b border-slate-800 pb-4">
-            Sistem 2.0: Entegre Çizelgeleme & Frekans Analizi
-          </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
-            
-            {/* Card Component 1: Titreşim Zarf Spektrumu */}
-            <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 rounded-xl p-6 shadow-lg flex flex-col">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                  📊 Titreşim Zarf Spektrumu (Live)
-                </h3>
-                <span className="flex items-center gap-2 text-xs font-semibold text-emerald-400 bg-emerald-400/10 px-3 py-1 rounded-full border border-emerald-400/20">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                  </span>
-                  Sensör Aktif
-                </span>
-              </div>
-              
-              <div className="flex-1 flex items-end justify-center gap-1 h-48 mt-4 border-b border-l border-slate-700 px-4 pb-0 relative">
-                <div className="w-4 bg-cyan-500 h-10 rounded-t-sm"></div>
-                <div className="w-4 bg-cyan-500 h-16 rounded-t-sm"></div>
-                <div className="w-4 bg-cyan-500 h-24 rounded-t-sm animate-pulse"></div>
-                <div className="w-4 bg-cyan-500 h-12 rounded-t-sm"></div>
-                <div className="w-4 bg-cyan-500 h-20 rounded-t-sm"></div>
-                <div className="w-4 bg-cyan-500 h-10 rounded-t-sm"></div>
-                
-                {/* Anomaly Spike at 165Hz */}
-                <div className="w-4 bg-red-500 h-40 rounded-t-sm animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.8)] relative group">
-                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-900 text-red-400 text-[10px] font-mono px-2 py-1 rounded border border-red-500/50 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-                    165 Hz (Arıza)
-                  </div>
-                </div>
-                
-                <div className="w-4 bg-cyan-500 h-28 rounded-t-sm"></div>
-                <div className="w-4 bg-cyan-500 h-16 rounded-t-sm"></div>
-                <div className="w-4 bg-cyan-500 h-32 rounded-t-sm"></div>
-                <div className="w-4 bg-cyan-500 h-20 rounded-t-sm"></div>
-                <div className="w-4 bg-cyan-500 h-14 rounded-t-sm"></div>
-                <div className="w-4 bg-cyan-500 h-24 rounded-t-sm"></div>
-                <div className="w-4 bg-cyan-500 h-12 rounded-t-sm"></div>
-                
-                {/* Axis Labels */}
-                <div className="absolute -bottom-6 left-2 text-[10px] text-slate-500 font-mono">0 Hz</div>
-                <div className="absolute -bottom-6 right-2 text-[10px] text-slate-500 font-mono">500 Hz</div>
-              </div>
+      {/* SİSTEM 2.0 - ANA SAYFA VİTRİN KARTLARI */}
+      <div className="w-full max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 mt-12 border-t border-slate-800">
+        <h2 className="text-3xl font-bold text-white mb-8">Sistem 2.0: Entegre Çizelgeleme & Frekans Analizi</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          
+          {/* KART 1: SPEKTRUM */}
+          <div className="bg-slate-900/50 backdrop-blur-md border border-slate-700/50 rounded-2xl p-6 shadow-xl">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-lg font-bold text-cyan-400">📊 Titreşim Zarf Spektrumu</h3>
+              <span className="bg-emerald-500/20 text-emerald-400 text-xs px-3 py-1 rounded-full border border-emerald-500/30 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Sensör Aktif
+              </span>
             </div>
-
-            {/* Card Component 2: Üretim ve Bakım Çizelgesi */}
-            <div className="bg-slate-900/60 backdrop-blur-xl border border-emerald-500/30 rounded-xl p-6 shadow-lg flex flex-col justify-between">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                  ⏱️ Üretim ve Bakım Çizelgesi
-                </h3>
-                <span className="text-xs font-semibold text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full border border-cyan-400/20">
-                  Optimal Slot Bulundu
-                </span>
+            {/* Görsel Çubuklar (Yazı değil, gerçek çizim) */}
+            <div className="flex items-end gap-1 h-32 w-full border-b border-l border-slate-700 p-2 relative">
+              <div className="w-full bg-cyan-500/40 h-[30%] rounded-t-sm"></div>
+              <div className="w-full bg-cyan-500/60 h-[50%] rounded-t-sm"></div>
+              <div className="w-full bg-cyan-500/30 h-[40%] rounded-t-sm"></div>
+              <div className="w-full bg-cyan-500/70 h-[60%] rounded-t-sm"></div>
+              {/* Arıza Çubuğu */}
+              <div className="w-full bg-red-500 h-[90%] rounded-t-sm animate-pulse shadow-[0_0_15px_red] relative">
+                <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-red-400 font-mono whitespace-nowrap bg-slate-950 px-1 rounded">⚠️ 165 Hz</span>
               </div>
-              
-              <div className="w-full flex flex-col gap-2 mt-4">
-                <div className="flex w-full h-8 rounded-md overflow-hidden border border-slate-700 shadow-inner">
-                  <div className="w-[40%] bg-blue-600 flex items-center justify-center border-r border-slate-800">
-                    <span className="text-xs font-bold text-white truncate px-1">Order #401</span>
-                  </div>
-                  <div className="w-[20%] bg-emerald-500 flex items-center justify-center border-r border-slate-800 animate-pulse">
-                    <span className="text-[10px] sm:text-xs font-bold text-slate-950 truncate px-1">⚙️ BAKIM</span>
-                  </div>
-                  <div className="w-[40%] bg-blue-800 flex items-center justify-center">
-                    <span className="text-xs font-bold text-white truncate px-1">Order #402</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-8 bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 flex items-center gap-3">
-                <span className="text-xl">💡</span>
-                <p className="text-sm text-emerald-400 font-medium">
-                  Kurtarılan Kurulum Süresi: 3.5 Saat.
-                </p>
-              </div>
+              <div className="w-full bg-cyan-500/50 h-[45%] rounded-t-sm"></div>
+              <div className="w-full bg-cyan-500/40 h-[35%] rounded-t-sm"></div>
+              <div className="w-full bg-cyan-500/80 h-[55%] rounded-t-sm"></div>
             </div>
-
           </div>
+
+          {/* KART 2: ÇİZELGE */}
+          <div className="bg-slate-900/50 backdrop-blur-md border border-slate-700/50 rounded-2xl p-6 shadow-xl">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-lg font-bold text-cyan-400">⏱️ Üretim ve Bakım Çizelgesi</h3>
+              <span className="bg-cyan-500/20 text-cyan-400 text-xs px-3 py-1 rounded-full border border-cyan-500/30">Optimal Slot</span>
+            </div>
+            {/* Görsel Bar (Yazı değil, gerçek çizim) */}
+            <div className="w-full h-12 flex rounded-lg overflow-hidden border border-slate-700 mb-4">
+              <div className="w-[40%] bg-blue-600 flex items-center justify-center text-xs text-white font-bold">Sipariş #401</div>
+              <div className="w-[20%] bg-emerald-500 flex items-center justify-center text-xs text-slate-900 font-black animate-pulse border-x border-slate-800">⚙️ BAKIM</div>
+              <div className="w-[40%] bg-blue-800 flex items-center justify-center text-xs text-white font-bold">Sipariş #402</div>
+            </div>
+            <div className="bg-emerald-500/10 border border-emerald-500/20 p-3 rounded-lg text-sm text-emerald-400 mt-6">
+              💡 <strong>3.5 Saat Kurulum Kazanıldı.</strong> Bakım iki üretim arasına otonom planlandı.
+            </div>
+          </div>
+
         </div>
-      </section>
+      </div>
+
 
       {/* SECTION 2: MARQUEE */}
       <div style={{ padding: '3rem 0', background: 'rgba(2, 6, 23, 0.5)' }}>
