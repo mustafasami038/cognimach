@@ -345,89 +345,78 @@ export default function Dashboard() {
       </div>
 
       {/* YENİ MODÜLLER: ZARF SPEKTRUMU VE ÇİZELGELEME */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 pb-10">
-        {/* Widget 1: Titreşim Zarf Spektrumu */}
-        <div className="bg-slate-900/40 backdrop-blur-md border border-slate-700/50 rounded-xl p-6 flex flex-col shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
-          <div className="flex justify-between items-center mb-4 border-b border-slate-700/50 pb-3">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              📊 Titreşim Zarf Spektrumu (Live)
-            </h3>
-            <div className="flex items-center gap-2 text-emerald-400 text-xs font-semibold px-3 py-1 bg-emerald-500/10 rounded-full border border-emerald-500/20">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              Sensör Aktif
-            </div>
-          </div>
-          <div className="flex-1 flex flex-col relative h-48 mt-2">
-             {/* Simulated Bar/Line Chart */}
-             <div className="flex items-end justify-between h-full gap-[2px] w-full px-2">
-               {Array.from({ length: 45 }).map((_, i) => {
-                 // Generate random looking spectrum with a peak around 165 Hz (index 15)
-                 const isPeak = i === 15;
-                 const baseHeight = Math.max(5, Math.random() * 25);
-                 const height = isPeak ? 85 + Math.random() * 10 : baseHeight;
-                 return (
-                   <div 
-                     key={i} 
-                     className={`w-full rounded-t-sm ${isPeak ? 'bg-red-500' : 'bg-cyan-500/70'}`}
-                     style={{ 
-                       height: `${height}%`,
-                       transition: 'height 0.2s ease-in-out',
-                       animation: isPeak ? 'pulse 2s infinite' : 'none'
-                     }}
-                   ></div>
-                 );
-               })}
-             </div>
-             {/* X-axis labels */}
-             <div className="flex justify-between text-[11px] text-slate-400 mt-2 px-2 border-t border-slate-700/50 pt-2 font-medium">
-               <span>0 Hz</span>
-               <span>250 Hz</span>
-               <span>500 Hz</span>
-             </div>
-             {/* Warning Line Overlay */}
-             <div className="absolute left-[33%] top-0 h-full border-l-2 border-dashed border-red-500/60 pointer-events-none flex flex-col justify-start pt-2">
-               <div className="ml-2 text-[11px] text-red-400 font-bold whitespace-nowrap bg-slate-900/90 px-2 py-1 rounded border border-red-500/30">
-                 Rulman İç Bilezik Arıza Frekansı: 165 Hz
-               </div>
-             </div>
-          </div>
-        </div>
-
-        {/* Widget 2: Akıllı Bakım Çizelgesi */}
-        <div className="bg-slate-900/40 backdrop-blur-md border border-slate-700/50 rounded-xl p-6 flex flex-col shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
-          <div className="flex justify-between items-center mb-4 border-b border-slate-700/50 pb-3">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              ⏱️ Üretim ve Bakım Çizelgesi
-            </h3>
-            <div className="text-cyan-400 text-xs font-bold px-3 py-1 bg-cyan-500/10 rounded border border-cyan-500/20 uppercase tracking-wider">
-              Optimal Slot Bulundu
-            </div>
-          </div>
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6 w-full">
           
-          <div className="flex-1 flex flex-col justify-center gap-6 mt-4">
-            {/* Horizontal Timeline (Gantt) */}
-            <div className="flex w-full h-14 rounded-lg overflow-hidden border border-slate-700 shadow-inner">
-              {/* Block 1 */}
-              <div className="flex-[3] bg-blue-900/60 border-r border-blue-500/30 flex items-center justify-center text-[11px] lg:text-xs font-semibold text-blue-200 truncate px-2 hover:bg-blue-800/60 transition-colors">
-                Sipariş #401 (1. Kalite Kağıt) - 12 Saat
+          <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-xl p-6 shadow-[0_0_30px_rgba(0,229,255,0.05)] flex flex-col">
+              <div className="flex justify-between items-center mb-8">
+                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                      📊 Titreşim Zarf Spektrumu (Live)
+                  </h3>
+                  <span className="flex items-center gap-2 text-xs font-semibold text-emerald-400 bg-emerald-400/10 px-3 py-1 rounded-full border border-emerald-400/20">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                      </span>
+                      Sensör Aktif
+                  </span>
               </div>
-              {/* Block 2 (Neon Cyan) */}
-              <div className="flex-[1.5] bg-cyan-500/20 border-r border-cyan-400/50 flex items-center justify-center text-[10px] lg:text-[11px] font-bold text-cyan-300 truncate px-2 shadow-[inset_0_0_15px_rgba(34,211,238,0.3)] animate-pulse text-center leading-tight">
-                ⚙️ ÖNERİLEN BAKIM<br/>(RUL Kapanmadan Önce) - 4 Saat
+              <div className="relative h-32 w-full flex items-end justify-between gap-1 border-b border-l border-slate-700 px-2 pb-0">
+                  <div className="w-full bg-cyan-500/30 hover:bg-cyan-400 transition-colors h-[20%] rounded-t-sm"></div>
+                  <div className="w-full bg-cyan-500/50 hover:bg-cyan-400 transition-colors h-[40%] rounded-t-sm"></div>
+                  <div className="w-full bg-cyan-500/80 hover:bg-cyan-400 transition-colors h-[70%] rounded-t-sm animate-pulse"></div>
+                  <div className="w-full bg-cyan-500/40 hover:bg-cyan-400 transition-colors h-[30%] rounded-t-sm"></div>
+                  <div className="w-full bg-red-500/90 hover:bg-red-400 transition-colors h-[90%] rounded-t-sm animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.5)]"></div>
+                  <div className="w-full bg-cyan-500/60 hover:bg-cyan-400 transition-colors h-[50%] rounded-t-sm"></div>
+                  <div className="w-full bg-cyan-500/30 hover:bg-cyan-400 transition-colors h-[25%] rounded-t-sm"></div>
+                  <div className="w-full bg-cyan-500/50 hover:bg-cyan-400 transition-colors h-[45%] rounded-t-sm"></div>
+                  <div className="w-full bg-cyan-500/40 hover:bg-cyan-400 transition-colors h-[35%] rounded-t-sm"></div>
+                  <div className="absolute -bottom-6 left-0 text-[10px] text-slate-500 font-mono">0 Hz</div>
+                  <div className="absolute -bottom-6 left-1/2 text-[10px] text-slate-500 font-mono">250 Hz</div>
+                  <div className="absolute -bottom-6 right-0 text-[10px] text-slate-500 font-mono">500 Hz</div>
+                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-red-400 font-mono bg-slate-950/90 px-3 py-1 rounded border border-red-500/30 whitespace-nowrap">
+                      ⚠️ İç Bilezik Arıza Frekansı: 165 Hz
+                  </div>
               </div>
-              {/* Block 3 */}
-              <div className="flex-[4] bg-blue-900/60 flex items-center justify-center text-[11px] lg:text-xs font-semibold text-blue-200 truncate px-2 hover:bg-blue-800/60 transition-colors">
-                Sipariş #402 (2. Kalite Kağıt) - 18 Saat
-              </div>
-            </div>
-            
-            {/* Metric Text */}
-            <div className="mt-2 flex items-center gap-3 text-emerald-400 text-sm bg-emerald-500/10 p-4 rounded-lg border border-emerald-500/20">
-              <span className="text-2xl">💡</span>
-              <span className="font-semibold tracking-wide">Kurtarılan Kurulum (Setup) Süresi: 3.5 Saat. Teslimatlar Gecikmeyecek.</span>
-            </div>
           </div>
-        </div>
+
+          <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-xl p-6 shadow-[0_0_30px_rgba(0,229,255,0.05)] flex flex-col justify-between">
+              <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                      ⏱️ Üretim ve Bakım Çizelgesi
+                  </h3>
+                  <span className="text-xs font-semibold text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full border border-cyan-400/20">
+                      Optimal Slot Bulundu
+                  </span>
+              </div>
+              
+              <div className="w-full flex flex-col gap-2 mt-4">
+                  <div className="flex w-full h-14 rounded-lg overflow-hidden border border-slate-700/50 shadow-inner">
+                      <div className="w-[40%] bg-blue-600/60 flex items-center justify-center border-r border-slate-800 hover:bg-blue-500 transition-colors cursor-help">
+                          <span className="text-xs font-bold text-white truncate px-2">Sipariş #401 (12s)</span>
+                      </div>
+                      <div className="w-[20%] bg-gradient-to-r from-emerald-500 to-cyan-500 flex items-center justify-center border-r border-slate-800 animate-pulse cursor-help">
+                          <span className="text-[10px] sm:text-xs font-black text-slate-900 truncate px-1">⚙️ BAKIM (4s)</span>
+                      </div>
+                      <div className="w-[40%] bg-blue-800/60 flex items-center justify-center hover:bg-blue-700 transition-colors cursor-help">
+                          <span className="text-xs font-bold text-white truncate px-2">Sipariş #402 (18s)</span>
+                      </div>
+                  </div>
+                  <div className="flex justify-between w-full text-[10px] text-slate-500 font-mono mt-1 px-1">
+                      <span>Şimdi</span>
+                      <span>+12s</span>
+                      <span>+16s</span>
+                      <span>+34s</span>
+                  </div>
+              </div>
+
+              <div className="mt-6 bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4 flex items-start gap-3">
+                  <span className="text-xl">💡</span>
+                  <p className="text-sm text-emerald-400 leading-relaxed">
+                      <strong className="text-emerald-300">Kurtarılan Kurulum (Setup) Süresi: 3.5 Saat.</strong><br/>
+                      <span className="text-emerald-500/80 text-xs">Müşteri teslimatları gecikmeyecek şekilde bakım, iki farklı kalite kağıt üretiminin arasına alındı.</span>
+                  </p>
+              </div>
+          </div>
       </div>
     </div>
   );
