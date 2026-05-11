@@ -190,6 +190,62 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* SECTION 1.5: SISTEM 2.0 */}
+      <section className="w-full py-16 px-4 lg:px-12 flex flex-col gap-10" style={{ background: 'rgba(15, 23, 42, 0.3)' }}>
+        <div className="container" style={{ margin: '0 auto' }}>
+          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 mb-2 border-b border-slate-800 pb-4">
+            Sistem 2.0: Entegre Çizelgeleme & Frekans Analizi
+          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+            {/* Card 1: Smart Scheduling */}
+            <div className="bg-slate-900/50 backdrop-blur-xl border border-emerald-500/30 rounded-xl p-6 shadow-lg">
+              <h3 className="text-xl font-bold text-white mb-2">⏱️ Akıllı Üretim ve Bakım Çizelgelemesi</h3>
+              <p className="text-slate-400 mb-6">
+                Müşteri sipariş teslimatlarını ve makine kurulum sürelerini hesaba katarak, üretimi durdurmadan en optimal bakım penceresini otonom olarak hesaplar.
+              </p>
+              {/* Mock UI: Horizontal Timeline */}
+              <div className="flex items-center gap-2 overflow-hidden text-sm font-semibold rounded-lg mt-4">
+                <div className="bg-slate-800 text-slate-300 px-4 py-3 flex-1 text-center border-r border-slate-700 whitespace-nowrap">
+                  [Sipariş A]
+                </div>
+                <div className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 px-4 py-3 flex-[1.5] text-center shadow-[0_0_15px_rgba(16,185,129,0.2)] whitespace-nowrap">
+                  🟢 OPTİMAL BAKIM (RUL: 45)
+                </div>
+                <div className="bg-slate-800 text-slate-300 px-4 py-3 flex-1 text-center border-l border-slate-700 whitespace-nowrap">
+                  [Sipariş B]
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2: Vibration Spectrum */}
+            <div className="bg-slate-900/50 backdrop-blur-xl border border-cyan-500/30 rounded-xl p-6 shadow-lg">
+              <h3 className="text-xl font-bold text-white mb-2">📊 Gerçek Zamanlı Zarf Spektrumu</h3>
+              <p className="text-slate-400 mb-6">
+                Makine gürültüsünü filtreleyerek, rulman arızalarının karakteristik frekanslarını (Envelope Spectrum) tespit eder.
+              </p>
+              {/* Mock UI: CSS-only Equalizer */}
+              <div className="flex items-end justify-between h-16 px-4 gap-1 mt-4">
+                {[
+                  {h: 30, d: 0.7}, {h: 45, d: 1.2}, {h: 20, d: 0.9}, {h: 80, d: 0.6}, {h: 50, d: 1.1},
+                  {h: 40, d: 0.8}, {h: 90, d: 0.5}, {h: 60, d: 1.0}, {h: 30, d: 1.3}, {h: 25, d: 0.8},
+                  {h: 75, d: 0.6}, {h: 45, d: 1.2}, {h: 35, d: 0.9}, {h: 55, d: 1.1}, {h: 65, d: 0.7}
+                ].map((bar, i) => (
+                  <div 
+                    key={i}
+                    className="w-2 bg-cyan-400 rounded-t-sm animate-pulse"
+                    style={{ 
+                      height: `${bar.h}%`,
+                      animationDuration: `${bar.d}s`,
+                      boxShadow: '0 0 10px rgba(34,211,238,0.5)'
+                    }}
+                  ></div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* SECTION 2: MARQUEE */}
       <div style={{ padding: '3rem 0', background: 'rgba(2, 6, 23, 0.5)' }}>
         <h3 className="text-center" style={{ fontSize: '0.9rem', color: '#94a3b8', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '2.5rem', fontWeight: 600 }}>

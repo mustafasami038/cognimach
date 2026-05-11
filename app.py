@@ -315,7 +315,7 @@ elif st.session_state.page == 'dashboard':
 
     def sonraki_saglam_veriyi_bul(mevcut_index, veri_seti):
         for j in range(mevcut_index + 1, len(veri_seti)):
-            if veri_seti.iloc[j]['Machine failure'] == 0: 
+            if veri_seti.iloc[j]['Tool wear [min]'] < 15: 
                 return j
         return mevcut_index + 1 
 
@@ -406,8 +406,7 @@ elif st.session_state.page == 'dashboard':
             if st.session_state.makine_durumu == 'calisiyor':
                 canli_ekran = st.empty()
                 
-                if st.session_state.kacinci_satir < len(df):
-                    i = st.session_state.kacinci_satir
+                for i in range(st.session_state.kacinci_satir, len(df)):
                     anlik_veri = df.iloc[i]
                     gecmis_veri = df.iloc[max(0, i-30):i+1] 
                     
@@ -457,15 +456,10 @@ elif st.session_state.page == 'dashboard':
                         su_an = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                         yeni_log = pd.DataFrame([{'Tarih/Saat': su_an, 'Vardiya Dk.': i, 'Tetikleyen AI': tetikleyen, 'Olay Tipi': olay, 'Hava Sıc.': anlik_veri['Air temperature [K]'], 'Hız': anlik_veri['Rotational speed [rpm]'], 'Aşınma': anlik_veri['Tool wear [min]']}])
                         st.session_state.hata_loglari = pd.concat([st.session_state.hata_loglari, yeni_log], ignore_index=True)
-                        mail_sonuc = otomatik_mail_gonder(tetikleyen, olay, anlik_veri, "Sıfırlandı", gnd_mail, gnd_sifre, alc_mail)
-                        st.session_state.son_mail_durumu = mail_sonuc
-                        if "✅" in mail_sonuc:
-                            st.toast("E-Mail Başarıyla Gönderildi!", icon="✅")
-                        else:
-                            st.toast("E-Mail Gönderimi Başarısız: " + mail_sonuc, icon="❌")
+                        st.session_state.son_mail_durumu = otomatik_mail_gonder(tetikleyen, olay, anlik_veri, "Sıfırlandı", gnd_mail, gnd_sifre, alc_mail)
                         st.session_state.makine_durumu = 'arizali'
                         st.session_state.kacinci_satir = i 
-                        time.sleep(0.5)
+                        canli_ekran.empty() 
                         st.rerun() 
                     
                     elif 0 < rul_sayisal <= erken_uyari_esigi:
@@ -474,23 +468,13 @@ elif st.session_state.page == 'dashboard':
                         su_an = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                         yeni_log = pd.DataFrame([{'Tarih/Saat': su_an, 'Vardiya Dk.': i, 'Tetikleyen AI': tetikleyen, 'Olay Tipi': olay, 'Hava Sıc.': anlik_veri['Air temperature [K]'], 'Hız': anlik_veri['Rotational speed [rpm]'], 'Aşınma': anlik_veri['Tool wear [min]']}])
                         st.session_state.hata_loglari = pd.concat([st.session_state.hata_loglari, yeni_log], ignore_index=True)
-                        mail_sonuc = otomatik_mail_gonder(tetikleyen, olay, anlik_veri, rul_gosterim, gnd_mail, gnd_sifre, alc_mail)
-                        st.session_state.son_mail_durumu = mail_sonuc
-                        if "✅" in mail_sonuc:
-                            st.toast("E-Mail Başarıyla Gönderildi!", icon="✅")
-                        else:
-                            st.toast("E-Mail Gönderimi Başarısız: " + mail_sonuc, icon="❌")
+                        st.session_state.son_mail_durumu = otomatik_mail_gonder(tetikleyen, olay, anlik_veri, rul_gosterim, gnd_mail, gnd_sifre, alc_mail)
                         st.session_state.makine_durumu = 'bakim_gerekiyor'
                         st.session_state.kacinci_satir = i 
-                        time.sleep(0.5)
+                        canli_ekran.empty() 
                         st.rerun()
                     
-                    else:
-                        st.session_state.kacinci_satir += 1
-                        time.sleep(0.5)
-                        st.rerun()
-                else:
-                    st.info("Veri seti sonuna ulaşıldı.")
+                    time.sleep(0.5)
 
             elif st.session_state.makine_durumu == 'bakim_gerekiyor':
                 i = st.session_state.kacinci_satir
@@ -519,7 +503,11 @@ elif st.session_state.page == 'dashboard':
                     with st.spinner("Bilişsel motor devrede..."):
                         try:
                             genai.configure(api_key=api_key)
-                            secilen_model = 'gemini-1.5-flash'
+                            secilen_model = 'gemini-pro' 
+                            for m in genai.list_models():
+                                if 'generateContent' in m.supported_generation_methods and 'flash' in m.name:
+                                    secilen_model = m.name
+                                    break
                             llm_model = genai.GenerativeModel(secilen_model)
                             senaryo = "SARI ALARM (Degradasyon)" if st.session_state.makine_durumu == 'bakim_gerekiyor' else "KIRMIZI ALARM (Donanım Şoku)"
                             prompt = f"Şirket: {sirket_adi}. DURUM: {senaryo}. Fabrika yönetimine profesyonel, teknik kök neden ve otonom aksiyon raporu yaz."
@@ -559,7 +547,11 @@ elif st.session_state.page == 'dashboard':
                         with st.spinner("Cogni düşünüyor..."):
                             try:
                                 genai.configure(api_key=api_key)
-                                secilen_model = 'gemini-1.5-flash'
+                                secilen_model = 'gemini-pro' 
+                                for m in genai.list_models():
+                                    if 'generateContent' in m.supported_generation_methods and 'flash' in m.name:
+                                        secilen_model = m.name
+                                        break
                                 model = genai.GenerativeModel(secilen_model)
                                 d = df.iloc[st.session_state.kacinci_satir] 
                                 canli_context = f"Sistem: CogniMach. Şirket: {sirket_adi}. Soru: {prompt}."

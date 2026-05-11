@@ -13,6 +13,7 @@ import io
 import warnings
 import urllib.parse
 import urllib.request
+import random
 
 warnings.filterwarnings("ignore")
 
@@ -383,3 +384,70 @@ def ai_chat(tenant_id: str, req: ChatRequest):
         return {"reply": response.text}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+def get_vibration_envelope_spectrum(rpm):
+    """
+    Simulates an FFT (Fast Fourier Transform) output for bearing fault frequencies.
+    Returns an array of frequencies (Hz) and corresponding amplitudes based on RPM.
+    """
+    frequencies_hz = list(range(10, 1000, 5))
+    rps = rpm / 60.0
+    
+    # Random baseline noise for realism
+    amplitudes = [random.uniform(0.01, 0.05) for _ in frequencies_hz]
+    
+    # Characteristic fault frequencies (simulated multipliers of RPS)
+    # E.g. BPFO, BPFI, BSF, FTF
+    fault_multipliers = [1.0, 3.14, 4.56, 5.23]
+    
+    for mult in fault_multipliers:
+        fault_freq = rps * mult
+        # Inject an amplitude peak around this frequency
+        try:
+            # Find closest frequency bin
+            closest_idx = next(i for i, f in enumerate(frequencies_hz) if f >= fault_freq)
+            amplitudes[closest_idx] += random.uniform(0.4, 1.2)
+            # Add some width to the peak
+            if closest_idx > 0:
+                amplitudes[closest_idx - 1] += random.uniform(0.1, 0.4)
+            if closest_idx < len(amplitudes) - 1:
+                amplitudes[closest_idx + 1] += random.uniform(0.1, 0.4)
+        except StopIteration:
+            pass
+
+    return {
+        "frequencies_hz": frequencies_hz,
+        "amplitudes": amplitudes
+    }
+
+def calculate_smart_maintenance_schedule(rul_shifts, pending_orders):
+    """
+    Takes Remaining Useful Life (RUL) and a list of customer orders.
+    Simulates finding an optimal gap between orders to save setup time before RUL expires.
+    """
+    if not pending_orders:
+        return {
+            "Optimal Maintenance Slot": "N/A",
+            "Saved Setup Time": "0",
+            "Status": "Sipariş bulunamadı"
+        }
+        
+    # Simulate logic: Find the best gap between orders
+    # Assuming pending_orders is a list of dicts: [{"id": "Order A", "setup_time": 4}, ...]
+    
+    if len(pending_orders) >= 2 and rul_shifts > 2:
+        # Example: Choose gap between 1st and 2nd order to perform maintenance
+        saved_time = pending_orders[1].get('setup_time', 4) * 0.5 # e.g. 50% setup time saved
+        slot = f"{pending_orders[0].get('id', 'Sipariş A')} sonrası, {pending_orders[1].get('id', 'Sipariş B')} öncesi"
+        status = "Optimal Çözüm Bulundu (Üretim Durmayacak)"
+    else:
+        # Not enough orders or too low RUL
+        saved_time = 0
+        slot = "Mevcut sipariş sonrası acil bakım"
+        status = "Kritik RUL Seviyesi"
+
+    return {
+        "Optimal Maintenance Slot": slot,
+        "Saved Setup Time": f"{saved_time:.1f} saat",
+        "Status": status
+    }
