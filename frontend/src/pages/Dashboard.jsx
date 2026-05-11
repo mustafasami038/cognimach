@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Play, Wrench, AlertTriangle, MessageSquare, FileUp } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Dashboard() {
   const tenantId = localStorage.getItem('tenant_id');
@@ -344,11 +345,21 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* V2.0 MODULES ROW */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '1.5rem', marginTop: '1.5rem', width: '100%' }}>
+      {/* V2.0 MODULES ROW — framer-motion stagger */}
+      <motion.div
+        variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.2 } } }}
+        initial="hidden"
+        animate="visible"
+        style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '1.5rem', marginTop: '1.5rem', width: '100%' }}
+      >
 
         {/* WIDGET 1: Titreşim Zarf Spektrumu */}
-        <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <motion.div
+          className="glass-panel"
+          variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 80, damping: 15 } } }}
+          whileHover={{ y: -5, boxShadow: '0 20px 40px -15px rgba(0,229,255,0.1)' }}
+          style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+        >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h3 style={{ color: '#e2e8f0', margin: 0, fontSize: '1rem', fontWeight: 700 }}>
               📊 Titreşim Zarf Spektrumu (Live)
@@ -361,7 +372,6 @@ export default function Dashboard() {
 
           {/* Equalizer Chart */}
           <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-end', gap: '4px', height: '140px', width: '100%', borderBottom: '1px solid #1e293b', borderLeft: '1px solid #1e293b', padding: '0 8px 0 8px' }}>
-            {/* Normal bars */}
             {[20, 45, 30, 60, 35, 50, 25].map((h, i) => (
               <div key={i} style={{ flex: 1, height: `${h}%`, backgroundColor: 'rgba(34,211,238,0.5)', borderRadius: '3px 3px 0 0' }}></div>
             ))}
@@ -371,18 +381,21 @@ export default function Dashboard() {
                 ⚠️ 165 Hz (İç Bilezik)
               </span>
             </div>
-            {/* Normal bars */}
             {[55, 40, 65, 30, 48, 22, 38].map((h, i) => (
               <div key={i+8} style={{ flex: 1, height: `${h}%`, backgroundColor: 'rgba(34,211,238,0.5)', borderRadius: '3px 3px 0 0' }}></div>
             ))}
-            {/* Axis labels */}
             <span style={{ position: 'absolute', bottom: '-20px', left: 0, fontSize: '10px', color: '#64748b', fontFamily: 'monospace' }}>0 Hz</span>
             <span style={{ position: 'absolute', bottom: '-20px', right: 0, fontSize: '10px', color: '#64748b', fontFamily: 'monospace' }}>500 Hz</span>
           </div>
-        </div>
+        </motion.div>
 
         {/* WIDGET 2: Üretim ve Bakım Çizelgesi */}
-        <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <motion.div
+          className="glass-panel"
+          variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 80, damping: 15 } } }}
+          whileHover={{ y: -5, boxShadow: '0 20px 40px -15px rgba(0,229,255,0.1)' }}
+          style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+        >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h3 style={{ color: '#e2e8f0', margin: 0, fontSize: '1rem', fontWeight: 700 }}>
               ⏱️ Üretim ve Bakım Çizelgesi
@@ -418,9 +431,9 @@ export default function Dashboard() {
               <span style={{ color: '#6ee7b7', fontSize: '0.78rem' }}>Teslimatlar gecikmeyecek şekilde bakım, iki üretim arasına alındı.</span>
             </p>
           </div>
-        </div>
+        </motion.div>
 
-      </div>
+      </motion.div>
 
     </div>
   );
