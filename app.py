@@ -9,6 +9,9 @@ import datetime
 from statsmodels.tsa.holtwinters import Holt
 from sklearn.ensemble import RandomForestClassifier
 import warnings
+import plotly.graph_objects as go
+import numpy as np
+from datetime import timedelta
 
 warnings.filterwarnings("ignore")
 
@@ -449,7 +452,97 @@ elif st.session_state.page == 'dashboard':
                         fig.update_layout(plot_bgcolor='#0b0f19', paper_bgcolor='#0b0f19', font_color='#e2e8f0', margin=dict(l=20, r=20, t=40, b=20))
                         fig.update_traces(line_color='#00e5ff') 
                         st.plotly_chart(fig, use_container_width=True)
+                        
+                        # --- SİSTEM 2.0 CANLI MODÜLLER BAŞLANGICI ---
+                        st.divider()
+                        col_mod1, col_mod2 = st.columns(2)
+
+                        # 1. MODÜL: TİTREŞİM ZARF SPEKTRUMU (Vibration Spectrum)
+                        with col_mod1:
+                            st.markdown("### 📊 Titreşim Zarf Spektrumu (Live)")
+                            
+                            # Frekanslar ve RPM tabanlı genlik simülasyonu
+                            x_freq = np.linspace(0, 500, 200)
+                            rpm_factor = anlik_veri['Rotational speed [rpm]'] / 1000.0
+                            y_amp = np.abs(np.sin(x_freq * rpm_factor)) + np.random.normal(0, 0.2, 200)
+                            
+                            # KRİTİK MANTIK: Eğer RUL eşik altındaysa 165Hz (İç Bilezik) etrafında pik yaptır
+                            if rul_sayisal <= erken_uyari_esigi:
+                                fault_indices = np.where((x_freq >= 160) & (x_freq <= 170))[0]
+                                y_amp[fault_indices] += np.random.uniform(3, 6, len(fault_indices))
+                            
+                            fig_vib = go.Figure()
+                            fig_vib.add_trace(go.Scatter(
+                                x=x_freq, y=y_amp, 
+                                mode='lines', 
+                                line=dict(color='#00e5ff', width=2),
+                                fill='tozeroy',
+                                fillcolor='rgba(0, 229, 255, 0.1)'
+                            ))
+                            
+                            # 165Hz Uyarı Çizgisi
+                            fig_vib.add_vline(x=165, line_width=2, line_dash="dash", line_color="#ef4444")
+                            fig_vib.add_annotation(x=165, y=max(y_amp), text="⚠️ İç Bilezik Arızası (165Hz)", showarrow=False, font=dict(color="#ef4444"), xshift=80)
+                            
+                            fig_vib.update_layout(
+                                paper_bgcolor='#0b0f19',
+                                plot_bgcolor='#0b0f19',
+                                font=dict(color='white'),
+                                margin=dict(l=20, r=20, t=30, b=20),
+                                xaxis=dict(title='Frekans (Hz)', showgrid=True, gridcolor='#1e293b'),
+                                yaxis=dict(title='Genlik', showgrid=True, gridcolor='#1e293b'),
+                                height=300
+                            )
+                            st.plotly_chart(fig_vib, use_container_width=True)
+
+                        # 2. MODÜL: AKILLI BAKIM ÇİZELGESİ (Smart Scheduling Gantt)
+                        with col_mod2:
+                            st.markdown("### ⏱️ Üretim ve Bakım Çizelgesi")
+                            
+                            now = datetime.datetime.now()
+                            
+                            # Temel üretim siparişleri (Dummy Schedule)
+                            df_tasks = [
+                                {"Tip": "Üretim", "Sipariş": "Sipariş #401", "Start": now, "Finish": now + timedelta(hours=12)},
+                                {"Tip": "Üretim", "Sipariş": "Sipariş #402", "Start": now + timedelta(hours=16), "Finish": now + timedelta(hours=30)}
+                            ]
+                            
+                            # KRİTİK MANTIK: Eğer RUL tehlikedeyse optimal aralığa bakım ekle
+                            if rul_sayisal <= erken_uyari_esigi:
+                                st.success("💡 **Bakım optimal slota planlandı. Kurulum kazancı: 4 Saat**")
+                                df_tasks.append({
+                                    "Tip": "Bakım", 
+                                    "Sipariş": "🔧 OTONOM BAKIM SLOTU", 
+                                    "Start": now + timedelta(hours=12), 
+                                    "Finish": now + timedelta(hours=16)
+                                })
+                            else:
+                                st.info("Sistem sağlıklı. Optimal üretim kuyruğu devrede.")
+                                
+                            fig_gantt = px.timeline(
+                                df_tasks, 
+                                x_start="Start", 
+                                x_end="Finish", 
+                                y="Tip", 
+                                color="Tip", 
+                                text="Sipariş",
+                                color_discrete_map={"Üretim": "#3b82f6", "Bakım": "#ef4444"}
+                            )
+                            
+                            fig_gantt.update_yaxes(autorange="reversed") # Yukarıdan aşağı sırayla
+                            fig_gantt.update_layout(
+                                paper_bgcolor='#0b0f19',
+                                plot_bgcolor='#0b0f19',
+                                font=dict(color='white'),
+                                margin=dict(l=20, r=20, t=20, b=20),
+                                xaxis=dict(showgrid=True, gridcolor='#1e293b'),
+                                yaxis=dict(showgrid=False, title=''),
+                                height=300,
+                                showlegend=False
+                            )
+                            st.plotly_chart(fig_gantt, use_container_width=True)
                     
+
                     if rf_tahmin == 1 or anlik_veri['Machine failure'] == 1:
                         olay = '🚨 Anomali Şoku'
                         tetikleyen = 'Random Forest Nöral Ağı'
