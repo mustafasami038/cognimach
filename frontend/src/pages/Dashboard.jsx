@@ -345,95 +345,83 @@ export default function Dashboard() {
       </div>
 
       {/* V2.0 MODULES ROW */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 w-full">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '1.5rem', marginTop: '1.5rem', width: '100%' }}>
 
         {/* WIDGET 1: Titreşim Zarf Spektrumu */}
-        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-xl p-6 shadow-lg flex flex-col">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
+        <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h3 style={{ color: '#e2e8f0', margin: 0, fontSize: '1rem', fontWeight: 700 }}>
               📊 Titreşim Zarf Spektrumu (Live)
             </h3>
-            <span className="flex items-center gap-2 text-xs font-semibold text-emerald-400 bg-emerald-400/10 px-3 py-1 rounded-full border border-emerald-400/20">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              Sensör Aktif
-            </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', backgroundColor: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', borderRadius: '9999px', padding: '3px 10px' }}>
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981', display: 'inline-block', animation: 'pulse-glow 2s infinite' }}></span>
+              <span style={{ color: '#10b981', fontSize: '0.75rem', fontWeight: 600 }}>Sensör Aktif</span>
+            </div>
           </div>
 
-          {/* CSS Equalizer Chart */}
-          <div className="relative flex items-end gap-1 h-32 w-full border-b border-l border-slate-700 p-2">
-            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[20%]"></div>
-            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[45%]"></div>
-            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[30%]"></div>
-            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[60%]"></div>
-            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[35%]"></div>
-            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[50%]"></div>
-            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[25%]"></div>
-            {/* ANOMALY BAR — 165Hz İç Bilezik */}
-            <div className="relative w-full rounded-t-sm h-[95%] bg-red-500 animate-pulse shadow-[0_0_10px_red]">
-              <span className="absolute -top-7 left-1/2 -translate-x-1/2 text-[9px] text-red-400 font-mono bg-slate-950 px-1.5 py-0.5 rounded border border-red-500/40 whitespace-nowrap">
+          {/* Equalizer Chart */}
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-end', gap: '4px', height: '140px', width: '100%', borderBottom: '1px solid #1e293b', borderLeft: '1px solid #1e293b', padding: '0 8px 0 8px' }}>
+            {/* Normal bars */}
+            {[20, 45, 30, 60, 35, 50, 25].map((h, i) => (
+              <div key={i} style={{ flex: 1, height: `${h}%`, backgroundColor: 'rgba(34,211,238,0.5)', borderRadius: '3px 3px 0 0' }}></div>
+            ))}
+            {/* ANOMALY BAR — 165Hz */}
+            <div style={{ flex: 1, height: '95%', backgroundColor: '#ef4444', borderRadius: '3px 3px 0 0', boxShadow: '0 0 12px rgba(239,68,68,0.8)', position: 'relative', animation: 'pulse-glow 1.5s infinite' }}>
+              <span style={{ position: 'absolute', top: '-26px', left: '50%', transform: 'translateX(-50%)', fontSize: '9px', color: '#f87171', fontFamily: 'monospace', whiteSpace: 'nowrap', backgroundColor: '#020617', padding: '2px 6px', borderRadius: '4px', border: '1px solid rgba(239,68,68,0.4)' }}>
                 ⚠️ 165 Hz (İç Bilezik)
               </span>
             </div>
-            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[55%]"></div>
-            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[40%]"></div>
-            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[65%]"></div>
-            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[30%]"></div>
-            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[48%]"></div>
-            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[22%]"></div>
-            <div className="w-full bg-cyan-500/50 rounded-t-sm h-[38%]"></div>
-
-            {/* Axis Labels */}
-            <div className="absolute -bottom-5 left-0 text-[9px] text-slate-500 font-mono">0 Hz</div>
-            <div className="absolute -bottom-5 right-0 text-[9px] text-slate-500 font-mono">500 Hz</div>
+            {/* Normal bars */}
+            {[55, 40, 65, 30, 48, 22, 38].map((h, i) => (
+              <div key={i+8} style={{ flex: 1, height: `${h}%`, backgroundColor: 'rgba(34,211,238,0.5)', borderRadius: '3px 3px 0 0' }}></div>
+            ))}
+            {/* Axis labels */}
+            <span style={{ position: 'absolute', bottom: '-20px', left: 0, fontSize: '10px', color: '#64748b', fontFamily: 'monospace' }}>0 Hz</span>
+            <span style={{ position: 'absolute', bottom: '-20px', right: 0, fontSize: '10px', color: '#64748b', fontFamily: 'monospace' }}>500 Hz</span>
           </div>
         </div>
 
         {/* WIDGET 2: Üretim ve Bakım Çizelgesi */}
-        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-xl p-6 shadow-lg flex flex-col justify-between">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
+        <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h3 style={{ color: '#e2e8f0', margin: 0, fontSize: '1rem', fontWeight: 700 }}>
               ⏱️ Üretim ve Bakım Çizelgesi
             </h3>
-            <span className="text-xs font-semibold text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full border border-cyan-400/20">
-              Optimal Slot Bulundu
-            </span>
-          </div>
-
-          {/* Visual Gantt Bar */}
-          <div className="flex w-full h-12 rounded-lg overflow-hidden border border-slate-700">
-            <div className="w-[40%] bg-blue-600 flex items-center justify-center text-white text-xs font-bold border-r border-slate-800">
-              Sipariş #401 (12s)
-            </div>
-            <div className="w-[20%] bg-emerald-500 flex items-center justify-center text-slate-950 text-xs font-black animate-pulse border-r border-slate-800">
-              ⚙️ BAKIM (4s)
-            </div>
-            <div className="w-[40%] bg-blue-800 flex items-center justify-center text-white text-xs font-bold">
-              Sipariş #402 (18s)
+            <div style={{ backgroundColor: 'rgba(34,211,238,0.1)', border: '1px solid rgba(34,211,238,0.3)', borderRadius: '9999px', padding: '3px 10px' }}>
+              <span style={{ color: '#22d3ee', fontSize: '0.75rem', fontWeight: 600 }}>Optimal Slot Bulundu</span>
             </div>
           </div>
 
-          {/* Timeline axis ticks */}
-          <div className="flex justify-between text-[9px] text-slate-500 font-mono mt-1 px-0.5">
-            <span>Şimdi</span>
-            <span>+12s</span>
-            <span>+16s</span>
-            <span>+34s</span>
+          {/* Gantt Bar */}
+          <div style={{ display: 'flex', width: '100%', height: '48px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #1e293b', marginTop: '0.5rem' }}>
+            <div style={{ width: '40%', backgroundColor: '#2563eb', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #1e293b' }}>
+              <span style={{ color: 'white', fontSize: '0.75rem', fontWeight: 700 }}>Sipariş #401 (12s)</span>
+            </div>
+            <div style={{ width: '20%', backgroundColor: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #1e293b', animation: 'pulse-glow 2s infinite' }}>
+              <span style={{ color: '#0f172a', fontSize: '0.7rem', fontWeight: 900 }}>⚙️ BAKIM</span>
+            </div>
+            <div style={{ width: '40%', backgroundColor: '#1e3a8a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <span style={{ color: 'white', fontSize: '0.75rem', fontWeight: 700 }}>Sipariş #402 (18s)</span>
+            </div>
           </div>
 
-          {/* Footer Alert */}
-          <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3 mt-4 flex items-start gap-3">
-            <span className="text-lg leading-none pt-0.5">💡</span>
-            <p className="text-xs text-emerald-400 leading-relaxed">
-              <strong className="text-emerald-300">Kurtarılan Kurulum Süresi: 3.5 Saat.</strong><br />
-              Teslimatlar gecikmeyecek şekilde bakım, iki üretim arasına alındı.
+          {/* Tick labels */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#64748b', fontFamily: 'monospace', padding: '0 2px' }}>
+            <span>Şimdi</span><span>+12s</span><span>+16s</span><span>+34s</span>
+          </div>
+
+          {/* Alert box */}
+          <div style={{ backgroundColor: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)', borderRadius: '8px', padding: '12px 14px', display: 'flex', alignItems: 'flex-start', gap: '10px', marginTop: '0.5rem' }}>
+            <span style={{ fontSize: '1.1rem' }}>💡</span>
+            <p style={{ margin: 0, color: '#10b981', fontSize: '0.85rem', lineHeight: 1.5 }}>
+              <strong style={{ color: '#34d399' }}>Kurtarılan Kurulum Süresi: 3.5 Saat.</strong><br />
+              <span style={{ color: '#6ee7b7', fontSize: '0.78rem' }}>Teslimatlar gecikmeyecek şekilde bakım, iki üretim arasına alındı.</span>
             </p>
           </div>
         </div>
 
       </div>
+
     </div>
   );
 }
