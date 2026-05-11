@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ShieldCheck, Zap, MessageSquare, Mail, ArrowRight, Activity, TrendingUp, ShieldAlert, Loader2 } from 'lucide-react';
-import { motion, useAnimationFrame, useMotionValue, useTransform } from 'framer-motion';
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -53,16 +52,146 @@ export default function Landing() {
   };
 
   return (
-    <div className="animate-fade-in" style={{ background: '#030712' }}>
+    <div className="animate-fade-in">
+      {/* SECTION 1: HERO */}
+      <section style={{ padding: '6rem 2rem', position: 'relative', overflow: 'hidden', minHeight: '85vh', display: 'flex', alignItems: 'center' }}>
+        <div className="container" style={{ position: 'relative', zIndex: 10, width: '100%', margin: '0 auto' }}>
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'row', 
+            alignItems: 'center', 
+            justifyContent: 'space-between',
+            gap: '4rem', 
+            width: '100%',
+            flexWrap: 'wrap' 
+          }}>
+            
+            {/* Left Column (Vitrin) */}
+            <div style={{ 
+              flex: '1 1 500px', 
+              textAlign: 'left', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              alignItems: 'flex-start' 
+            }}>
+              <h1 className="hero-title gradient-text" style={{ 
+                textAlign: 'left', 
+                fontSize: 'clamp(3rem, 8vw, 4.8rem)', 
+                lineHeight: '1.1', 
+                marginBottom: '2rem',
+                fontWeight: 800
+              }}>
+                Endüstrinin <br /> Nöral Ağı: <br /> CogniMach
+              </h1>
+              <p style={{ 
+                fontSize: '1.4rem', 
+                maxWidth: '550px', 
+                marginBottom: '3rem', 
+                color: '#94a3b8',
+                lineHeight: '1.6',
+                textAlign: 'left'
+              }}>
+                Üretim hatlarınızı karanlıktan kurtarın. Çift motorlu yapay zeka ve entegre LLM asistanı ile 
+                <span style={{ color: '#00e5ff', fontWeight: 600 }}> "Sıfır Duruş"</span> hedefine ulaşın.
+              </p>
+              
+              <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+                <button onClick={() => navigate('/login')} className="btn" style={{ padding: '1.2rem 3rem', fontSize: '1.1rem' }}>
+                  Sisteme Entegre Ol <ArrowRight size={22} style={{ marginLeft: '8px' }} />
+                </button>
+                <button 
+                  onClick={handleDemoLogin} 
+                  className="btn btn-secondary" 
+                  style={{ padding: '1.2rem 3rem', fontSize: '1.1rem' }}
+                  disabled={loading}
+                >
+                  {loading ? <Loader2 className="animate-spin" size={22} /> : 'Canlı Demoyu İzle'}
+                </button>
+              </div>
+            </div>
 
-      <HeroSection
-        onLoginClick={() => navigate('/login')}
-        onDemoClick={handleDemoLogin}
-        loading={loading}
-      />
+            {/* Right Column (Makine Dairesi - Animasyon) */}
+            <div style={{ 
+              flex: '1 1 400px', 
+              display: 'flex', 
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              <div style={{ 
+                backgroundColor: 'rgba(15, 23, 42, 0.4)', 
+                backdropFilter: 'blur(30px)', 
+                WebkitBackdropFilter: 'blur(30px)',
+                border: '1px solid rgba(0, 229, 255, 0.25)', 
+                borderRadius: '2.5rem', 
+                padding: '2rem', 
+                width: '100%', 
+                maxWidth: '580px', 
+                height: '520px', 
+                position: 'relative', 
+                overflow: 'hidden', 
+                boxShadow: '0 0 100px rgba(0, 229, 255, 0.15)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                
+                {/* SVG Neural Animation */}
+                <svg viewBox="0 0 400 400" style={{ width: '100%', height: '100%', filter: 'drop-shadow(0 0 15px rgba(0, 229, 255, 0.3))' }}>
+                  <defs>
+                    <radialGradient id="hubGlow" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#00e5ff" stopOpacity="0.7" />
+                      <stop offset="100%" stopColor="#00e5ff" stopOpacity="0" />
+                    </radialGradient>
+                  </defs>
+
+                  {/* Lines with Pulses */}
+                  {[
+                    { x: 80, y: 100 }, { x: 320, y: 120 },
+                    { x: 100, y: 300 }, { x: 300, y: 320 },
+                    { x: 200, y: 50 }, { x: 200, y: 350 }
+                  ].map((pos, i) => (
+                    <g key={i}>
+                      <line x1="200" y1="200" x2={pos.x} y2={pos.y} stroke="#00e5ff" strokeWidth="1.5" strokeDasharray="4,4" opacity="0.15" />
+                      <circle r="4" fill="#00e5ff">
+                        <animateMotion path={`M 200 200 L ${pos.x} ${pos.y}`} dur={`${2 + i}s`} repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0;1;0" dur={`${2 + i}s`} repeatCount="indefinite" />
+                      </circle>
+                      <circle cx={pos.x} cy={pos.y} r="8" fill="#0f172a" stroke="#00e5ff" strokeWidth="1.5" />
+                      <circle cx={pos.x} cy={pos.y} r="3" fill="#00e5ff">
+                        <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite" />
+                      </circle>
+                    </g>
+                  ))}
+
+                  {/* Central Hub */}
+                  <circle cx="200" cy="200" r="50" fill="url(#hubGlow)">
+                    <animate attributeName="r" values="45;55;45" dur="3s" repeatCount="indefinite" />
+                  </circle>
+                  <circle cx="200" cy="200" r="18" fill="#00e5ff" style={{ filter: 'blur(1px)' }} />
+                  
+                  {/* Floating Particles */}
+                  {[...Array(15)].map((_, i) => (
+                    <circle key={i} r="1.5" fill="#00e5ff" opacity="0.3">
+                      <animate attributeName="cx" values={`${Math.random()*400};${Math.random()*400}`} dur={`${10+Math.random()*10}s`} repeatCount="indefinite" />
+                      <animate attributeName="cy" values={`${Math.random()*400};${Math.random()*400}`} dur={`${10+Math.random()*10}s`} repeatCount="indefinite" />
+                    </circle>
+                  ))}
+                </svg>
+
+                {/* Minimalist Visual Indicators */}
+                <div style={{ position: 'absolute', bottom: '2rem', left: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#22c55e', boxShadow: '0 0 10px #22c55e' }}></div>
+                  <span style={{ fontSize: '10px', color: 'rgba(0, 229, 255, 0.5)', letterSpacing: '2px', fontWeight: 'bold' }}>SYSTEM_LIVE</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
 
       {/* SECTION 2: MARQUEE */}
-
       <div style={{ padding: '3rem 0', background: 'rgba(2, 6, 23, 0.5)' }}>
         <h3 className="text-center" style={{ fontSize: '0.9rem', color: '#94a3b8', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '2.5rem', fontWeight: 600 }}>
           Bizi Tercih Edenler
