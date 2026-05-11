@@ -343,6 +343,92 @@ export default function Dashboard() {
           {status === 'calisiyor' && <div style={{ fontSize: '0.8rem', color: '#f59e0b', marginTop: '0.5rem', textAlign: 'center' }}>Makine stabilken Cogni izleme modundadır.</div>}
         </div>
       </div>
+
+      {/* YENİ MODÜLLER: ZARF SPEKTRUMU VE ÇİZELGELEME */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 pb-10">
+        {/* Widget 1: Titreşim Zarf Spektrumu */}
+        <div className="bg-slate-900/40 backdrop-blur-md border border-slate-700/50 rounded-xl p-6 flex flex-col shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+          <div className="flex justify-between items-center mb-4 border-b border-slate-700/50 pb-3">
+            <h3 className="text-lg font-bold text-white flex items-center gap-2">
+              📊 Titreşim Zarf Spektrumu (Live)
+            </h3>
+            <div className="flex items-center gap-2 text-emerald-400 text-xs font-semibold px-3 py-1 bg-emerald-500/10 rounded-full border border-emerald-500/20">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Sensör Aktif
+            </div>
+          </div>
+          <div className="flex-1 flex flex-col relative h-48 mt-2">
+             {/* Simulated Bar/Line Chart */}
+             <div className="flex items-end justify-between h-full gap-[2px] w-full px-2">
+               {Array.from({ length: 45 }).map((_, i) => {
+                 // Generate random looking spectrum with a peak around 165 Hz (index 15)
+                 const isPeak = i === 15;
+                 const baseHeight = Math.max(5, Math.random() * 25);
+                 const height = isPeak ? 85 + Math.random() * 10 : baseHeight;
+                 return (
+                   <div 
+                     key={i} 
+                     className={`w-full rounded-t-sm ${isPeak ? 'bg-red-500' : 'bg-cyan-500/70'}`}
+                     style={{ 
+                       height: `${height}%`,
+                       transition: 'height 0.2s ease-in-out',
+                       animation: isPeak ? 'pulse 2s infinite' : 'none'
+                     }}
+                   ></div>
+                 );
+               })}
+             </div>
+             {/* X-axis labels */}
+             <div className="flex justify-between text-[11px] text-slate-400 mt-2 px-2 border-t border-slate-700/50 pt-2 font-medium">
+               <span>0 Hz</span>
+               <span>250 Hz</span>
+               <span>500 Hz</span>
+             </div>
+             {/* Warning Line Overlay */}
+             <div className="absolute left-[33%] top-0 h-full border-l-2 border-dashed border-red-500/60 pointer-events-none flex flex-col justify-start pt-2">
+               <div className="ml-2 text-[11px] text-red-400 font-bold whitespace-nowrap bg-slate-900/90 px-2 py-1 rounded border border-red-500/30">
+                 Rulman İç Bilezik Arıza Frekansı: 165 Hz
+               </div>
+             </div>
+          </div>
+        </div>
+
+        {/* Widget 2: Akıllı Bakım Çizelgesi */}
+        <div className="bg-slate-900/40 backdrop-blur-md border border-slate-700/50 rounded-xl p-6 flex flex-col shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+          <div className="flex justify-between items-center mb-4 border-b border-slate-700/50 pb-3">
+            <h3 className="text-lg font-bold text-white flex items-center gap-2">
+              ⏱️ Üretim ve Bakım Çizelgesi
+            </h3>
+            <div className="text-cyan-400 text-xs font-bold px-3 py-1 bg-cyan-500/10 rounded border border-cyan-500/20 uppercase tracking-wider">
+              Optimal Slot Bulundu
+            </div>
+          </div>
+          
+          <div className="flex-1 flex flex-col justify-center gap-6 mt-4">
+            {/* Horizontal Timeline (Gantt) */}
+            <div className="flex w-full h-14 rounded-lg overflow-hidden border border-slate-700 shadow-inner">
+              {/* Block 1 */}
+              <div className="flex-[3] bg-blue-900/60 border-r border-blue-500/30 flex items-center justify-center text-[11px] lg:text-xs font-semibold text-blue-200 truncate px-2 hover:bg-blue-800/60 transition-colors">
+                Sipariş #401 (1. Kalite Kağıt) - 12 Saat
+              </div>
+              {/* Block 2 (Neon Cyan) */}
+              <div className="flex-[1.5] bg-cyan-500/20 border-r border-cyan-400/50 flex items-center justify-center text-[10px] lg:text-[11px] font-bold text-cyan-300 truncate px-2 shadow-[inset_0_0_15px_rgba(34,211,238,0.3)] animate-pulse text-center leading-tight">
+                ⚙️ ÖNERİLEN BAKIM<br/>(RUL Kapanmadan Önce) - 4 Saat
+              </div>
+              {/* Block 3 */}
+              <div className="flex-[4] bg-blue-900/60 flex items-center justify-center text-[11px] lg:text-xs font-semibold text-blue-200 truncate px-2 hover:bg-blue-800/60 transition-colors">
+                Sipariş #402 (2. Kalite Kağıt) - 18 Saat
+              </div>
+            </div>
+            
+            {/* Metric Text */}
+            <div className="mt-2 flex items-center gap-3 text-emerald-400 text-sm bg-emerald-500/10 p-4 rounded-lg border border-emerald-500/20">
+              <span className="text-2xl">💡</span>
+              <span className="font-semibold tracking-wide">Kurtarılan Kurulum (Setup) Süresi: 3.5 Saat. Teslimatlar Gecikmeyecek.</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
