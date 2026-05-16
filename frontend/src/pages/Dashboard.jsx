@@ -17,6 +17,68 @@ export default function Dashboard() {
   const [chatInput, setChatInput] = useState('');
   const [isAiLoading, setIsAiLoading] = useState(false);
 
+  // Gantt Chart Live Schedule State
+  const [schedule, setSchedule] = useState({
+    scenario: 1,
+    savedHours: 3.5,
+    blocks: [
+      { id: 'sip401', label: 'Sipariş #401', duration: 40, color: '#2563eb', text: 'white', desc: '12s' },
+      { id: 'bakim', label: '⚙️ BAKIM', duration: 20, color: '#10b981', text: '#0f172a', desc: '4s' },
+      { id: 'sip402', label: 'Sipariş #402', duration: 40, color: '#1e3a8a', text: 'white', desc: '18s' }
+    ],
+    ticks: ['Şimdi', '+12s', '+16s', '+34s'],
+    message: 'Bakım işlemi #401 ile #402 arasına (duruş maliyetinin en düşük olduğu aralık) konumlandırıldı.'
+  });
+
+  // Gantt Chart Live Update Logic
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSchedule(prev => {
+        if (prev.scenario === 1) {
+          // Scenario 2: Maintenance shifts left due to critical RUL
+          return {
+            scenario: 2,
+            savedHours: 5.2,
+            blocks: [
+              { id: 'bakim', label: '⚙️ ACİL BAKIM', duration: 25, color: '#ef4444', text: 'white', desc: '5s' },
+              { id: 'sip401', label: 'Sipariş #401', duration: 35, color: '#2563eb', text: 'white', desc: '12s' },
+              { id: 'sip402', label: 'Sipariş #402', duration: 40, color: '#1e3a8a', text: 'white', desc: '18s' }
+            ],
+            ticks: ['Şimdi', '+5s', '+17s', '+35s'],
+            message: 'RUL kritik seviyeye indi. Bakım öne çekildi ve siparişler kaydırıldı.'
+          };
+        } else if (prev.scenario === 2) {
+          // Scenario 3: Order 401 takes longer
+          return {
+            scenario: 3,
+            savedHours: 2.1,
+            blocks: [
+              { id: 'sip401', label: 'Sipariş #401', duration: 55, color: '#2563eb', text: 'white', desc: '16s' },
+              { id: 'bakim', label: '⚙️ BAKIM', duration: 15, color: '#10b981', text: '#0f172a', desc: '4s' },
+              { id: 'sip402', label: 'Sipariş #402', duration: 30, color: '#1e3a8a', text: 'white', desc: '18s' }
+            ],
+            ticks: ['Şimdi', '+16s', '+20s', '+38s'],
+            message: '#401 siparişi uzadı. Bakım penceresi dinamik olarak yeniden hesaplandı.'
+          };
+        } else {
+          // Back to Scenario 1
+          return {
+            scenario: 1,
+            savedHours: 3.5,
+            blocks: [
+              { id: 'sip401', label: 'Sipariş #401', duration: 40, color: '#2563eb', text: 'white', desc: '12s' },
+              { id: 'bakim', label: '⚙️ BAKIM', duration: 20, color: '#10b981', text: '#0f172a', desc: '4s' },
+              { id: 'sip402', label: 'Sipariş #402', duration: 40, color: '#1e3a8a', text: 'white', desc: '18s' }
+            ],
+            ticks: ['Şimdi', '+12s', '+16s', '+34s'],
+            message: 'Bakım işlemi #401 ile #402 arasına (duruş maliyetinin en düşük olduğu aralık) konumlandırıldı.'
+          };
+        }
+      });
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
   // Yeni Eklenen Stateler
   const [activeTab, setActiveTab] = useState('canli');
   const [toastMsg, setToastMsg] = useState('');
@@ -407,28 +469,39 @@ export default function Dashboard() {
 
           {/* Gantt Bar */}
           <div style={{ display: 'flex', width: '100%', height: '48px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #1e293b', marginTop: '0.5rem' }}>
-            <div style={{ width: '40%', backgroundColor: '#2563eb', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #1e293b' }}>
-              <span style={{ color: 'white', fontSize: '0.75rem', fontWeight: 700 }}>Sipariş #401 (12s)</span>
-            </div>
-            <div style={{ width: '20%', backgroundColor: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #1e293b', animation: 'pulse-glow 2s infinite' }}>
-              <span style={{ color: '#0f172a', fontSize: '0.7rem', fontWeight: 900 }}>⚙️ BAKIM</span>
-            </div>
-            <div style={{ width: '40%', backgroundColor: '#1e3a8a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ color: 'white', fontSize: '0.75rem', fontWeight: 700 }}>Sipariş #402 (18s)</span>
-            </div>
+            {schedule.blocks.map((block, idx) => (
+              <motion.div
+                layout
+                key={block.id}
+                style={{
+                  width: `${block.duration}%`,
+                  backgroundColor: block.color,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRight: idx !== schedule.blocks.length - 1 ? '1px solid #1e293b' : 'none',
+                  animation: block.id === 'bakim' && schedule.scenario !== 2 ? 'pulse-glow 2s infinite' : 'none'
+                }}
+                transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+              >
+                <span style={{ color: block.text, fontSize: block.id === 'bakim' ? '0.7rem' : '0.75rem', fontWeight: block.id === 'bakim' ? 900 : 700 }}>
+                  {block.label} {block.id !== 'bakim' && `(${block.desc})`}
+                </span>
+              </motion.div>
+            ))}
           </div>
 
           {/* Tick labels */}
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#64748b', fontFamily: 'monospace', padding: '0 2px' }}>
-            <span>Şimdi</span><span>+12s</span><span>+16s</span><span>+34s</span>
+            {schedule.ticks.map((tick, i) => <span key={i}>{tick}</span>)}
           </div>
 
           {/* Alert box */}
           <div style={{ backgroundColor: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)', borderRadius: '8px', padding: '12px 14px', display: 'flex', alignItems: 'flex-start', gap: '10px', marginTop: '0.5rem' }}>
             <span style={{ fontSize: '1.1rem' }}>💡</span>
             <p style={{ margin: 0, color: '#10b981', fontSize: '0.85rem', lineHeight: 1.5 }}>
-              <strong style={{ color: '#34d399' }}>Kurtarılan Kurulum Süresi: 3.5 Saat.</strong><br />
-              <span style={{ color: '#6ee7b7', fontSize: '0.78rem' }}>Teslimatlar gecikmeyecek şekilde bakım, iki üretim arasına alındı.</span>
+              <strong style={{ color: '#34d399' }}>Kurtarılan Kurulum Süresi: {schedule.savedHours} Saat.</strong><br />
+              <span style={{ color: '#6ee7b7', fontSize: '0.78rem' }}>{schedule.message}</span>
             </p>
           </div>
         </motion.div>
