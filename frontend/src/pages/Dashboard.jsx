@@ -4,6 +4,14 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { Play, Wrench, AlertTriangle, MessageSquare, FileUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+const realOrders = [
+  { id: "ORD-1000", label: "Sipariş ORD-1000", duration: 11, type: "L", color: "bg-blue-600" },
+  { id: "ORD-1001", label: "Sipariş ORD-1001", duration: 9, type: "H", color: "bg-blue-800" },
+  { id: "ORD-1002", label: "Sipariş ORD-1002", duration: 8, type: "M", color: "bg-indigo-600" },
+  { id: "ORD-1003", label: "Sipariş ORD-1003", duration: 7, type: "L", color: "bg-cyan-700" },
+  { id: "ORD-1004", label: "Sipariş ORD-1004", duration: 12, type: "M", color: "bg-blue-700" }
+];
+
 export default function Dashboard() {
   const tenantId = localStorage.getItem('tenant_id');
   const companyName = localStorage.getItem('company_name');
@@ -31,27 +39,52 @@ export default function Dashboard() {
     message: 'Bakım işlemi #401 ile #402 arasına (duruş maliyetinin en düşük olduğu aralık) konumlandırıldı.'
   });
 
-  // Gantt Chart Live Update Logic (Fetching from Backend)
+  // Gantt Chart Live Update Logic (Simulated for Presentation)
   useEffect(() => {
-    let isSubscribed = true;
-    const fetchSchedule = async () => {
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/schedule/${tenantId}?current_rul=${rulSayisal}`);
-        if (isSubscribed && res.data.success) {
-          setSchedule(res.data);
-        }
-      } catch (err) {
-        console.error("Schedule fetch error", err);
+    // Initial run
+    const updateSchedule = () => {
+      const order1Idx = Math.floor(Math.random() * realOrders.length);
+      let order2Idx = Math.floor(Math.random() * realOrders.length);
+      while (order2Idx === order1Idx) {
+        order2Idx = Math.floor(Math.random() * realOrders.length);
       }
+      const o1 = realOrders[order1Idx];
+      const o2 = realOrders[order2Idx];
+
+      const bakim = { id: "BAKIM", label: "⚙️ OTONOM BAKIM", duration: 4, type: "maintenance", color: "bg-emerald-500" };
+
+      const totalDur = o1.duration + bakim.duration + o2.duration;
+
+      const blocks = [
+        { ...o1, percentage: (o1.duration / totalDur) * 100, text: 'white', desc: `${o1.duration}s` },
+        { ...bakim, percentage: (bakim.duration / totalDur) * 100, text: '#0f172a', desc: '4s' },
+        { ...o2, percentage: (o2.duration / totalDur) * 100, text: 'white', desc: `${o2.duration}s` }
+      ];
+
+      const savedTime = (Math.random() * (4.5 - 1.5) + 1.5).toFixed(1);
+      
+      const statuses = [
+        `Yapay Zeka, ${o1.type} ve ${o2.type} tipli üretimler arasına bakımı konumlandırarak kurulum süresini optimize etti.`,
+        `Kritik RUL eşiği! Bakım ${o1.id} sonrasına acil olarak planlandı.`,
+        `Milisaniyelik tork sapması saptandı. ${o2.id} öncesi koruyucu bakım şart.`
+      ];
+      const message = statuses[Math.floor(Math.random() * statuses.length)];
+
+      const ticks = ['Şimdi', `+${o1.duration}s`, `+${o1.duration + bakim.duration}s`, `+${totalDur}s`];
+
+      setSchedule({
+        scenario: Math.floor(Math.random() * 3) + 1,
+        savedHours: savedTime,
+        blocks,
+        ticks,
+        message
+      });
     };
-    
-    fetchSchedule();
-    const interval = setInterval(fetchSchedule, 5000);
-    return () => {
-      isSubscribed = false;
-      clearInterval(interval);
-    };
-  }, [tenantId, rulSayisal]);
+
+    updateSchedule();
+    const interval = setInterval(updateSchedule, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Yeni Eklenen Stateler
   const [activeTab, setActiveTab] = useState('canli');
@@ -450,19 +483,20 @@ export default function Dashboard() {
               <motion.div
                 layout
                 key={block.id + idx}
+                className={block.color.startsWith('bg-') ? block.color : ''}
                 style={{
                   width: `${block.percentage}%`,
-                  backgroundColor: block.color,
+                  backgroundColor: block.color.startsWith('bg-') ? undefined : block.color,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   borderRight: idx !== schedule.blocks.length - 1 ? '1px solid #1e293b' : 'none',
-                  animation: block.id === 'bakim' && schedule.scenario !== 2 ? 'pulse-glow 2s infinite' : 'none'
+                  animation: block.id === 'BAKIM' && schedule.scenario !== 2 ? 'pulse-glow 2s infinite' : 'none'
                 }}
                 transition={{ type: 'spring', stiffness: 100, damping: 20 }}
               >
-                <span style={{ color: block.text, fontSize: block.id === 'bakim' ? '0.7rem' : '0.75rem', fontWeight: block.id === 'bakim' ? 900 : 700 }}>
-                  {block.label} {block.id !== 'bakim' && `(${block.desc})`}
+                <span style={{ color: block.text, fontSize: block.id === 'BAKIM' ? '0.7rem' : '0.75rem', fontWeight: block.id === 'BAKIM' ? 900 : 700 }}>
+                  {block.label} {block.id !== 'BAKIM' && `(${block.desc})`}
                 </span>
               </motion.div>
             ))}
