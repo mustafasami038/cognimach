@@ -12,6 +12,7 @@ export default function Dashboard() {
   const [telemetry, setTelemetry] = useState(null);
   const [history, setHistory] = useState([]);
   const [rulGosterim, setRulGosterim] = useState('Veri Bekleniyor...');
+  const [rulSayisal, setRulSayisal] = useState(20.0);
   const [alertMsg, setAlertMsg] = useState('');
   const [chatMessages, setChatMessages] = useState([]);
   const [chatInput, setChatInput] = useState('');
@@ -30,54 +31,27 @@ export default function Dashboard() {
     message: 'Bakım işlemi #401 ile #402 arasına (duruş maliyetinin en düşük olduğu aralık) konumlandırıldı.'
   });
 
-  // Gantt Chart Live Update Logic
+  // Gantt Chart Live Update Logic (Fetching from Backend)
   useEffect(() => {
-    const interval = setInterval(() => {
-      setSchedule(prev => {
-        if (prev.scenario === 1) {
-          // Scenario 2: Maintenance shifts left due to critical RUL
-          return {
-            scenario: 2,
-            savedHours: 5.2,
-            blocks: [
-              { id: 'bakim', label: '⚙️ ACİL BAKIM', duration: 25, color: '#ef4444', text: 'white', desc: '5s' },
-              { id: 'sip401', label: 'Sipariş #401', duration: 35, color: '#2563eb', text: 'white', desc: '12s' },
-              { id: 'sip402', label: 'Sipariş #402', duration: 40, color: '#1e3a8a', text: 'white', desc: '18s' }
-            ],
-            ticks: ['Şimdi', '+5s', '+17s', '+35s'],
-            message: 'RUL kritik seviyeye indi. Bakım öne çekildi ve siparişler kaydırıldı.'
-          };
-        } else if (prev.scenario === 2) {
-          // Scenario 3: Order 401 takes longer
-          return {
-            scenario: 3,
-            savedHours: 2.1,
-            blocks: [
-              { id: 'sip401', label: 'Sipariş #401', duration: 55, color: '#2563eb', text: 'white', desc: '16s' },
-              { id: 'bakim', label: '⚙️ BAKIM', duration: 15, color: '#10b981', text: '#0f172a', desc: '4s' },
-              { id: 'sip402', label: 'Sipariş #402', duration: 30, color: '#1e3a8a', text: 'white', desc: '18s' }
-            ],
-            ticks: ['Şimdi', '+16s', '+20s', '+38s'],
-            message: '#401 siparişi uzadı. Bakım penceresi dinamik olarak yeniden hesaplandı.'
-          };
-        } else {
-          // Back to Scenario 1
-          return {
-            scenario: 1,
-            savedHours: 3.5,
-            blocks: [
-              { id: 'sip401', label: 'Sipariş #401', duration: 40, color: '#2563eb', text: 'white', desc: '12s' },
-              { id: 'bakim', label: '⚙️ BAKIM', duration: 20, color: '#10b981', text: '#0f172a', desc: '4s' },
-              { id: 'sip402', label: 'Sipariş #402', duration: 40, color: '#1e3a8a', text: 'white', desc: '18s' }
-            ],
-            ticks: ['Şimdi', '+12s', '+16s', '+34s'],
-            message: 'Bakım işlemi #401 ile #402 arasına (duruş maliyetinin en düşük olduğu aralık) konumlandırıldı.'
-          };
+    let isSubscribed = true;
+    const fetchSchedule = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/schedule/${tenantId}?current_rul=${rulSayisal}`);
+        if (isSubscribed && res.data.success) {
+          setSchedule(res.data);
         }
-      });
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
+      } catch (err) {
+        console.error("Schedule fetch error", err);
+      }
+    };
+    
+    fetchSchedule();
+    const interval = setInterval(fetchSchedule, 5000);
+    return () => {
+      isSubscribed = false;
+      clearInterval(interval);
+    };
+  }, [tenantId, rulSayisal]);
 
   // Yeni Eklenen Stateler
   const [activeTab, setActiveTab] = useState('canli');
@@ -173,6 +147,9 @@ export default function Dashboard() {
       
       setTelemetry(res.data.telemetry);
       setRulGosterim(res.data.rul_gosterim);
+      if (res.data.rul_sayisal !== undefined) {
+        setRulSayisal(res.data.rul_sayisal);
+      }
       
       const newHistory = res.data.history['Tool wear [min]'].map((val, idx) => ({ time: idx, wear: val }));
       setHistory(newHistory);
@@ -472,9 +449,9 @@ export default function Dashboard() {
             {schedule.blocks.map((block, idx) => (
               <motion.div
                 layout
-                key={block.id}
+                key={block.id + idx}
                 style={{
-                  width: `${block.duration}%`,
+                  width: `${block.percentage}%`,
                   backgroundColor: block.color,
                   display: 'flex',
                   alignItems: 'center',
