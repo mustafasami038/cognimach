@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#080c16"><meta name="description" content=""><meta property="og:title" content="Bir sürpriz var 👀"><meta property="og:description" content=""><meta name="robots" content="noindex,nofollow"><title>Bir sürpriz var 👀</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+body{min-height:100svh;padding:18px;color:#fff;display:grid;place-items:center;background:radial-gradient(ellipse at 50% -10%,#3b1629,#10121e 44%,#05070d)}
+main{width:min(100%,560px);position:relative;border:1px solid #ffffff25;border-radius:24px;padding:clamp(23px,5vw,38px);background:linear-gradient(150deg,#242635f5,#0b101aff);box-shadow:0 23px 85px #000a,0 0 70px #f22d4422;overflow:hidden}
+main:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,transparent,#fc425c,transparent)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;font:600 10px ui-monospace,monospace;letter-spacing:.12em;color:#8f9db0}
+.active{color:#fb7b8b}.active:before{content:"●";color:#f9435b;margin-right:8px;animation:blink .9s infinite}
+.icon{height:84px;width:84px;border:1px solid #f8677850;border-radius:24px;margin:36px auto 24px;background:#fa314722;display:grid;place-items:center;color:#ff677d;box-shadow:0 0 50px #fc304423}
+.icon svg{height:49px;width:49px;stroke:currentColor;fill:none;stroke-width:1.8}
+h1{text-align:center;margin:0;font-size:clamp(31px,7vw,44px);line-height:1.1;font-weight:850;letter-spacing:-.045em}
+h1 span{color:#ff687d}
+.sub{text-align:center;margin:16px auto 35px;max-width:420px;color:#abb6c7;font-size:14px;line-height:1.65}
+.status{display:flex;align-items:end;justify-content:space-between;color:#bdc6d4;font-size:12px;margin-bottom:11px;gap:10px}
+#pct{font:800 28px ui-monospace,monospace;color:#fa7085}
+.track{height:10px;background:#343746;border-radius:50px;overflow:hidden}
+#bar{height:100%;width:2%;background:linear-gradient(90deg,#f52d47,#fd8da0);border-radius:50px;transition:width .1s}
+.logs{font:12px/1.9 ui-monospace,monospace;margin-top:23px;min-height:116px;padding:16px;border:1px solid #ffffff1c;border-radius:12px;background:#060a10;color:#a0abbe;overflow-wrap:anywhere}
+.logs p{margin:0}.logs p:first-child{color:#ff8a98}
+.footer{margin-top:24px;display:flex;align-items:center;justify-content:space-between;gap:9px;color:#8190a2;font-size:11px}
+button{font:inherit;border:1px solid #ffffff2d;border-radius:11px;background:#ffffff15;color:white;padding:11px 15px;cursor:pointer}
+#result{display:none;text-align:center}
+.emoji{font-size:86px;display:block;margin:20px 0}
+#result h1{font-size:clamp(38px,8vw,68px);color:#76edba}
+#result .sub{color:#dfe9ef;font-size:17px}
+#result .explain{max-width:420px;font-size:13px;line-height:1.7;color:#a3b4c4;margin:auto}
+.actions{margin-top:28px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.actions button{font-weight:800;font-size:14px;padding:13px 19px}
+#again{background:#77edb9;color:#0a1c15;border:0}
+@keyframes blink{50%{opacity:.35}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style></head>
+<body><main>
+<section id="scan"><div class="top"><span>SECURE CHECK · DEMO</span><span class="active">ANALİZ AKTİF</span></div>
+<div class="icon"><svg viewBox="0 0 24 24"><path d="M10.3 3.5 2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.5a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4.5M12 17h.01" stroke-linecap="round"/></svg></div>
+<h1>SİSTEM <span>UYARISI!</span></h1><p class="sub">Cihazınızda şüpheli bir işlem algılandı!<br>Güvenlik taraması başlatılıyor...</p>
+<div class="status"><span id="phase">Sistem analizi devam ediyor</span><span id="pct">2%</span></div><div class="track"><div id="bar"></div></div>
+<div class="logs"><p id="log1">&gt; Güvenlik denetimi başlatılıyor...</p><p id="log2">&gt; Analiz devam ediyor...</p><p id="log3">&gt; Sonuçlar hazırlanıyor...</p></div>
+<div class="footer"><span>ŞAKA AMAÇLI SİMÜLASYON</span><button id="skip">Kapat</button></div></section>
+<section id="result"><span class="emoji">🤣</span><h1>ŞAKALANDIN!</h1><p class="sub">Gardaş, bir an korktun değil mi? 😎<br>Bu sadece arkadaş şakasıydı!</p><p class="explain">Gerçekte virüs yüklenmedi, dosyalarına erişilmedi. Bu sayfa yalnızca sahte bir animasyon gösterdi.</p><div class="actions"><button id="again">Tekrar oynat</button><button id="copy">Linki kopyala</button></div></section>
+</main><script>
+(()=>{const scan=document.getElementById('scan'),res=document.getElementById('result'),pct=document.getElementById('pct'),bar=document.getElementById('bar');
+const messages=['Kontrol başlatıldı...','Şüpheli etkinlik inceleniyor...','Sistem bütünlüğü denetleniyor...','Güvenlik taraması sürüyor...','Sonuçlar hazırlanıyor...'];
+let interval=null,delay=null;function stop(){clearInterval(interval);clearTimeout(delay)}
+function end(){stop();scan.style.display='none';res.style.display='block';document.title='Şakalandın! 🤣'}
+function start(){stop();scan.style.display='block';res.style.display='none';document.title='Bir sürpriz var 👀';
+const t0=Date.now();function tick(){const t=Math.min(1,(Date.now()-t0)/6000),p=Math.min(99,Math.round(2+t*97)),step=Math.min(4,Math.floor(t*5));
+pct.textContent=p+'%';bar.style.width=p+'%';document.getElementById('log1').textContent='> '+messages[step];document.getElementById('log2').textContent='> Kontrol aşaması '+(step+1)+'/5';document.getElementById('log3').textContent='> İlerleme '+p+'%';
+if(t>=1){clearInterval(interval);delay=setTimeout(end,450)}}
+tick();interval=setInterval(tick,100)}
+document.getElementById('skip').addEventListener('click',end);document.getElementById('again').addEventListener('click',start);
+document.getElementById('copy').addEventListener('click',async e=>{try{await navigator.clipboard.writeText(location.href);e.target.textContent='Kopyalandı ✓'}catch{e.target.textContent='Adresi tarayıcıdan kopyala'}});start()})();
+</script></body></html>
