@@ -29,6 +29,7 @@ button{font:inherit;border:1px solid #ffffff2d;border-radius:11px;background:#ff
 #again{background:#77edb9;color:#0a1c15;border:0}
 @keyframes blink{50%{opacity:.35}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+@media(max-width:410px){.footer{align-items:flex-start}.footer .controls{flex-direction:column}.footer .controls button{padding:9px 11px}}.footer .controls{display:flex;gap:7px;align-items:center}.footer button{white-space:nowrap}.sound-note{font-size:11px;color:#b4c0ce;text-align:center;margin-top:12px}
 </style></head>
 <body><main>
 <section id="scan"><div class="top"><span>SECURE CHECK · DEMO</span><span class="active">ANALİZ AKTİF</span></div>
@@ -36,18 +37,86 @@ button{font:inherit;border:1px solid #ffffff2d;border-radius:11px;background:#ff
 <h1>SİSTEM <span>UYARISI!</span></h1><p class="sub">Cihazınızda şüpheli bir işlem algılandı!<br>Güvenlik taraması başlatılıyor...</p>
 <div class="status"><span id="phase">Sistem analizi devam ediyor</span><span id="pct">2%</span></div><div class="track"><div id="bar"></div></div>
 <div class="logs"><p id="log1">&gt; Güvenlik denetimi başlatılıyor...</p><p id="log2">&gt; Analiz devam ediyor...</p><p id="log3">&gt; Sonuçlar hazırlanıyor...</p></div>
-<div class="footer"><span>ŞAKA AMAÇLI SİMÜLASYON</span><button id="skip">Kapat</button></div></section>
+<div class="footer"><span>ŞAKA AMAÇLI SİMÜLASYON</span><span class="controls"><button type="button" id="sound" aria-pressed="false">🔊 Sesi aç</button><button type="button" id="skip">Bitir</button></span></div></section>
 <section id="result"><span class="emoji">🤣</span><h1>ŞAKALANDIN!</h1><p class="sub">Gardaş, bir an korktun değil mi? 😎<br>Bu sadece arkadaş şakasıydı!</p><p class="explain">Gerçekte virüs yüklenmedi, dosyalarına erişilmedi. Bu sayfa yalnızca sahte bir animasyon gösterdi.</p><div class="actions"><button id="again">Tekrar oynat</button><button id="copy">Linki kopyala</button></div></section>
 </main><script>
-(()=>{const scan=document.getElementById('scan'),res=document.getElementById('result'),pct=document.getElementById('pct'),bar=document.getElementById('bar');
-const messages=['Kontrol başlatıldı...','Şüpheli etkinlik inceleniyor...','Sistem bütünlüğü denetleniyor...','Güvenlik taraması sürüyor...','Sonuçlar hazırlanıyor...'];
-let interval=null,delay=null;function stop(){clearInterval(interval);clearTimeout(delay)}
-function end(){stop();scan.style.display='none';res.style.display='block';document.title='Şakalandın! 🤣'}
-function start(){stop();scan.style.display='block';res.style.display='none';document.title='Bir sürpriz var 👀';
-const t0=Date.now();function tick(){const t=Math.min(1,(Date.now()-t0)/6000),p=Math.min(99,Math.round(2+t*97)),step=Math.min(4,Math.floor(t*5));
-pct.textContent=p+'%';bar.style.width=p+'%';document.getElementById('log1').textContent='> '+messages[step];document.getElementById('log2').textContent='> Kontrol aşaması '+(step+1)+'/5';document.getElementById('log3').textContent='> İlerleme '+p+'%';
-if(t>=1){clearInterval(interval);delay=setTimeout(end,450)}}
-tick();interval=setInterval(tick,100)}
-document.getElementById('skip').addEventListener('click',end);document.getElementById('again').addEventListener('click',start);
-document.getElementById('copy').addEventListener('click',async e=>{try{await navigator.clipboard.writeText(location.href);e.target.textContent='Kopyalandı ✓'}catch{e.target.textContent='Adresi tarayıcıdan kopyala'}});start()})();
+(() => {
+  const scan=document.getElementById('scan'), result=document.getElementById('result');
+  const pct=document.getElementById('pct'), bar=document.getElementById('bar');
+  const phase=document.getElementById('phase'), soundButton=document.getElementById('sound');
+  const log1=document.getElementById('log1'),log2=document.getElementById('log2'),log3=document.getElementById('log3');
+  const messages=[
+    'Güvenlik denetimi başlatıldı...',
+    'Bağlantı trafiği inceleniyor...',
+    'Şüpheli etkinlik algılandı...',
+    'Sistem bütünlüğü denetleniyor...',
+    'Bilinmeyen işlemler kontrol ediliyor...',
+    'Güvenlik taraması sürüyor...',
+    'Son kontroller gerçekleştiriliyor...',
+    'Analiz tamamlanmak üzere...'
+  ];
+  const TOTAL_MS=60000;
+  let tickTimer=null, revealTimer=null, audioTimer=null, ctx=null, hum=null, humGain=null, audioActive=false;
+
+  function stopSound(){
+    if(audioTimer){clearInterval(audioTimer);audioTimer=null;}
+    if(hum){try{hum.stop()}catch{}hum=null;}
+    if(ctx){try{ctx.close()}catch{}ctx=null;}
+    humGain=null;audioActive=false;soundButton.textContent='🔊 Sesi aç';soundButton.setAttribute('aria-pressed','false');
+  }
+  function pulseSound(){
+    if(!ctx||ctx.state!=='running')return;
+    const now=ctx.currentTime;
+    const tone=ctx.createOscillator(), gain=ctx.createGain();
+    tone.type='sine';tone.frequency.setValueAtTime(190,now);tone.frequency.exponentialRampToValueAtTime(270,now+0.5);
+    gain.gain.setValueAtTime(0.0001,now);gain.gain.exponentialRampToValueAtTime(0.032,now+0.08);gain.gain.exponentialRampToValueAtTime(0.0001,now+0.8);
+    tone.connect(gain);gain.connect(ctx.destination);tone.start(now);tone.stop(now+0.82);
+  }
+  async function toggleSound(){
+    if(audioActive){stopSound();return;}
+    const AudioApi=window.AudioContext||window.webkitAudioContext;
+    if(!AudioApi){soundButton.textContent='Ses desteklenmiyor';soundButton.disabled=true;return;}
+    try{
+      ctx=new AudioApi();
+      hum=ctx.createOscillator();humGain=ctx.createGain();
+      hum.type='sine';hum.frequency.value=72;humGain.gain.value=0.017;
+      hum.connect(humGain);humGain.connect(ctx.destination);hum.start();
+      await ctx.resume();
+      if(scan.style.display==='none'){stopSound();return;}
+      audioActive=true;soundButton.textContent='🔇 Sesi kapat';soundButton.setAttribute('aria-pressed','true');
+      pulseSound();audioTimer=setInterval(pulseSound,3200);
+    }catch(e){stopSound();soundButton.textContent='Ses açılamadı';}
+  }
+  function stopTimers(){clearInterval(tickTimer);clearTimeout(revealTimer);tickTimer=null;revealTimer=null;}
+  function showReveal(){
+    stopTimers();stopSound();scan.style.display='none';result.style.display='block';document.title='Şakalandın! 🤣';
+  }
+  function start(){
+    stopTimers();stopSound();
+    scan.style.display='block';result.style.display='none';document.title='Bir sürpriz var 👀';
+    const begun=Date.now();
+    function tick(){
+      const elapsed=Math.min(TOTAL_MS,Date.now()-begun);
+      const progress=elapsed/TOTAL_MS;
+      const percent=Math.min(99,Math.round(2+progress*97));
+      const step=Math.min(messages.length-1,Math.floor(progress*messages.length));
+      pct.textContent=percent+'%';bar.style.width=percent+'%';
+      phase.textContent=step>=6?'Son güvenlik kontrolleri yapılıyor':'Sistem analizi devam ediyor';
+      log1.textContent='> '+messages[step];
+      log2.textContent='> Kontrol aşaması '+(step+1)+'/'+messages.length;
+      log3.textContent='> İlerleme '+percent+'%';
+      if(elapsed>=TOTAL_MS){stopTimers();pct.textContent='100%';bar.style.width='100%';revealTimer=setTimeout(showReveal,600);}
+    }
+    tick();tickTimer=setInterval(tick,130);
+  }
+  document.getElementById('skip').addEventListener('click',showReveal);
+  document.getElementById('again').addEventListener('click',start);
+  soundButton.addEventListener('click',toggleSound);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&audioActive)stopSound();});
+  document.getElementById('copy').addEventListener('click',async(event)=>{
+    try{await navigator.clipboard.writeText(location.href);event.target.textContent='Kopyalandı ✓'}
+    catch{event.target.textContent='Adresi tarayıcıdan kopyala'}
+  });
+  start();
+})();
 </script></body></html>
